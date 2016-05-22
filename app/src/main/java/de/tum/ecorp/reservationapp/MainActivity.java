@@ -1,8 +1,10 @@
 package de.tum.ecorp.reservationapp;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,11 +18,14 @@ import java.util.List;
 import de.tum.ecorp.reservationapp.model.Restaurant;
 import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
 import de.tum.ecorp.reservationapp.resource.Task;
+import de.tum.ecorp.reservationapp.service.LocationService;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
+
+    private LocationService locationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +38,16 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, locationService.getCurrentLocation().getLatitude() + " - " + locationService.getCurrentLocation().getLongitude(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-        restaurantListView = (ListView) findViewById(R.id.listView);
 
-        //Creating adapter
-        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
 
-        populateListView(listAdapter);
-
-        restaurantListView.setAdapter(listAdapter);
+        locationService = new LocationService(this);
     }
+
 
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
         new MockRestaurantResource().getRestaurants(new Task<List<Restaurant>>() {
@@ -61,6 +63,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        locationService.connect();
+
+        restaurantListView = (ListView) findViewById(R.id.listView);
+
+        //Creating adapter
+        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
+
+        populateListView(listAdapter);
+
+        restaurantListView.setAdapter(listAdapter);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        locationService.disconnect();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
