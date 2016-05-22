@@ -8,14 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Currency;
 import java.util.Locale;
 
 import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
+import de.tum.ecorp.reservationapp.model.UserManager;
 
 public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
+    //TODO: Decide if we want to support miles as well, then we need to use Locale information
+    private final static String UNIT_KILOMETER = "km";
+    private final static String UNIT_METER = "m";
 
     public RestaurantArrayAdapter(Context context, int resource) {
         super(context, resource);
@@ -50,6 +56,8 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
             viewHolder.reviewAmountLabel.setText(
                     context.getString(R.string.review_amount_label, restaurant.getNumerOfReviews()));
             viewHolder.priceRangeLabel.setText(formatPriceRange(restaurant.getPriceRange()));
+            viewHolder.distanceLabel.setText(formatDistance(
+                    restaurant.getLocation().distanceTo(UserManager.getInstance().getCurrentLocation())));
             viewHolder.ratingBar.setRating(restaurant.getRating());
         }
 
@@ -62,6 +70,22 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
         StringBuilder result = new StringBuilder();
         for (int i = 1; i <= priceRange.getNumberRepresentation(); i++) {
             result.append(currency.getSymbol());
+        }
+
+        return result.toString();
+    }
+
+    private String formatDistance(float distance) {
+        StringBuilder result = new StringBuilder();
+        if (distance < 1000) {
+            result.append((int)distance);
+            result.append(UNIT_METER);
+        } else {
+            double kilometerValue = distance / 1000;
+            DecimalFormat oneDecForm = new DecimalFormat("#.#");
+            oneDecForm.setRoundingMode(RoundingMode.FLOOR);
+            result.append(oneDecForm.format(kilometerValue));
+            result.append(UNIT_KILOMETER);
         }
 
         return result.toString();
