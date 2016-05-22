@@ -15,7 +15,7 @@ import java.util.List;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
 import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
-import de.tum.ecorp.reservationapp.resource.RestaurantResource;
+import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
-        new MockRestaurantResource().getRestaurants(new RestaurantResource.Task<List<Restaurant>>() {
+        new MockRestaurantResource().getRestaurants(new Task<List<Restaurant>>() {
             @Override
             public void before() {
                 listAdapter.clear();

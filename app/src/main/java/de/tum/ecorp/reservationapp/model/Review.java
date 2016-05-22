@@ -1,6 +1,6 @@
 package de.tum.ecorp.reservationapp.model;
 
-public class Review {
+public class Review extends Entity {
     private String reviewText;
     private float rating;
 

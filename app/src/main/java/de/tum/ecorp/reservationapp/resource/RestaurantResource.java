@@ -6,11 +6,7 @@ import de.tum.ecorp.reservationapp.model.Restaurant;
 
 public interface RestaurantResource {
 
-    interface Task<ResultType> {
-        void before();
-
-        void handleResult(ResultType result);
-    }
-
     void getRestaurants(Task<List<Restaurant>> task);
+
+    void getRestaurant(ParameterTask<Long, Restaurant> task);
 }
