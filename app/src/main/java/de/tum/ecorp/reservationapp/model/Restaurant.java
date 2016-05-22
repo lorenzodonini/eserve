@@ -1,5 +1,7 @@
 package de.tum.ecorp.reservationapp.model;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +25,14 @@ public class Restaurant extends Entity {
     private String category;
     private PriceRange priceRange;
     private List<Review> reviews;
+    private Location location;
 
-    public Restaurant(String name, String category, PriceRange priceRange, List<Review> reviews) {
+    public Restaurant(String name, String category, PriceRange priceRange, List<Review> reviews, Location location) {
         this.name = name;
         this.category = category;
         this.reviews = (reviews != null) ? reviews : new ArrayList<Review>();
         this.priceRange = priceRange;
+        this.location = location;
     }
 
     public String getName() {
@@ -45,6 +49,14 @@ public class Restaurant extends Entity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public float getRating() {
