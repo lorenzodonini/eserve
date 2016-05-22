@@ -3,7 +3,7 @@ package de.tum.ecorp.reservationapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Restaurant {
+public class Restaurant extends Entity {
 
     public enum PriceRange {
         LOW(1), MEDIUM(2), HIGH(3);
