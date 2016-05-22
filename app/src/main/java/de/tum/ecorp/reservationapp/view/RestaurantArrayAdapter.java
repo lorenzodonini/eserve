@@ -11,7 +11,9 @@ import android.widget.TextView;
 import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
 
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
@@ -47,7 +49,7 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
             viewHolder.restaurantNameLabel.setText(restaurant.getName());
             viewHolder.restaurantCategoryLabel.setText(restaurant.getCategory());
             viewHolder.reviewAmountLabel.setText(
-                    context.getString(R.string.review_amount_label, restaurant.getReviews().size()));
+                    context.getString(R.string.review_amount_label, restaurant.getNumerOfReviews()));
             viewHolder.priceRangeLabel.setText(formatPriceRange(restaurant.getPriceRange()));
             viewHolder.ratingBar.setRating(restaurant.getRating());
         }
@@ -55,9 +57,15 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
         return convertView;
     }
 
-    private String formatPriceRange(float priceRange) {
-        int floor = (int)priceRange;
-        return new String(new char[floor]).replace("\0","€");
+    private String formatPriceRange(Restaurant.PriceRange priceRange) {
+        Currency currency = Currency.getInstance(Locale.getDefault());
+
+        StringBuilder result = new StringBuilder();
+        for (int i = 1; i <= priceRange.getNumberRepresentation(); i++) {
+            result.append(currency.getSymbol());
+        }
+
+        return result.toString();
     }
 
     private static class ViewHolder {

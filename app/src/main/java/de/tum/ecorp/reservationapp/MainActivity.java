@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import de.tum.ecorp.reservationapp.model.Restaurant;
 import de.tum.ecorp.reservationapp.model.Review;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
@@ -49,11 +50,11 @@ public class MainActivity extends AppCompatActivity {
         List<Review> reviews = new ArrayList<>();
         reviews.add(new Review("Trololol, bad waiters", 2));
         reviews.add(new Review("This weeks' product owner sucks :)", 4));
-        Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",3.1f,reviews);
+        Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant", Restaurant.PriceRange.HIGH, reviews);
         reviews = new ArrayList<>();
         reviews.add(new Review("Best restaurant ever", 5));
         reviews.add(new Review("Cookies! Om nom nom..", 4));
-        Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant",1.8f,reviews);
+        Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant", Restaurant.PriceRange.LOW, reviews);
 
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(sample1);

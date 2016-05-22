@@ -4,15 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
+
+    public enum PriceRange {
+        LOW(1), MEDIUM(2), HIGH(3);
+
+        int numberRepresentation;
+
+        PriceRange(int numberRepresentation) {
+            this.numberRepresentation = numberRepresentation;
+        }
+
+        public int getNumberRepresentation() {
+            return numberRepresentation;
+        }
+    }
+
     private String name;
     private String category;
-    private float priceRange;
-    private List<Review> reviewList;
+    private PriceRange priceRange;
+    private List<Review> reviews;
 
-    public Restaurant(String name, String category, float priceRange, List<Review> reviews) {
+    public Restaurant(String name, String category, PriceRange priceRange, List<Review> reviews) {
         this.name = name;
         this.category = category;
-        this.reviewList = (reviews != null) ? reviews : new ArrayList<Review>();
+        this.reviews = (reviews != null) ? reviews : new ArrayList<Review>();
         this.priceRange = priceRange;
     }
 
@@ -33,33 +48,37 @@ public class Restaurant {
     }
 
     public float getRating() {
-        if (reviewList == null || reviewList.isEmpty()) {
+        if (reviews == null || reviews.isEmpty()) {
             return 0;
         }
         float rating = 0;
-        for (Review r : reviewList) {
+        for (Review r : reviews) {
             rating += r.getRating();
         }
-        return rating / reviewList.size();
+        return rating / reviews.size();
     }
 
     public void addReview(Review review) {
-        this.reviewList.add(review);
+        this.reviews.add(review);
     }
 
     public void addReviews(List<Review> reviews) {
-        this.reviewList.addAll(reviews);
+        this.reviews.addAll(reviews);
     }
 
     public List<Review> getReviews() {
-        return this.reviewList;
+        return this.reviews;
     }
 
-    public float getPriceRange() {
+    public int getNumerOfReviews() {
+        return this.reviews.size();
+    }
+
+    public PriceRange getPriceRange() {
         return priceRange;
     }
 
-    public void setPriceRange(float priceRange) {
+    public void setPriceRange(PriceRange priceRange) {
         this.priceRange = priceRange;
     }
 }
