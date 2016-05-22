@@ -1,10 +1,8 @@
 package de.tum.ecorp.reservationapp;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,7 +22,6 @@ import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 public class MainActivity extends AppCompatActivity {
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
-
     private LocationService locationService;
 
     @Override
@@ -35,17 +32,27 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, locationService.getCurrentLocation().getLatitude() + " - " + locationService.getCurrentLocation().getLongitude(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                locationService = new LocationService(MainActivity.this);
+                if (locationService.canGetLocation()) {
+                    final double latitude = locationService.getLatitude();
+                    final double longitude = locationService.getLongitude();
+
+                    Snackbar.make(view, latitude + " - " + longitude, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+                } else {
+                    locationService.showSettingsAlert();
+                }
             }
         });
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+        //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
 
-        locationService = new LocationService(this);
+        //locationService = new LocationService(this);
     }
 
 
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        locationService.connect();
+        //locationService.connect();
 
         restaurantListView = (ListView) findViewById(R.id.listView);
 
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        locationService.disconnect();
+        //locationService.disconnect();
     }
 
     @Override
