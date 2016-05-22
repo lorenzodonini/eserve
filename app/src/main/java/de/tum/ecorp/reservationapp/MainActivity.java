@@ -5,18 +5,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.model.Review;
-import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import de.tum.ecorp.reservationapp.model.Restaurant;
+import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
+import de.tum.ecorp.reservationapp.resource.RestaurantResource;
+import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private ListView restaurantListView;
@@ -40,27 +40,27 @@ public class MainActivity extends AppCompatActivity {
         restaurantListView = (ListView) findViewById(R.id.listView);
 
         //Creating adapter
-        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item, getMockRestaurants());
-        //TODO: Add async mechanism to add restaurants (we are fetching them from a server)
+        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
+
+        populateListView(listAdapter);
+
         restaurantListView.setAdapter(listAdapter);
     }
 
-    private List<Restaurant> getMockRestaurants() {
-        //Mock values
-        List<Review> reviews = new ArrayList<>();
-        reviews.add(new Review("Trololol, bad waiters", 2));
-        reviews.add(new Review("This weeks' product owner sucks :)", 4));
-        Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant", Restaurant.PriceRange.HIGH, reviews);
-        reviews = new ArrayList<>();
-        reviews.add(new Review("Best restaurant ever", 5));
-        reviews.add(new Review("Cookies! Om nom nom..", 4));
-        Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant", Restaurant.PriceRange.LOW, reviews);
+    private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
+        new MockRestaurantResource().getRestaurants(new RestaurantResource.Task<List<Restaurant>>() {
+            @Override
+            public void before() {
+                listAdapter.clear();
+            }
 
-        List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(sample1);
-        restaurants.add(sample2);
-        return restaurants;
+            @Override
+            public void handleResult(List<Restaurant> result) {
+                listAdapter.addAll(result);
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

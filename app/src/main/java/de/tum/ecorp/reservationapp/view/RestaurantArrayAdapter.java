@@ -8,18 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.Currency;
+import java.util.Locale;
+
 import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
-
-import java.util.Currency;
-import java.util.List;
-import java.util.Locale;
 
 public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
 
-    public RestaurantArrayAdapter(Context context, int resource, List<Restaurant> objects) {
-        super(context, resource, objects);
+    public RestaurantArrayAdapter(Context context, int resource) {
+        super(context, resource);
         this.context = context;
     }
 
