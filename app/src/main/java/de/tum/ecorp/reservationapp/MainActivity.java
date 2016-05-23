@@ -3,6 +3,7 @@ package de.tum.ecorp.reservationapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -15,9 +16,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
+import de.tum.ecorp.reservationapp.model.UserManager;
 import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
 import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.service.LocationService;
@@ -26,6 +30,7 @@ import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 public class MainActivity extends AppCompatActivity {
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
+    private int maxDisplayedResults = 50; //TODO: should be set via settings somehow, and not statically
     private LocationService locationService;
 
     @Override
@@ -53,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
 
@@ -66,7 +70,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void handleResult(List<Restaurant> result) {
-                listAdapter.addAll(result);
+                final Location searchLocation = UserManager.getInstance().getCurrentLocation();
+                if (searchLocation != null) {
+                    //Sorting results according to distance from search location
+                    Collections.sort(result, new Comparator<Restaurant>() {
+                        @Override
+                        public int compare(Restaurant lhs, Restaurant rhs) {
+                            return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
+                                    searchLocation.distanceTo(rhs.getLocation()));
+                        }
+                    });
+                }
+                //Only displaying the first N results, where N cannot be higher than the amount of results
+                List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), maxDisplayedResults));
+                listAdapter.addAll(resultsToDisplay);
             }
         });
     }

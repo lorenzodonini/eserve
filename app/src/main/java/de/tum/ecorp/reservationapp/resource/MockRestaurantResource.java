@@ -1,5 +1,6 @@
 package de.tum.ecorp.reservationapp.resource;
 
+import android.location.Location;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
@@ -70,12 +71,20 @@ public class MockRestaurantResource implements RestaurantResource {
         List<Review> reviews = new ArrayList<>();
         reviews.add(new Review("Trololol, bad waiters", 2));
         reviews.add(new Review("This weeks' product owner sucks :)", 4));
-        Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant", Restaurant.PriceRange.HIGH, reviews);
+        Location restaurantLocation = new Location("dummyProvider");
+        restaurantLocation.setLatitude(48.130350972491556);
+        restaurantLocation.setLongitude(11.561393737792969);
+        Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
+                Restaurant.PriceRange.HIGH, reviews, restaurantLocation);
 
         reviews = new ArrayList<>();
         reviews.add(new Review("Best restaurant ever", 5));
         reviews.add(new Review("Cookies! Om nom nom..", 4));
-        Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant", Restaurant.PriceRange.LOW, reviews);
+        restaurantLocation = new Location("dummyProvider");
+        restaurantLocation.setLatitude(48.13825869999999);
+        restaurantLocation.setLongitude(11.578163000000018);
+        Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant",
+                Restaurant.PriceRange.LOW, reviews, restaurantLocation);
 
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(sample1);

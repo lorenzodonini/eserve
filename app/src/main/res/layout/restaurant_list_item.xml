@@ -56,6 +56,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView" android:layout_alignBottom="@+id/distanceLabel"
             android:layout_toStartOf="@+id/distanceLabel" android:src="@mipmap/ic_place_black_18dp"
-            android:layout_marginRight="5dip" android:layout_alignTop="@+id/distanceLabel"
+            android:layout_marginRight="3dip" android:layout_alignTop="@+id/distanceLabel"
     />
 </RelativeLayout>
