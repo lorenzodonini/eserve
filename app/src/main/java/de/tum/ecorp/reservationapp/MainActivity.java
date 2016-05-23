@@ -1,6 +1,10 @@
 package de.tum.ecorp.reservationapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                             .setAction("Action", null).show();
 
                 } else {
-                    locationService.showSettingsAlert();
+                    showSettingsAlert();
                 }
             }
         });
@@ -109,5 +113,41 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Function to show settings alert dialog On pressing Settings button will
+     * launch Settings Options
+     */
+    private void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS settings");
+
+        // Setting Dialog Message
+        alertDialog
+                .setMessage("GPS is not enabled. Do you want to go to settings menu?");
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }
