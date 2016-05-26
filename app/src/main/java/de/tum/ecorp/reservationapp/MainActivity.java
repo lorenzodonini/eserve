@@ -44,7 +44,13 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         setSupportActionBar(toolbar);
 
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+        try {
+            userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+        } catch (SecurityException e) {
+            View rootView = findViewById(android.R.id.content);
+            Snackbar.make(rootView, "bla", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
