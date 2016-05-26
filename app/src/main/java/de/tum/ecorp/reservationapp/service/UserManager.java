@@ -9,7 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class UserManager implements Observer {
-    private Location currentLocation = LocationService.DEFAULT_LOCATION;
+    private Location currentLocation;
 
     private LocationService locationService;
 
