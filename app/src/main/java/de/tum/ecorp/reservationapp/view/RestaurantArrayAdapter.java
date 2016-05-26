@@ -15,7 +15,7 @@ import java.util.Locale;
 
 import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.model.UserManager;
+import de.tum.ecorp.reservationapp.service.UserManager;
 
 public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
@@ -78,7 +78,7 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
     private String formatDistance(float distance) {
         StringBuilder result = new StringBuilder();
         if (distance < 1000) {
-            result.append((int)distance);
+            result.append((int) distance);
             result.append(UNIT_METER);
         } else {
             double kilometerValue = distance / 1000;

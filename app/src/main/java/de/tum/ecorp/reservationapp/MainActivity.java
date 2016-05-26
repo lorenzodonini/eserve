@@ -1,7 +1,12 @@
 package de.tum.ecorp.reservationapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,20 +17,24 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.model.UserManager;
 import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
 import de.tum.ecorp.reservationapp.resource.Task;
+import de.tum.ecorp.reservationapp.service.LocationAware;
+import de.tum.ecorp.reservationapp.service.UserManager;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationAware {
+    private static final int MAX_DISPLAYED_RESULTS = 50;
+
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
-    private int maxDisplayedResults = 50; //TODO: should be set via settings somehow, and not statically
+    private UserManager userManager = UserManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,29 +43,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (userManager.canGetLocation()) {
+                    Location currentLocation = userManager.getCurrentLocation();
+                    final double latitude = currentLocation.getLatitude();
+                    final double longitude = currentLocation.getLongitude();
+
+                    Snackbar.make(view, latitude + " - " + longitude, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+                } else {
+                    showSettingsAlert();
+                }
             }
         });
-        restaurantListView = (ListView) findViewById(R.id.listView);
-
-        //Creating adapter
-        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
-
-        populateListView(listAdapter);
-
-        restaurantListView.setAdapter(listAdapter);
     }
+
 
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
         new MockRestaurantResource().getRestaurants(new Task<List<Restaurant>>() {
             @Override
             public void before() {
-                listAdapter.clear();
+
             }
 
             @Override
@@ -73,12 +89,34 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
                 //Only displaying the first N results, where N cannot be higher than the amount of results
-                List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), maxDisplayedResults));
+                List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
+                listAdapter.clear();
                 listAdapter.addAll(resultsToDisplay);
             }
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //locationService.connect();
+
+        restaurantListView = (ListView) findViewById(R.id.listView);
+
+        //Creating adapter
+        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
+
+        populateListView(listAdapter);
+
+        restaurantListView.setAdapter(listAdapter);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //locationService.disconnect();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,5 +138,46 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Function to show settings alert dialog On pressing Settings button will
+     * launch Settings Options
+     */
+    private void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS settings");
+
+        // Setting Dialog Message
+        alertDialog
+                .setMessage("GPS is not enabled. Do you want to go to settings menu?");
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    }
+                });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+    @Override
+    public void updateLocation(Location location) {
+        populateListView(listAdapter);
     }
 }
