@@ -31,14 +31,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/restaurant_price_placeholder"
-            android:id="@+id/priceRangeLabel"
-            android:layout_above="@+id/distanceLabel" android:layout_alignEnd="@+id/distanceLabel"/>
+            android:id="@+id/restaurantPriceRangeLabel"
+            android:layout_above="@+id/restaurantDistanceLabel" android:layout_alignEnd="@+id/restaurantDistanceLabel"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/restaurant_distance_placeholder"
-            android:id="@+id/distanceLabel"
+            android:id="@+id/restaurantDistanceLabel"
             android:layout_alignTop="@+id/restaurantTypeLabel" android:layout_alignParentEnd="true"
             android:layout_alignBottom="@+id/restaurantTypeLabel" android:textColor="#000000"/>
     <TextView
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/review_amount_placeholder"
-            android:id="@+id/reviewAmountLabel"
+            android:id="@+id/restaurantReviewAmountLabel"
             android:layout_toEndOf="@+id/ratingBar"
             android:layout_toLeftOf="@+id/ratingBar" android:layout_alignTop="@+id/ratingBar"
             android:layout_alignBottom="@+id/ratingBar" android:layout_marginLeft="10dip"
@@ -54,8 +54,8 @@
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView" android:layout_alignBottom="@+id/distanceLabel"
-            android:layout_toStartOf="@+id/distanceLabel" android:src="@mipmap/ic_place_black_18dp"
-            android:layout_marginRight="3dip" android:layout_alignTop="@+id/distanceLabel"
+            android:id="@+id/imageView" android:layout_alignBottom="@+id/restaurantDistanceLabel"
+            android:layout_toStartOf="@+id/restaurantDistanceLabel" android:src="@mipmap/ic_place_black_18dp"
+            android:layout_marginRight="3dip" android:layout_alignTop="@+id/restaurantDistanceLabel"
     />
 </RelativeLayout>
