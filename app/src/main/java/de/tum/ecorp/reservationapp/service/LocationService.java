@@ -1,19 +1,20 @@
 package de.tum.ecorp.reservationapp.service;
 
-import android.Manifest;
-import android.app.Service;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 
 import java.util.Observable;
 
-public class LocationService extends Observable implements LocationListener {
+class LocationService extends Observable implements LocationListener {
+
+    public static final Location DEFAULT_LOCATION = new Location("dummyProvider");
+
+    static {
+        DEFAULT_LOCATION.setLatitude(48.13703389999999);
+        DEFAULT_LOCATION.setLongitude(11.575813400000015);
+    }
 
     /**
      * The minimum distance to change updates in meters
@@ -25,83 +26,55 @@ public class LocationService extends Observable implements LocationListener {
      */
     private static final long MIN_TIME_BW_UPDATES = 6000;
 
-    private final Context context;
+    private final LocationManager locationManager;
 
-    private Location location;
-    private LocationManager locationManager;
-
-    private boolean gpsEnabled;
-    private boolean networkEnabled;
-
-    public LocationService(Context context) {
-        this.context = context;
-        locationManager = (LocationManager) context.getSystemService(Service.LOCATION_SERVICE);
-        this.location = calculateLocation();
+    public LocationService(LocationManager locationManager) {
+        this.locationManager = locationManager;
+        registerForLocationUpdates();
     }
 
-    public Double getLatitude() {
-        return location != null ? location.getLatitude() : null;
+    private void registerForLocationUpdates() throws SecurityException {
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
     }
 
-    public Double getLongitude() {
-        return location != null ? location.getLongitude() : null;
-    }
+    public Location getLocation() throws SecurityException {
+        Location location = null;
 
-    public Location getLocation() {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+
+        if (location == null) {
+            location = DEFAULT_LOCATION;
+        }
+
         return location;
     }
 
     public boolean canGetLocation() {
-        gpsEnabled = locationManager
+        boolean gpsEnabled = locationManager
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        networkEnabled = locationManager
+        boolean networkEnabled = locationManager
                 .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
         return gpsEnabled || networkEnabled;
     }
 
-    private Location calculateLocation() {
-        Location location = null;
-
-        if (canGetLocation()) {
-            if (gpsEnabled) {
-                location = getLocationForProvider(LocationManager.GPS_PROVIDER);
-            }
-
-            if (location == null && networkEnabled) {
-                location = getLocationForProvider(LocationManager.NETWORK_PROVIDER);
-            }
-        }
-
-        return location;
-    }
-
     private void updateLocation(Location location) {
-        this.location = location;
         setChanged();
         notifyObservers(location);
     }
 
 
-    private Location getLocationForProvider(String networkProvider) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
-
-        Location location = null;
-
-        if (locationManager != null) {
-            locationManager.requestLocationUpdates(networkProvider, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-            location = locationManager.getLastKnownLocation(networkProvider);
-        }
-
-        return location;
-    }
-
     @Override
     public void onLocationChanged(Location location) {
-        updateLocation(location);
+        if (location != null) {
+            updateLocation(location);
+        }
     }
 
     @Override
@@ -111,16 +84,12 @@ public class LocationService extends Observable implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        if (LocationManager.GPS_PROVIDER.equals(provider) || LocationManager.NETWORK_PROVIDER.equals(provider)) {
-            updateLocation(calculateLocation());
-        }
+        updateLocation(getLocation());
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        if (LocationManager.GPS_PROVIDER.equals(provider) && status == LocationProvider.AVAILABLE) {
-            updateLocation(calculateLocation());
-        }
+        updateLocation(getLocation());
     }
 
 }
