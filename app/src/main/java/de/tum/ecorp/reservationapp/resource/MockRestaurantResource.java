@@ -75,6 +75,7 @@ public class MockRestaurantResource implements RestaurantResource {
         restaurantLocation.setLatitude(48.130350972491556);
         restaurantLocation.setLongitude(11.561393737792969);
         Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
+                "Boltzmannstraße 3, 85748 Garching bei München", "www.ecorp.com",
                 Restaurant.PriceRange.HIGH, reviews, restaurantLocation);
 
         reviews = new ArrayList<>();
@@ -84,6 +85,7 @@ public class MockRestaurantResource implements RestaurantResource {
         restaurantLocation.setLatitude(48.13825869999999);
         restaurantLocation.setLongitude(11.578163000000018);
         Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant",
+                "SomeRandomStreet 25, 666 Gotham, World", "www.inyourface.org",
                 Restaurant.PriceRange.LOW, reviews, restaurantLocation);
 
         List<Restaurant> restaurants = new ArrayList<>();

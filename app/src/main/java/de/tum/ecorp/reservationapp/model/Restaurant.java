@@ -1,11 +1,13 @@
 package de.tum.ecorp.reservationapp.model;
 
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Restaurant extends Entity {
+public class Restaurant extends Entity implements Parcelable {
 
     public enum PriceRange {
         LOW(1), MEDIUM(2), HIGH(3);
@@ -23,18 +25,24 @@ public class Restaurant extends Entity {
 
     private String name;
     private String category;
+    private String address;
+    private String website;
     private PriceRange priceRange;
-    private List<Review> reviews;
+    private ArrayList<Review> reviews;
     private Location location;
 
-    public Restaurant(String name, String category, PriceRange priceRange, List<Review> reviews, Location location) {
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, List<Review> reviews, Location location) {
         this.name = name;
         this.category = category;
-        this.reviews = (reviews != null) ? reviews : new ArrayList<Review>();
+        this.address = address;
+        this.website = website;
+        this.reviews = new ArrayList<>();
+        this.reviews.addAll(reviews);
         this.priceRange = priceRange;
         this.location = location;
     }
 
+    //GETTERS & SETTERS
     public String getName() {
         return name;
     }
@@ -49,6 +57,22 @@ public class Restaurant extends Entity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public Location getLocation() {
@@ -78,7 +102,7 @@ public class Restaurant extends Entity {
         this.reviews.addAll(reviews);
     }
 
-    public List<Review> getReviews() {
+    public ArrayList<Review> getReviews() {
         return this.reviews;
     }
 
@@ -93,4 +117,50 @@ public class Restaurant extends Entity {
     public void setPriceRange(PriceRange priceRange) {
         this.priceRange = priceRange;
     }
+
+    //PARCELABLE IMPLEMENTATION
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(category);
+        dest.writeString(address);
+        dest.writeString(website);
+        dest.writeString(priceRange.name());
+        dest.writeParcelable(location, flags);
+        dest.writeParcelableArray(reviews.toArray(new Review[reviews.size()]), flags);
+        //dest.writeArray(reviews.toArray(new Review[reviews.size()]));
+    }
+
+    private Restaurant(Parcel in) {
+        name = in.readString();
+        category = in.readString();
+        address = in.readString();
+        website = in.readString();
+        priceRange = PriceRange.valueOf(in.readString());
+        location = in.readParcelable(Location.class.getClassLoader());
+        Parcelable [] items = in.readParcelableArray(Review.class.getClassLoader());
+        if (items != null) {
+            reviews = new ArrayList<>(items.length);
+            for (Parcelable item : items) {
+                reviews.add((Review)item);
+            }
+        }
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 }
