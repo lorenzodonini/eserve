@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.model.UserManager;
+import de.tum.ecorp.reservationapp.service.UserManager;
 
 public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
