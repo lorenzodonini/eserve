@@ -1,5 +1,7 @@
 package de.tum.ecorp.reservationapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,6 +24,7 @@ import de.tum.ecorp.reservationapp.model.UserManager;
 import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
 import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
+import de.tum.ecorp.reservationapp.view.RestaurantDetailFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ListView restaurantListView;
@@ -43,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         restaurantListView = (ListView) findViewById(R.id.listView);
+        restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Restaurant restaurant = (Restaurant)parent.getItemAtPosition(position);
+                Context context = view.getContext();
+                Intent intent = new Intent(context, RestaurantDetailsActivity.class);
+                intent.putExtra(RestaurantDetailsActivity.ARG_RESTAURANT, restaurant);
+
+                context.startActivity(intent);
+            }
+        });
 
         //Creating adapter
         listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
