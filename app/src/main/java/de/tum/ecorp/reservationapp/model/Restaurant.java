@@ -3,7 +3,9 @@ package de.tum.ecorp.reservationapp.model;
 import android.location.Location;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Restaurant extends Entity {
 
@@ -26,13 +28,15 @@ public class Restaurant extends Entity {
     private PriceRange priceRange;
     private List<Review> reviews;
     private Location location;
+    private Set<Integer> freeTimeSlots;
 
-    public Restaurant(String name, String category, PriceRange priceRange, List<Review> reviews, Location location) {
+    public Restaurant(String name, String category, PriceRange priceRange, List<Review> reviews, Location location, Set<Integer> freeTimeSlots) {
         this.name = name;
         this.category = category;
         this.reviews = (reviews != null) ? reviews : new ArrayList<Review>();
         this.priceRange = priceRange;
         this.location = location;
+        this.freeTimeSlots = (freeTimeSlots != null) ? freeTimeSlots : new HashSet<Integer>();
     }
 
     public String getName() {
@@ -82,8 +86,24 @@ public class Restaurant extends Entity {
         return this.reviews;
     }
 
-    public int getNumerOfReviews() {
+    public int getNumberOfReviews() {
         return this.reviews.size();
+    }
+
+    public void addFreeTimeSlot(Integer timeSlot) {
+        this.freeTimeSlots.add(timeSlot);
+    }
+
+    public void addFreeTimeSlots(Set<Integer> timeSlots) {
+        this.freeTimeSlots.addAll(timeSlots);
+    }
+
+    public Set<Integer> getFreeTimeSlots() {
+        return this.freeTimeSlots;
+    }
+
+    public int getNumberOfFreeTimeSlots() {
+        return this.freeTimeSlots.size();
     }
 
     public PriceRange getPriceRange() {
