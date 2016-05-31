@@ -11,16 +11,16 @@ import de.tum.ecorp.reservationapp.model.Restaurant;
 public interface RestaurantResource {
 
     public enum Filter {
-        RESTAURANT_NAME,    // String
-        RESTAURANT_CATEGORY,// String
-        PRICE_RANGE,        // PriceRange
-        AVERAGE_RATING,     // Integer
-        FREE_TIME_SLOTS,    // Integer
-        START_TIME,         // ?
-        END_TIME,           // ?
-        NUMBER_OF_VISITORS, // Integer
-        SEARCH_LOCATION,    // Location
-        SEARCH_RADIUS       // double
+        RESTAURANT_NAME,        // String
+        RESTAURANT_CATEGORY,    // String
+        PRICE_RANGE,            // PriceRange
+        AVERAGE_RATING,         // Integer
+        FREE_TIME_SLOTS,        // Integer
+        RESERVATION_START_TIME, // ?
+        RESERVATION_END_TIME,   // ?
+        RESERVATION_GUESTS,     // Integer
+        SEARCH_LOCATION,        // Location
+        SEARCH_RADIUS           // double
     }
 
     void getRestaurants(Task<List<Restaurant>> task);

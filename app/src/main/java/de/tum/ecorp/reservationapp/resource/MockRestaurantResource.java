@@ -4,15 +4,17 @@ import android.location.Location;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import de.tum.ecorp.reservationapp.model.OpeningTimes;
 import de.tum.ecorp.reservationapp.model.Restaurant;
 import de.tum.ecorp.reservationapp.model.Review;
+import de.tum.ecorp.reservationapp.model.Table;
+import de.tum.ecorp.reservationapp.model.TimeSlot;
 
 public class MockRestaurantResource implements RestaurantResource {
 
@@ -21,7 +23,7 @@ public class MockRestaurantResource implements RestaurantResource {
     public MockRestaurantResource() {
         restaurants = new HashMap<>();
 
-        List<Restaurant> newRestaurants = createRestaurants();
+        List<Restaurant> newRestaurants = createMockRestaurants();
 
         for (Restaurant restaurant : newRestaurants) {
             restaurants.put(restaurant.getId(), restaurant);
@@ -170,30 +172,87 @@ public class MockRestaurantResource implements RestaurantResource {
         }.execute(task.getParameters());
     }
 
-    private List<Restaurant> createRestaurants() {
-        List<Review> reviews = new ArrayList<>();
+    private List<Restaurant> createMockRestaurants() {
+
+        List<Restaurant> result = new ArrayList<>();
+        List<Review> reviews;
+        Location location;
+        List<Table> tables;
+        OpeningTimes openingTimes;
+
+        // RESTAURANT 1
+        location = new Location("dummyProvider");
+        location.setLatitude(48.130350972491556);
+        location.setLongitude(11.561393737792969);
+
+        reviews = new ArrayList<>();
         reviews.add(new Review("Trololol, bad waiters", 2));
         reviews.add(new Review("This weeks' product owner sucks :)", 4));
-        Location restaurantLocation = new Location("dummyProvider");
-        restaurantLocation.setLatitude(48.130350972491556);
-        restaurantLocation.setLongitude(11.561393737792969);
-        Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
-                Restaurant.PriceRange.HIGH, reviews, restaurantLocation, new HashSet<Integer>(Arrays.asList(5, 200)));
+
+        tables = new ArrayList<>();
+        tables.add(new Table(4));  // 1 table for 4
+        tables.add(new Table(6));  // 1 table for 6
+
+        openingTimes = new OpeningTimes();
+        // This restaurant is opened from X to Y on mondays
+        openingTimes.addTimeSlotMonday(new TimeSlot(13, 0));  //13.00-13.30
+        // ...and half an hour on saturdays
+        openingTimes.addTimeSlotSaturday(new TimeSlot(20, 0));  //20.00-20.30
+
+        result.add(new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
+                Restaurant.PriceRange.HIGH, location, reviews, tables, openingTimes));
+
+        // RESTAURANT 2
+        location = new Location("dummyProvider");
+        location.setLatitude(48.13825869999999);
+        location.setLongitude(11.578163000000018);
 
         reviews = new ArrayList<>();
         reviews.add(new Review("Best restaurant ever", 5));
         reviews.add(new Review("Cookies! Om nom nom..", 4));
-        restaurantLocation = new Location("dummyProvider");
-        restaurantLocation.setLatitude(48.13825869999999);
-        restaurantLocation.setLongitude(11.578163000000018);
-        Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant",
-                Restaurant.PriceRange.LOW, reviews, restaurantLocation, new HashSet<Integer>(Arrays.asList(5, 40, 200)));
 
-        List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(sample1);
-        restaurants.add(sample2);
+        tables = new ArrayList<>();
+        tables.add(new Table(4));  // 1 table for 4
+        tables.add(new Table(6));  // 1 table for 6
 
-        return restaurants;
+        openingTimes = new OpeningTimes();
+        // This restaurant is opened from X to Y on mondays
+        openingTimes.addTimeSlotMonday(new TimeSlot(13, 0));  //13.00-13.30
+        // ...and half an hour on saturdays
+        openingTimes.addTimeSlotSaturday(new TimeSlot(20, 0));  //20.00-20.30
+
+        result.add(new Restaurant("America Graffiti", "American Diner restaurant",
+                Restaurant.PriceRange.LOW, location, reviews, tables, openingTimes));
+
+        // RESTAURANT 3
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1390143);
+        location.setLongitude(11.5541695);
+
+        reviews = new ArrayList<>();
+        reviews.add(new Review("As a mexican, this is the worst mexican food I have ever taste in my life. The burrito look more like a Calzone. Not coming back, adios amigos!", 1));
+        reviews.add(new Review("I liked the place.  Taste of food was good.", 4));
+
+        tables = new ArrayList<>();
+        tables.add(new Table(4));  // 1 table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(10)); // 1 table for 10
+
+        openingTimes = new OpeningTimes();
+        // This restaurant is opened from X to Y on mondays
+        openingTimes.addTimeSlotMonday(new TimeSlot(13, 0));  //13.00-13.30
+        openingTimes.addTimeSlotMonday(new TimeSlot(13, 30)); //13.30-14.00
+        openingTimes.addTimeSlotMonday(new TimeSlot(14, 0));  //14.00-14.30
+        openingTimes.addTimeSlotMonday(new TimeSlot(14, 30)); //14.30-15.00
+        // ...and half an hour on saturdays
+        openingTimes.addTimeSlotSaturday(new TimeSlot(20, 0));  //20.00-20.30
+
+        openingTimes.toString();
+
+        result.add(new Restaurant("La Cucaracha", "Tex Mex Restaurant, Mexican Restaurant",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes));
+
+        return result;
     }
 
     private boolean isFilteredOut(Restaurant restaurant, Map<Filter, Object> filters) {
@@ -245,21 +304,21 @@ public class MockRestaurantResource implements RestaurantResource {
                     }
                     break;
 
-                case START_TIME:
+                case RESERVATION_START_TIME:
                     startTime = (int) value;
                     if (! timeSlotsOkay(restaurant, timeSlots, startTime, endTime, numberOfVisitors)) {
                         return true;
                     }
                     break;
 
-                case END_TIME:
+                case RESERVATION_END_TIME:
                     endTime = (int) value;
                     if (! timeSlotsOkay(restaurant, timeSlots, startTime, endTime, numberOfVisitors)) {
                         return true;
                     }
                     break;
 
-                case NUMBER_OF_VISITORS:
+                case RESERVATION_GUESTS:
                     numberOfVisitors = (int) value;
                     if (! timeSlotsOkay(restaurant, timeSlots, startTime, endTime, numberOfVisitors)) {
                         return true;
@@ -304,9 +363,6 @@ public class MockRestaurantResource implements RestaurantResource {
         }
 
         //TODO: Implement time slot logic
-        if (restaurant.getNumberOfFreeTimeSlots() < timeSlots) {
-            return false;
-        }
 
         return true;
     }

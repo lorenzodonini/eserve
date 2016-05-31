@@ -73,36 +73,6 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         });
     }
 
-    private void populateListViewTesting(final ArrayAdapter<Restaurant> listAdapter) {
-        new MockRestaurantResource().getRestaurantsNearby(new Task<List<Restaurant>>() {
-            @Override
-            public void before() {
-
-            }
-
-            @Override
-            public void handleResult(List<Restaurant> result) {
-                final Location searchLocation = UserManager.getInstance().getCurrentLocation();
-                if (searchLocation != null) {
-                    //Sorting results according to distance from search location
-                    Collections.sort(result, new Comparator<Restaurant>() {
-                        @Override
-                        public int compare(Restaurant lhs, Restaurant rhs) {
-                            return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
-                                    searchLocation.distanceTo(rhs.getLocation()));
-                        }
-                    });
-                }
-                //Only displaying the first N results, where N cannot be higher than the amount of results
-                List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
-                listAdapter.clear();
-                listAdapter.addAll(resultsToDisplay);
-            }
-        }, userManager.getCurrentLocation(), 500);
-    }
-
-
-
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
         new MockRestaurantResource().getRestaurants(new Task<List<Restaurant>>() {
             @Override
@@ -141,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         //Creating adapter
         listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
 
-        populateListViewTesting(listAdapter);
+        populateListView(listAdapter);
 
         restaurantListView.setAdapter(listAdapter);
 
