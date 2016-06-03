@@ -5,12 +5,28 @@ import java.util.Set;
 
 public class Reservation extends Entity {
 
-    private long restaurantId;
+    private Long restaurantId;
     private Date date;
     private Set<TimeSlot> timeSlots;
     private Table table;
 
     public Reservation() {
         //TODO
+    }
+
+    public Long getRestaurantId() {
+        return this.restaurantId;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
+
+    public Table getTable() {
+        return this.table;
+    }
+
+    public Set<TimeSlot> getTimeSlots() {
+        return this.timeSlots;
     }
 }

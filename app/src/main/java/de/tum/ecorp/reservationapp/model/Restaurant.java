@@ -24,6 +24,9 @@ public class Restaurant extends Entity {
 
     private String name;
     private String category;
+    private String address;
+    private String website;
+
     private PriceRange priceRange;
     private Location location;
 
@@ -31,11 +34,14 @@ public class Restaurant extends Entity {
     private List<Table> tables;
     private OpeningTimes openingTimes;
 
-    public Restaurant(String name, String category, PriceRange priceRange, Location location,
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
                       List<Review> reviews, List<Table> tables, OpeningTimes openingTimes) {
 
         this.name = name;
         this.category = category;
+        this.address = address;
+        this.website = website;
+
         this.priceRange = priceRange;
         this.location = location;
 
@@ -44,9 +50,12 @@ public class Restaurant extends Entity {
         this.openingTimes = openingTimes;
     }
 
-    public Restaurant(String name, String category, PriceRange priceRange, Location location) {
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location) {
         this.name = name;
         this.category = category;
+        this.address = address;
+        this.website = website;
+
         this.priceRange = priceRange;
         this.location = location;
 
@@ -69,6 +78,22 @@ public class Restaurant extends Entity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWebsite() {
+        return this.website;
+    }
+
+    public void setWebsite() {
+        this.website = website;
     }
 
     public Location getLocation() {
@@ -112,5 +137,13 @@ public class Restaurant extends Entity {
 
     public void setPriceRange(PriceRange priceRange) {
         this.priceRange = priceRange;
+    }
+
+    public OpeningTimes getOpeningTimes() {
+        return this.openingTimes;
+    }
+
+    public List<Table> getTables() {
+        return this.tables;
     }
 }

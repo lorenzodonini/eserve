@@ -2,7 +2,6 @@ package de.tum.ecorp.reservationapp.resource;
 
 import android.location.Location;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +22,10 @@ public interface RestaurantResource {
         SEARCH_RADIUS           // double
     }
 
-    void getRestaurants(Task<List<Restaurant>> task);
-    void getRestaurantsBySearchString(Task<List<Restaurant>> task, String searchString);
-    void getRestaurantsNearby(Task<List<Restaurant>> task, Location searchLocation, double searchRadius);
-    void getRestaurantsFiltered(Task<List<Restaurant>> task, Map<Filter, Object> filters);
+    List<Restaurant> getRestaurants();
+    List<Restaurant> getRestaurantsBySearchString(String searchString);
+    List<Restaurant> getRestaurantsNearby(Location searchLocation, Double searchRadius);
+    List<Restaurant> getRestaurantsFiltered(Map<Filter, Object> filters);
 
-    void getRestaurant(ParameterTask<Long, Restaurant> task);
+    Restaurant getRestaurant(Long restaurantId);
 }

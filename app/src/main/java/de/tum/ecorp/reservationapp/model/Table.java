@@ -8,8 +8,13 @@ public class Table extends Entity {
         this.numberOfSeats = numberOfSeats;
     }
 
+    @Override
     public String toString() {
         return "TableFor" + numberOfSeats;
+    }
+
+    public int getNumberOfSeats() {
+        return this.numberOfSeats;
     }
 
 }

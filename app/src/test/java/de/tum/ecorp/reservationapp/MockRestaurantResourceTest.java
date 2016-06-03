@@ -1,6 +1,9 @@
 package de.tum.ecorp.reservationapp;
 
+import android.location.Location;
+
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -24,49 +27,29 @@ public class MockRestaurantResourceTest {
         mrr = new MockRestaurantResource();
     }
 
-    /* These tests do not work. Why? Because AsyncTask s are a pain to test.
-       See http://stackoverflow.com/questions/9774792/asynctask-onpostexecute-not-called-in-unit-test-case
+    @Test
+    public void get_restaurants() throws Exception {
+        assertEquals(mrr.getRestaurants().size(), 3);
+    }
 
-       An alternative would be to change the stuff to a Service. Let's think about that.
-     */
+    @Test
+    public void get_restaurants_by_search_string() throws Exception {
+        assertEquals(mrr.getRestaurantsBySearchString("cuca").size(), 1);
+        assertEquals(mrr.getRestaurantsBySearchString("ECORP").size(), 1);
+        assertEquals(mrr.getRestaurantsBySearchString("ecorp").size(), 1);
+        assertEquals(mrr.getRestaurantsBySearchString("ecORp").size(), 1);
+    }
 
-//    @Test
-//    public void get_all_restaurants() throws Exception {
-//
-//        mrr.getRestaurants(new Task<List<Restaurant>>() {
-//            @Override
-//            public void before() {
-//                //
-//            }
-//
-//            @Override
-//            public void handleResult(List<Restaurant> result) {
-//                assertEquals(result.size(), 3);
-//            }
-//        });
-//    }
+    @Ignore("Location is always <null> in JUnit...")
+    @Test
+    public void get_restaurants_nearby() throws Exception {
+        Location location = new Location("testprovider");
+        location.setLatitude(48.1390143);
+        location.setLongitude(11.5541695);
 
-//    @Test
-//    public void get_restaurant_filtered_by_name() throws Exception {
-//
-//        final CountDownLatch lock = new CountDownLatch(1);
-//
-//        mrr.getRestaurantsBySearchString(new Task<List<Restaurant>>() {
-//            @Override
-//            public void before() {
-//                //
-//            }
-//
-//            @Override
-//            public void handleResult(List<Restaurant> result) {
-//
-//                assertNotNull(result);
-//                assertEquals(result.size(), 1);
-//                lock.countDown();
-//            }
-//
-//        }, "ecorp");
-//
-//        lock.await();
-//    }
+        assertEquals(mrr.getRestaurantsNearby(location, 20).size(), 1);
+        assertEquals(mrr.getRestaurantsNearby(location, 5000).size(), 3);
+    }
+
+    //TODO: Add test cases for getRestaurantsFiltered(Map<Filter, Object> filters);
 }

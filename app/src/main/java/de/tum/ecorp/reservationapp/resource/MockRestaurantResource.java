@@ -1,14 +1,13 @@
 package de.tum.ecorp.reservationapp.resource;
 
 import android.location.Location;
-import android.os.AsyncTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import de.tum.ecorp.reservationapp.model.OpeningTimes;
 import de.tum.ecorp.reservationapp.model.Restaurant;
@@ -21,7 +20,7 @@ public class MockRestaurantResource implements RestaurantResource {
     private Map<Long, Restaurant> restaurants;
 
     public MockRestaurantResource() {
-        restaurants = new HashMap<>();
+        this.restaurants = new HashMap<>();
 
         List<Restaurant> newRestaurants = createMockRestaurants();
 
@@ -31,145 +30,47 @@ public class MockRestaurantResource implements RestaurantResource {
     }
 
     @Override
-    public void getRestaurants(final Task<List<Restaurant>> task) {
-        new AsyncTask<Void, Void, List<Restaurant>>() {
-
-            @Override
-            protected void onPreExecute() {
-                task.before();
-            }
-
-            @Override
-            protected void onPostExecute(List<Restaurant> restaurants) {
-                task.handleResult(restaurants);
-            }
-
-            @Override
-            protected List<Restaurant> doInBackground(Void... params) {
-                return new ArrayList<>(restaurants.values());
-            }
-        }.execute();
+    public List<Restaurant> getRestaurants() {
+        return new ArrayList<>(this.restaurants.values());
     }
 
     @Override
-    public void getRestaurantsFiltered(final Task<List<Restaurant>> task, final Map<Filter, Object> filters) {
-        new AsyncTask<Void, Void, List<Restaurant>>() {
+    public List<Restaurant> getRestaurantsFiltered(Map<Filter, Object> filters) {
 
-            @Override
-            protected void onPreExecute() {
-                task.before();
+        List<Restaurant> result = new ArrayList<>(this.restaurants.values());
+
+        for (Iterator<Restaurant> iterator = result.iterator(); iterator.hasNext(); ) {
+            Restaurant restaurant = iterator.next();
+            if (isFilteredOut(restaurant, filters)) {
+                iterator.remove();
             }
+        }
 
-            @Override
-            protected void onPostExecute(List<Restaurant> restaurants) {
-                task.handleResult(restaurants);
-            }
-
-            @Override
-            protected List<Restaurant> doInBackground(Void... params) {
-
-                List<Restaurant> result = new ArrayList<>(restaurants.values());
-
-                for (Iterator<Restaurant> iterator = result.iterator(); iterator.hasNext(); ) {
-                    Restaurant restaurant = iterator.next();
-                    if (isFilteredOut(restaurant, filters)) {
-                        iterator.remove();
-                    }
-                }
-
-                return result;
-            }
-        }.execute();
+        return result;
     }
 
     @Override
-    public void getRestaurantsBySearchString(final Task<List<Restaurant>> task, final String searchString) {
-        new AsyncTask<Void, Void, List<Restaurant>>() {
+    public List<Restaurant> getRestaurantsBySearchString(final String searchString) {
 
-            @Override
-            protected void onPreExecute() {
-                task.before();
-            }
+        Map<Filter, Object> filters = new HashMap<>();
+        filters.put(Filter.RESTAURANT_NAME, searchString);
 
-            @Override
-            protected void onPostExecute(List<Restaurant> restaurants) {
-                task.handleResult(restaurants);
-            }
-
-            @Override
-            protected List<Restaurant> doInBackground(Void... params) {
-
-                List<Restaurant> result = new ArrayList<>(restaurants.values());
-
-                Map<Filter, Object> filters = new HashMap<>();
-                filters.put(Filter.RESTAURANT_NAME, searchString);
-
-                for (Iterator<Restaurant> iterator = result.iterator(); iterator.hasNext(); ) {
-                    Restaurant restaurant = iterator.next();
-                    if (isFilteredOut(restaurant, filters)) {
-                        iterator.remove();
-                    }
-                }
-
-                return result;
-            }
-        }.execute();
+        return getRestaurantsFiltered(filters);
     }
 
     @Override
-    public void getRestaurantsNearby(final Task<List<Restaurant>> task, final Location searchLocation, final double searchRadius) {
-        new AsyncTask<Void, Void, List<Restaurant>>() {
+    public List<Restaurant> getRestaurantsNearby(Location searchLocation, Double searchRadius) {
 
-            @Override
-            protected void onPreExecute() {
-                task.before();
-            }
+        Map<Filter, Object> filters = new HashMap<>();
+        filters.put(Filter.SEARCH_LOCATION, searchLocation);
+        filters.put(Filter.SEARCH_RADIUS, searchRadius);
 
-            @Override
-            protected void onPostExecute(List<Restaurant> restaurants) {
-                task.handleResult(restaurants);
-            }
-
-            @Override
-            protected List<Restaurant> doInBackground(Void... params) {
-
-                List<Restaurant> result = new ArrayList<>(restaurants.values());
-
-                Map<Filter, Object> filters = new HashMap<>();
-                filters.put(Filter.SEARCH_LOCATION, searchLocation);
-                filters.put(Filter.SEARCH_RADIUS, searchRadius);
-
-                for (Iterator<Restaurant> iterator = result.iterator(); iterator.hasNext(); ) {
-                    Restaurant restaurant = iterator.next();
-                    if (isFilteredOut(restaurant, filters)) {
-                        iterator.remove();
-                    }
-                }
-
-                return result;
-            }
-        }.execute();
+        return getRestaurantsFiltered(filters);
     }
 
     @Override
-    public void getRestaurant(final ParameterTask<Long, Restaurant> task) {
-        new AsyncTask<Long, Void, Restaurant>() {
-
-            @Override
-            protected void onPreExecute() {
-                task.before();
-            }
-
-            @Override
-            protected void onPostExecute(Restaurant restaurant) {
-                task.handleResult(restaurant);
-            }
-
-            @Override
-            protected Restaurant doInBackground(Long... params) {
-                return restaurants.get(params[0]);
-            }
-        }.execute(task.getParameters());
+    public Restaurant getRestaurant(Long restaurantId) {
+        return this.restaurants.get(restaurantId);
     }
 
     private List<Restaurant> createMockRestaurants() {
@@ -186,7 +87,7 @@ public class MockRestaurantResource implements RestaurantResource {
         location.setLongitude(11.561393737792969);
 
         reviews = new ArrayList<>();
-        reviews.add(new Review("Trololol, bad waiters", 2));
+        reviews.add(new Review("Trololo, bad waiters", 2));
         reviews.add(new Review("This weeks' product owner sucks :)", 4));
 
         tables = new ArrayList<>();
@@ -195,11 +96,12 @@ public class MockRestaurantResource implements RestaurantResource {
 
         openingTimes = new OpeningTimes();
         // This restaurant is opened from X to Y on mondays
-        openingTimes.addTimeSlotMonday(new TimeSlot(13, 0));  //13.00-13.30
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(13, 0));  //13.00-13.30
         // ...and half an hour on saturdays
-        openingTimes.addTimeSlotSaturday(new TimeSlot(20, 0));  //20.00-20.30
+        openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
 
         result.add(new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
+                "Creepway 3, 80932 Munich", "www.ecorp.com",
                 Restaurant.PriceRange.HIGH, location, reviews, tables, openingTimes));
 
         // RESTAURANT 2
@@ -217,11 +119,12 @@ public class MockRestaurantResource implements RestaurantResource {
 
         openingTimes = new OpeningTimes();
         // This restaurant is opened from X to Y on mondays
-        openingTimes.addTimeSlotMonday(new TimeSlot(13, 0));  //13.00-13.30
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(13, 0));  //13.00-13.30
         // ...and half an hour on saturdays
-        openingTimes.addTimeSlotSaturday(new TimeSlot(20, 0));  //20.00-20.30
+        openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
 
         result.add(new Restaurant("America Graffiti", "American Diner restaurant",
+                "SomeRandomStreet 25, 666 Gotham, World", "www.inyourface.org",
                 Restaurant.PriceRange.LOW, location, reviews, tables, openingTimes));
 
         // RESTAURANT 3
@@ -240,16 +143,15 @@ public class MockRestaurantResource implements RestaurantResource {
 
         openingTimes = new OpeningTimes();
         // This restaurant is opened from X to Y on mondays
-        openingTimes.addTimeSlotMonday(new TimeSlot(13, 0));  //13.00-13.30
-        openingTimes.addTimeSlotMonday(new TimeSlot(13, 30)); //13.30-14.00
-        openingTimes.addTimeSlotMonday(new TimeSlot(14, 0));  //14.00-14.30
-        openingTimes.addTimeSlotMonday(new TimeSlot(14, 30)); //14.30-15.00
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(13, 0));  //13.00-13.30
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(13, 30)); //13.30-14.00
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(14, 0));  //14.00-14.30
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(14, 30)); //14.30-15.00
         // ...and half an hour on saturdays
-        openingTimes.addTimeSlotSaturday(new TimeSlot(20, 0));  //20.00-20.30
-
-        openingTimes.toString();
+        openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
 
         result.add(new Restaurant("La Cucaracha", "Tex Mex Restaurant, Mexican Restaurant",
+                "Bayerstraße 49, 80335 München, Deutschland", "http://www.la-cucaracha-muenchen.de/",
                 Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes));
 
         return result;

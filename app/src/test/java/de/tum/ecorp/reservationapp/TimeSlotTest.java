@@ -16,19 +16,19 @@ public class TimeSlotTest {
         TimeSlot ts;
 
         ts = new TimeSlot(0);
-        assertEquals(ts.getId(), 0);
+        assertEquals(ts.getSlotId(), 0);
 
         ts = new TimeSlot(1);
-        assertEquals(ts.getId(), 2);
+        assertEquals(ts.getSlotId(), 2);
 
         ts = new TimeSlot(2);
-        assertEquals(ts.getId(), 4);
+        assertEquals(ts.getSlotId(), 4);
 
         ts = new TimeSlot(8);
-        assertEquals(ts.getId(), 16);
+        assertEquals(ts.getSlotId(), 16);
 
         ts = new TimeSlot(15);
-        assertEquals(ts.getId(), 30);
+        assertEquals(ts.getSlotId(), 30);
     }
 
     @Test
@@ -37,40 +37,40 @@ public class TimeSlotTest {
         TimeSlot ts;
 
         ts = new TimeSlot(0, 0);
-        assertEquals(ts.getId(), 0);
+        assertEquals(ts.getSlotId(), 0);
 
         ts = new TimeSlot(0, 20);
-        assertEquals(ts.getId(), 0);
+        assertEquals(ts.getSlotId(), 0);
 
         ts = new TimeSlot(0, 30);
-        assertEquals(ts.getId(), 1);
+        assertEquals(ts.getSlotId(), 1);
 
         ts = new TimeSlot(0, 50);
-        assertEquals(ts.getId(), 1);
+        assertEquals(ts.getSlotId(), 1);
 
         ts = new TimeSlot(1, 20);
-        assertEquals(ts.getId(), 2);
+        assertEquals(ts.getSlotId(), 2);
 
         ts = new TimeSlot(1, 29);
-        assertEquals(ts.getId(), 2);
+        assertEquals(ts.getSlotId(), 2);
 
         ts = new TimeSlot(1, 30);
-        assertEquals(ts.getId(), 3);
+        assertEquals(ts.getSlotId(), 3);
 
         ts = new TimeSlot(1, 35);
-        assertEquals(ts.getId(), 3);
+        assertEquals(ts.getSlotId(), 3);
 
         ts = new TimeSlot(2, 20);
-        assertEquals(ts.getId(), 4);
+        assertEquals(ts.getSlotId(), 4);
 
         ts = new TimeSlot(2, 40);
-        assertEquals(ts.getId(), 5);
+        assertEquals(ts.getSlotId(), 5);
 
         ts = new TimeSlot(8, 0);
-        assertEquals(ts.getId(), 16);
+        assertEquals(ts.getSlotId(), 16);
 
         ts = new TimeSlot(15, 59);
-        assertEquals(ts.getId(), 31);
+        assertEquals(ts.getSlotId(), 31);
     }
 
     @Test
