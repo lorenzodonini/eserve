@@ -3,12 +3,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:id="@+id/restaurantImageFlipper" android:layout_alignParentTop="true">
+
+    </ViewFlipper>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/restaurant_name_placeholder"
-            android:id="@+id/restaurantDetailName" android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
+            android:id="@+id/restaurantDetailName" android:layout_alignParentTop="false" android:layout_alignParentStart="true"
+            android:layout_below="@+id/restaurantImageFlipper" android:layout_marginTop="10dp"/>
     <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package de.tum.ecorp.reservationapp;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -29,7 +30,7 @@ import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.service.LocationAware;
 import de.tum.ecorp.reservationapp.service.UserManager;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
-import de.tum.ecorp.reservationapp.view.RestaurantDetailFragment;
+
 
 public class MainActivity extends AppCompatActivity implements LocationAware {
     private static final int MAX_DISPLAYED_RESULTS = 50;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 }
             }
         });
+
         restaurantListView = (ListView) findViewById(R.id.listView);
         restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,10 +118,9 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         });
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
-        //locationService.connect();
 
         restaurantListView = (ListView) findViewById(R.id.listView);
 
@@ -130,13 +131,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
         restaurantListView.setAdapter(listAdapter);
 
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //locationService.disconnect();
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
