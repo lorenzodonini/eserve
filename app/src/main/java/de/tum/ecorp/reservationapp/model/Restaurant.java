@@ -1,9 +1,12 @@
 package de.tum.ecorp.reservationapp.model;
 
 import android.location.Location;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +33,9 @@ public class Restaurant extends Entity implements Parcelable {
     private PriceRange priceRange;
     private ArrayList<Review> reviews;
     private Location location;
+    private String [] imageUris;
 
-    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, List<Review> reviews, Location location) {
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, List<Review> reviews, Location location, String [] images) {
         this.name = name;
         this.category = category;
         this.address = address;
@@ -40,6 +44,7 @@ public class Restaurant extends Entity implements Parcelable {
         this.reviews.addAll(reviews);
         this.priceRange = priceRange;
         this.location = location;
+        this.imageUris = images;
     }
 
     //GETTERS & SETTERS
@@ -118,6 +123,14 @@ public class Restaurant extends Entity implements Parcelable {
         this.priceRange = priceRange;
     }
 
+    public String[] getImageUris() {
+        return imageUris;
+    }
+
+    public void setImageUris(String[] imageUris) {
+        this.imageUris = imageUris;
+    }
+
     //PARCELABLE IMPLEMENTATION
     @Override
     public int describeContents() {
@@ -133,7 +146,8 @@ public class Restaurant extends Entity implements Parcelable {
         dest.writeString(priceRange.name());
         dest.writeParcelable(location, flags);
         dest.writeParcelableArray(reviews.toArray(new Review[reviews.size()]), flags);
-        //dest.writeArray(reviews.toArray(new Review[reviews.size()]));
+        dest.writeInt(imageUris.length);
+        dest.writeStringArray(imageUris);
     }
 
     private Restaurant(Parcel in) {
@@ -150,6 +164,9 @@ public class Restaurant extends Entity implements Parcelable {
                 reviews.add((Review)item);
             }
         }
+        int imageAmt = in.readInt();
+        imageUris = new String[imageAmt];
+        in.readStringArray(imageUris);
     }
 
     public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
