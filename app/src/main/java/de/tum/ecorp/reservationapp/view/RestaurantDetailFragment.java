@@ -1,16 +1,24 @@
 package de.tum.ecorp.reservationapp.view;
 
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.*;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import de.tum.ecorp.reservationapp.R;
+import de.tum.ecorp.reservationapp.model.OpeningTime;
 import de.tum.ecorp.reservationapp.model.Restaurant;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +31,9 @@ public class RestaurantDetailFragment extends Fragment {
     public static final String ARG_RESTAURANT = "restaurant";
 
     private Restaurant mRestaurant;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
+    private ViewGroup expandableContainer;
+    private boolean bOpeningHoursExpanded = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,12 +58,13 @@ public class RestaurantDetailFragment extends Fragment {
                 mRestaurant = (Restaurant) arguments.get(ARG_RESTAURANT);
             }
         }
+        imageLoader.init(ImageLoaderConfiguration.createDefault(getContext()));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_restaurant_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_restaurant_det, container, false);
         if (mRestaurant != null) {
             TextView name = (TextView)rootView.findViewById(R.id.restaurantDetailName);
             TextView ratingNum = (TextView)rootView.findViewById(R.id.restaurantDetailRatingNum);
@@ -62,8 +74,14 @@ public class RestaurantDetailFragment extends Fragment {
             TextView price = (TextView)rootView.findViewById(R.id.restaurantDetailPrice);
             TextView address = (TextView)rootView.findViewById(R.id.restaurantDetailAddress);
             TextView website = (TextView)rootView.findViewById(R.id.restaurantDetailWebsite);
-            TextView openingTimes = (TextView)rootView.findViewById(R.id.restaurantDetailOpeningTimes);
+            expandableContainer = (ViewGroup)rootView.findViewById(R.id.expandable_container);
 
+            //Settings values
+            /*for (String img: mRestaurant.getImageUris()) {
+                ImageView imageView = new ImageView(getContext());
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageLoader.displayImage(img, imageView);
+            }*/
             name.setText(mRestaurant.getName());
             ratingNum.setText(ViewUtility.formatFloat(mRestaurant.getRating(),1));
             ratingBar.setRating(mRestaurant.getRating());
@@ -72,8 +90,49 @@ public class RestaurantDetailFragment extends Fragment {
             price.setText(ViewUtility.formatPriceRange(mRestaurant.getPriceRange()));
             address.setText(mRestaurant.getAddress());
             website.setText(mRestaurant.getWebsite());
-            //TODO: implement opening times correctly
-            openingTimes.setText("Closed today!");
+            if (bOpeningHoursExpanded) {
+                inflater.inflate(R.layout.expanded_opening_hours, expandableContainer);
+                ListView openingHoursList = (ListView)rootView.findViewById(R.id.opening_times_list);
+                OpeningHoursArrayAdapter adapter = new OpeningHoursArrayAdapter(getContext(),
+                        R.layout.opening_hours_listitem);
+                //Creating mock values
+                List<String> openingTimes = new ArrayList<>();
+                openingTimes.add("12:00 PM-3:00 PM");
+                openingTimes.add("5:00 PM-10:00 PM");
+                OpeningTime time = new OpeningTime(0, null);
+                adapter.add(time);
+                time = new OpeningTime(1, openingTimes);
+                adapter.add(time);
+                time = new OpeningTime(2, openingTimes);
+                adapter.add(time);
+                time = new OpeningTime(3, openingTimes);
+                adapter.add(time);
+                time = new OpeningTime(4, openingTimes);
+                adapter.add(time);
+                time = new OpeningTime(5, openingTimes);
+                adapter.add(time);
+                time = new OpeningTime(6, openingTimes);
+                adapter.add(time);
+                openingHoursList.setAdapter(adapter);
+            } else {
+                inflater.inflate(R.layout.collapsed_opening_hours, expandableContainer);
+
+            }
+            expandableContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LayoutInflater inflater =
+                            (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    if (expandableContainer.findViewById(R.id.expandedContainer) != null) {
+                        expandableContainer.removeAllViews();
+                        inflater.inflate(R.layout.collapsed_opening_hours, expandableContainer);
+                    } else if (expandableContainer.findViewById(R.id.collapsedContainer) != null) {
+                        expandableContainer.removeAllViews();
+                        inflater.inflate(R.layout.expanded_opening_hours, expandableContainer);
+                        //TODO: this probably doesn't work, cause the view is being added but not initialized
+                    }
+                }
+            });
         }
 
         return rootView;
@@ -109,5 +168,13 @@ public class RestaurantDetailFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void initializeExpandedOpeningHours() {
+
+    }
+
+    private void initializeCollapsedOpeningHours() {
+
     }
 }

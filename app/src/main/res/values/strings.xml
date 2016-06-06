@@ -16,4 +16,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_content_description">No images for this restaurant found</string>
+    <string name="expanded_opening_day_placeholder">Wednesday</string>
+    <string name="expanded_opening_hours_placeholder">12:00 PM-3:00 PM\n5:00 PM-10:00 PM</string>
 </resources>
