@@ -1,8 +1,9 @@
 package de.tum.ecorp.reservationapp;
 
+import android.content.Context;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -17,7 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import de.tum.ecorp.reservationapp.model.Restaurant;
 import de.tum.ecorp.reservationapp.view.RestaurantDetailFragment;
 import de.tum.ecorp.reservationapp.view.RestaurantReviewsFragment;
@@ -35,10 +41,25 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
-     * The {@link ViewPager} that will host the section contents.
+     * The {@link ViewPager} that will host the main section contents.
      */
     private ViewPager mViewPager;
+
+    /**
+     * The {@link ImagePagerAdapter} that will provide the appropriate
+     * image view, according to the current position.
+     * This could become very memory intensive, in case there a lot
+     * of images to load. Needs optimisation.
+     */
+    private ImagePagerAdapter mImagePagerAdapter;
+
+    /**
+     * The {@link ViewPager} that will host the images of the restaurant.
+     */
+    private ViewPager mImagePager;
+
     private Restaurant mRestaurant;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
 
     private static final String DETAILS_TAB = "Details";
     private static final String REVIEWS_TAB = "Reviews";
@@ -57,22 +78,39 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_restaurant_details);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Set toolbar as support action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.details_toolbar);
         setSupportActionBar(toolbar);
-        if (mRestaurant != null) {
-            getSupportActionBar().setTitle(mRestaurant.getName());
-        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Initialize image loader
+        if (!imageLoader.isInited()) {
+            imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+        }
+
+        // Pager used for displaying restaurant images
+        mImagePagerAdapter = new ImagePagerAdapter(this);
+        mImagePager = (ViewPager)findViewById(R.id.restaurant_image_pager);
+        mImagePager.setAdapter(mImagePagerAdapter);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.details_content);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        // Set up the tabs
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.details_tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        // Setting title on the Collapsing Toolbar
+        if (mRestaurant != null) {
+            CollapsingToolbarLayout collapsingToolbar =
+                    (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
+            collapsingToolbar.setTitle(mRestaurant.getName());
+        }
     }
 
 
@@ -137,6 +175,46 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                     return RESERVATION_TAB;
             }
             return null;
+        }
+    }
+
+    /**
+     * A {@link ImagePagerAdapter} that returns a view corresponding to the currently
+     * chosen section (there are as many sections as there are available images)
+     */
+    private class ImagePagerAdapter extends PagerAdapter {
+        private Context mContext;
+        private LayoutInflater mLayoutInflater;
+
+        public ImagePagerAdapter(Context context) {
+            mContext = context;
+            mLayoutInflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return (mRestaurant != null) ? mRestaurant.getImageUris().length : 0;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View itemView = mLayoutInflater.inflate(R.layout.image_pager, container, false);
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.restaurant_image);
+            imageLoader.displayImage(mRestaurant.getImageUris()[position], imageView);
+
+            container.addView(itemView);
+            return itemView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((LinearLayout)object);
         }
     }
 }
