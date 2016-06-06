@@ -1,6 +1,7 @@
 package de.tum.ecorp.reservationapp.resource;
 
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
 import de.tum.ecorp.reservationapp.model.Review;
 
@@ -74,9 +76,13 @@ public class MockRestaurantResource implements RestaurantResource {
         Location restaurantLocation = new Location("dummyProvider");
         restaurantLocation.setLatitude(48.130350972491556);
         restaurantLocation.setLongitude(11.561393737792969);
+        String [] imageUris = new String[3];
+        imageUris[0] = "drawable://" + R.drawable.ecorp_rest1;
+        imageUris[1] = "drawable://" + R.drawable.ecorp_rest2;
+        imageUris[2] = "drawable://" + R.drawable.ecorp_rest3;
         Restaurant sample1 = new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
                 "Boltzmannstraße 3, 85748 Garching bei München", "www.ecorp.com",
-                Restaurant.PriceRange.HIGH, reviews, restaurantLocation);
+                Restaurant.PriceRange.HIGH, reviews, restaurantLocation, imageUris);
 
         reviews = new ArrayList<>();
         reviews.add(new Review("Best restaurant ever", 5));
@@ -86,7 +92,7 @@ public class MockRestaurantResource implements RestaurantResource {
         restaurantLocation.setLongitude(11.578163000000018);
         Restaurant sample2 = new Restaurant("America Graffiti", "American Diner restaurant",
                 "SomeRandomStreet 25, 666 Gotham, World", "www.inyourface.org",
-                Restaurant.PriceRange.LOW, reviews, restaurantLocation);
+                Restaurant.PriceRange.LOW, reviews, restaurantLocation, imageUris);
 
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(sample1);
