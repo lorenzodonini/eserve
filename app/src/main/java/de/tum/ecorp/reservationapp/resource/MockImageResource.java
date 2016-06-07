@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 
+import android.view.View;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,12 +35,18 @@ public class MockImageResource implements ImageResource {
     public List<Bitmap> loadImagesForRestaurant(long restaurantId) {
         List<Bitmap> result = new ArrayList<>();
 
-        for (String str : restaurantImages.get(restaurantId)) {
-            Bitmap b = imageLoader.loadImageSync(str);
-            result.add(b);
+        for (String str: restaurantImages.get(restaurantId)) {
+            imageLoader.loadImage(str, new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    System.out.println(imageUri);
+                    //TODO: finish the moron's work
+                }
+            });
         }
 
-        return new ArrayList<>();
+        return result;
     }
 
     private Map<Long, List<String>> initializeMockRestaurantImages() {

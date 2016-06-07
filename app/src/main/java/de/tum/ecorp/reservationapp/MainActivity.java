@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
                 listAdapter.clear();
                 listAdapter.addAll(resultsToDisplay);
-                //imageResource.loadImagesForRestaurant(1);
+                imageResource.loadImagesForRestaurant(1);
             }
         });
     }
