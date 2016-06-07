@@ -11,7 +11,7 @@
             android:layout_marginTop="4dp" android:layout_marginBottom="4dp" android:tint="#42a5f5"/>
     <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/opening_times_list"
             tools:listitem="@layout/opening_hours_listitem" android:divider="#00ffffff"
             android:footerDividersEnabled="false" android:layout_marginTop="12dp" android:layout_marginLeft="10dp"/>
