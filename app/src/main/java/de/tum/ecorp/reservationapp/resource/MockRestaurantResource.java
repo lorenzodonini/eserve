@@ -4,10 +4,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
@@ -71,8 +68,8 @@ public class MockRestaurantResource implements RestaurantResource {
 
     private List<Restaurant> createRestaurants() {
         List<Review> reviews = new ArrayList<>();
-        reviews.add(new Review("Trololol, bad waiters", 2));
-        reviews.add(new Review("This weeks' product owner sucks :)", 4));
+        reviews.add(new Review("Trololol, bad waiters", 2, new Date()));
+        reviews.add(new Review("This weeks' product owner sucks :)", 4, new Date()));
         Location restaurantLocation = new Location("dummyProvider");
         restaurantLocation.setLatitude(48.130350972491556);
         restaurantLocation.setLongitude(11.561393737792969);
@@ -85,8 +82,8 @@ public class MockRestaurantResource implements RestaurantResource {
                 Restaurant.PriceRange.HIGH, reviews, restaurantLocation, imageUris);
 
         reviews = new ArrayList<>();
-        reviews.add(new Review("Best restaurant ever", 5));
-        reviews.add(new Review("Cookies! Om nom nom..", 4));
+        reviews.add(new Review("Best restaurant ever", 5, new Date()));
+        reviews.add(new Review("Cookies! Om nom nom...", 4, new Date()));
         restaurantLocation = new Location("dummyProvider");
         restaurantLocation.setLatitude(48.13825869999999);
         restaurantLocation.setLongitude(11.578163000000018);

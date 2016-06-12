@@ -3,13 +3,17 @@ package de.tum.ecorp.reservationapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 public class Review extends Entity implements Parcelable {
     private String reviewText;
     private float rating;
+    private Date reviewDate;
 
-    public Review(String reviewText, float rating) {
+    public Review(String reviewText, float rating, Date reviewDate) {
         this.reviewText = reviewText;
         this.rating = rating;
+        this.reviewDate = reviewDate;
     }
 
     public String getReviewText() {
@@ -20,9 +24,14 @@ public class Review extends Entity implements Parcelable {
         return rating;
     }
 
+    public Date getReviewDate() {
+        return reviewDate;
+    }
+
     private Review(Parcel in) {
         reviewText = in.readString();
         rating = in.readFloat();
+        reviewDate = new Date(in.readLong());
     }
 
     //PARCELABLE IMPLEMENTATION
@@ -47,5 +56,6 @@ public class Review extends Entity implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(reviewText);
         dest.writeFloat(rating);
+        dest.writeLong(reviewDate.getTime());
     }
 }
