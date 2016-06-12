@@ -3,6 +3,8 @@ package de.tum.ecorp.reservationapp.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,6 @@ import java.util.List;
  */
 public class RestaurantReviewsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String ARG_REVIEWS = "restaurant_reviews";
     public static final String ARG_RATING = "avg_rating";
 
@@ -41,7 +42,6 @@ public class RestaurantReviewsFragment extends Fragment {
      * @param rating Parameter 2.
      * @return A new instance of fragment RestaurantReviewsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RestaurantReviewsFragment newInstance(ArrayList<Review> reviews, float rating) {
         RestaurantReviewsFragment fragment = new RestaurantReviewsFragment();
         Bundle args = new Bundle();
@@ -69,7 +69,15 @@ public class RestaurantReviewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurant_reviews, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_restaurant_reviews, container, false);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.reviewsView);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new RestaurantReviewsAdapter(rating,
+                reviews.toArray(new Review[reviews.size()]), getContext()));
+
+        return rootView;
     }
 
 }
