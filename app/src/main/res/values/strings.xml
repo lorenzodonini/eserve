@@ -19,4 +19,10 @@
     <string name="image_content_description">No images for this restaurant found</string>
     <string name="expanded_opening_day_placeholder">Wednesday</string>
     <string name="expanded_opening_hours_placeholder">12:00 PM-3:00 PM\n5:00 PM-10:00 PM</string>
+    <string name="time_icon_description">Opening Times Icon</string>
+    <string name="review_amount_placeholder2">13</string>
+    <string name="review_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget diam augue.
+        Nam euismod vitae ex in hendrerit
+    </string>
+    <string name="review_date_placeholder">2/25/2016</string>
 </resources>
