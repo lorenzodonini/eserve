@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <RatingBar style="@style/Widget.AppCompat.RatingBar.Small" android:layout_width="wrap_content"
+               android:layout_height="wrap_content" android:id="@+id/reviewRating" android:numStars="5"
+               android:rating="4.8" android:progressTint="#ff9100" android:maxHeight="20dp" android:minHeight="20dp"
+               android:layout_marginTop="15dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/review_date_placeholder"
+            android:id="@+id/reviewDateLabel" android:layout_alignBottom="@+id/reviewRating"
+            android:layout_toEndOf="@+id/reviewRating" android:layout_alignTop="@+id/reviewRating"
+            android:layout_marginLeft="10dp" android:gravity="center_vertical" android:textSize="14sp"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/review_placeholder"
+            android:id="@+id/reviewText" android:layout_below="@+id/reviewRating"
+            android:layout_toStartOf="@+id/reviewDateLabel" android:layout_marginTop="5dp" android:textSize="14sp"
+            android:textColor="#000000" android:layout_alignParentEnd="true"/>
+</RelativeLayout>
