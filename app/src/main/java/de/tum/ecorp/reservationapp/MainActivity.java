@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
+    private LocationManager locationManager;
     private UserManager userManager = UserManager.getInstance();
 
     @Override
@@ -46,8 +47,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Restaurant restaurant = (Restaurant)parent.getItemAtPosition(position);
+                Restaurant restaurant = (Restaurant) parent.getItemAtPosition(position);
                 Context context = view.getContext();
                 Intent intent = new Intent(context, RestaurantDetailsActivity.class);
                 intent.putExtra(RestaurantDetailsActivity.ARG_RESTAURANT, restaurant);
@@ -132,6 +132,21 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         restaurantListView.setAdapter(listAdapter);
 
     }*/
+    @Override
+    protected void onPause() {
+        super.onPause();
+        userManager.stopUsingGPS();
+        //userManager=null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //userManager =  UserManager.getInstance();
+
+        userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

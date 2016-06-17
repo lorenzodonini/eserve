@@ -69,6 +69,9 @@ class LocationService extends Observable implements LocationListener {
         notifyObservers(location);
     }
 
+    public void stopUsingGPS() throws SecurityException{
+        locationManager.removeUpdates(this);
+    }
 
     @Override
     public void onLocationChanged(Location location) {
