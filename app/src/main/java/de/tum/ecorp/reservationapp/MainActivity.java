@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
     private UserManager userManager = UserManager.getInstance();
-    private ImageResource imageResource;
+    private MockImageResource imageResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

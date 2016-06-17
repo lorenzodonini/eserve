@@ -47,8 +47,8 @@ public class MockRestaurantResourceTest {
         location.setLatitude(48.1390143);
         location.setLongitude(11.5541695);
 
-        assertEquals(mrr.getRestaurantsNearby(location, 20).size(), 1);
-        assertEquals(mrr.getRestaurantsNearby(location, 5000).size(), 3);
+        assertEquals(mrr.getRestaurantsNearby(location, 20.0).size(), 1);
+        assertEquals(mrr.getRestaurantsNearby(location, 5000.0).size(), 3);
     }
 
     //TODO: Add test cases for getRestaurantsFiltered(Map<Filter, Object> filters);
