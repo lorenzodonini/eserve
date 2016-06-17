@@ -92,7 +92,7 @@ public class Restaurant extends Entity {
         return this.website;
     }
 
-    public void setWebsite() {
+    public void setWebsite(String website) {
         this.website = website;
     }
 
@@ -141,6 +141,10 @@ public class Restaurant extends Entity {
 
     public OpeningTimes getOpeningTimes() {
         return this.openingTimes;
+    }
+
+    public void setOpeningTimes(OpeningTimes openingTimes) {
+        this.openingTimes = openingTimes;
     }
 
     public List<Table> getTables() {

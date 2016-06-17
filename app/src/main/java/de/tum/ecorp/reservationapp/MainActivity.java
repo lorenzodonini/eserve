@@ -23,7 +23,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.resource.ImageResource;
 import de.tum.ecorp.reservationapp.resource.MockImageResource;
 import de.tum.ecorp.reservationapp.resource.MockRestaurantResourceAsync;
 import de.tum.ecorp.reservationapp.resource.Task;
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
                 listAdapter.clear();
                 listAdapter.addAll(resultsToDisplay);
-                imageResource.loadImagesForRestaurant(1);
             }
         });
     }
@@ -120,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         populateListView(listAdapter);
 
         restaurantListView.setAdapter(listAdapter);
-
     }
 
     @Override

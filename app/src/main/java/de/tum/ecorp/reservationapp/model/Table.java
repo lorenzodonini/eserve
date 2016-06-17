@@ -16,5 +16,4 @@ public class Table extends Entity {
     public int getNumberOfSeats() {
         return this.numberOfSeats;
     }
-
 }
