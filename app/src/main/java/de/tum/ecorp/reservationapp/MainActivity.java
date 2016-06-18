@@ -132,18 +132,16 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         restaurantListView.setAdapter(listAdapter);
 
     }*/
+
     @Override
     protected void onPause() {
         super.onPause();
         userManager.stopUsingGPS();
-        //userManager=null;
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
-        //userManager =  UserManager.getInstance();
-
+        super.onResume(); 
         userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
 
     }
