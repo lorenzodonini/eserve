@@ -25,8 +25,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
+import de.tum.ecorp.reservationapp.resource.MockImageResource;
+import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.view.RestaurantDetailFragment;
 import de.tum.ecorp.reservationapp.view.RestaurantReviewsFragment;
+
+import java.util.List;
 
 public class RestaurantDetailsActivity extends AppCompatActivity {
 
@@ -92,6 +96,9 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         mImagePagerAdapter = new ImagePagerAdapter(this);
         mImagePager = (ViewPager)findViewById(R.id.restaurant_image_pager);
         mImagePager.setAdapter(mImagePagerAdapter);
+        //Loading the images for this restaurant asynchronously
+        //loadImagesForRestaurant();
+
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -111,6 +118,21 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                     (CollapsingToolbarLayout) findViewById(R.id.collapse_toolbar);
             collapsingToolbar.setTitle(mRestaurant.getName());
         }
+    }
+
+    private void loadImagesForRestaurant() {
+        new MockImageResource().getRestaurantImageUrisAsync(mRestaurant, new Task<List<String>>() {
+            @Override
+            public void before() {
+                //Do nothing
+            }
+
+            @Override
+            public void handleResult(List<String> result) {
+                mRestaurant.setImageUris(result.toArray(new String[result.size()]));
+                mImagePagerAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**

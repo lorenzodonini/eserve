@@ -59,6 +59,7 @@ public class RestaurantDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_restaurant_details, container, false);
+        //TODO: Get opening times from restaurant and display them properly, instead of default mocked data
         if (mRestaurant != null) {
             TextView name = (TextView)rootView.findViewById(R.id.restaurantDetailName);
             TextView ratingNum = (TextView)rootView.findViewById(R.id.restaurantDetailRatingNum);

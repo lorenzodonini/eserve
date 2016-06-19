@@ -35,7 +35,7 @@ public class Restaurant extends Entity implements Parcelable {
     private OpeningTimes openingTimes;
 
     public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
-                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes) {
+                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes, String [] imageUris) {
 
         this.name = name;
         this.category = category;
@@ -47,6 +47,7 @@ public class Restaurant extends Entity implements Parcelable {
         this.reviews.addAll(reviews);
         this.tables = tables;
         this.openingTimes = openingTimes;
+        this.imageUris = (imageUris != null) ? imageUris : new String[0];
     }
 
     public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location) {
@@ -59,6 +60,7 @@ public class Restaurant extends Entity implements Parcelable {
         this.reviews = new ArrayList<>();
         this.tables = new ArrayList<>();
         this.openingTimes = new OpeningTimes();
+        this.imageUris = new String[0];
     }
 
     //GETTERS & SETTERS
@@ -154,7 +156,9 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     public void setImageUris(String[] imageUris) {
-        this.imageUris = imageUris;
+        if (imageUris != null) {
+            this.imageUris = imageUris;
+        }
     }
 
     //PARCELABLE IMPLEMENTATION
