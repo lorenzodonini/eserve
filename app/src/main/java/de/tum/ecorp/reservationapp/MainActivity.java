@@ -23,7 +23,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
+import de.tum.ecorp.reservationapp.resource.MockImageResource;
+import de.tum.ecorp.reservationapp.resource.MockRestaurantResourceAsync;
 import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.service.LocationAware;
 import de.tum.ecorp.reservationapp.service.UserManager;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
     private UserManager userManager = UserManager.getInstance();
+    private MockImageResource imageResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +75,8 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         });
     }
 
-
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
-        new MockRestaurantResource().getRestaurants(new Task<List<Restaurant>>() {
+        new MockRestaurantResourceAsync().getRestaurantsAsync(new Task<List<Restaurant>>() {
             @Override
             public void before() {
 
@@ -107,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         super.onStart();
         //locationService.connect();
 
+        imageResource = new MockImageResource(this.getApplicationContext(), this.getResources());
+
         restaurantListView = (ListView) findViewById(R.id.listView);
 
         //Creating adapter
@@ -115,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         populateListView(listAdapter);
 
         restaurantListView.setAdapter(listAdapter);
-
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.location.Location;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Restaurant extends Entity {
 
@@ -23,16 +24,44 @@ public class Restaurant extends Entity {
 
     private String name;
     private String category;
+    private String address;
+    private String website;
+
     private PriceRange priceRange;
-    private List<Review> reviews;
     private Location location;
 
-    public Restaurant(String name, String category, PriceRange priceRange, List<Review> reviews, Location location) {
+    private List<Review> reviews;
+    private List<Table> tables;
+    private OpeningTimes openingTimes;
+
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
+                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes) {
+
         this.name = name;
         this.category = category;
-        this.reviews = (reviews != null) ? reviews : new ArrayList<Review>();
+        this.address = address;
+        this.website = website;
+
         this.priceRange = priceRange;
         this.location = location;
+
+        this.reviews = reviews;
+        this.tables = tables;
+        this.openingTimes = openingTimes;
+    }
+
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location) {
+        this.name = name;
+        this.category = category;
+        this.address = address;
+        this.website = website;
+
+        this.priceRange = priceRange;
+        this.location = location;
+
+        this.reviews = new ArrayList<Review>();
+        this.tables = new ArrayList<Table>();
+        this.openingTimes = new OpeningTimes();
     }
 
     public String getName() {
@@ -49,6 +78,22 @@ public class Restaurant extends Entity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWebsite() {
+        return this.website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public Location getLocation() {
@@ -82,7 +127,7 @@ public class Restaurant extends Entity {
         return this.reviews;
     }
 
-    public int getNumerOfReviews() {
+    public int getNumberOfReviews() {
         return this.reviews.size();
     }
 
@@ -92,5 +137,17 @@ public class Restaurant extends Entity {
 
     public void setPriceRange(PriceRange priceRange) {
         this.priceRange = priceRange;
+    }
+
+    public OpeningTimes getOpeningTimes() {
+        return this.openingTimes;
+    }
+
+    public void setOpeningTimes(OpeningTimes openingTimes) {
+        this.openingTimes = openingTimes;
+    }
+
+    public List<Table> getTables() {
+        return this.tables;
     }
 }

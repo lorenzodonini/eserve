@@ -54,7 +54,7 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
             viewHolder.restaurantNameLabel.setText(restaurant.getName());
             viewHolder.restaurantCategoryLabel.setText(restaurant.getCategory());
             viewHolder.reviewAmountLabel.setText(
-                    context.getString(R.string.review_amount_label, restaurant.getNumerOfReviews()));
+                    context.getString(R.string.review_amount_label, restaurant.getNumberOfReviews()));
             viewHolder.priceRangeLabel.setText(formatPriceRange(restaurant.getPriceRange()));
             viewHolder.distanceLabel.setText(formatDistance(
                     restaurant.getLocation().distanceTo(UserManager.getInstance().getCurrentLocation())));
