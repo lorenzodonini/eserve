@@ -102,16 +102,5 @@
             <include layout="@layout/opening_hours_listitem" android:layout_width="wrap_content"
                      android:layout_height="wrap_content" android:id="@+id/saturdayHours"/>
         </LinearLayout>
-        <!--<android.support.v7.widget.RecyclerView android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:id="@+id/openingTimesView"
-                                                android:layout_below="@+id/restaurantDetailWebsite" android:scrollIndicators="none"
-                                                android:layout_toRightOf="@+id/opening_times_icon"
-                                                android:layout_marginTop="18dp" android:layout_marginLeft="10dp"/>-->
-        <!--<ListView tools:listitem="@layout/opening_hours_listitem" android:layout_width="match_parent"
-                  android:layout_height="wrap_content" android:id="@+id/opening_times_list" android:divider="#00ffffff"
-                  android:footerDividersEnabled="false" android:layout_marginTop="18dp" android:layout_marginLeft="10dp"
-                  android:scrollIndicators="none" android:layout_below="@+id/datePicker"
-                  android:layout_toRightOf="@+id/opening_times_icon"/>-->
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

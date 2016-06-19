@@ -24,7 +24,6 @@ import java.util.List;
  * to handle interaction events.
  */
 public class RestaurantDetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     public static final String ARG_RESTAURANT = "restaurant";
 
     private Restaurant mRestaurant;

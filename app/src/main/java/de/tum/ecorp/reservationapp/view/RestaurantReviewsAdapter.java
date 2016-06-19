@@ -17,7 +17,7 @@ public class RestaurantReviewsAdapter extends RecyclerView.Adapter<RecyclerView.
     private static final int HEADER_VIEW_POSITION = 0;
     private static final int BODY_VIEW_TYPE = 1;
     private static final int HEADER_ELEMENT_COUNT = 1;
-    private static final int RATING_BAR_MAX_WIDTH = 200;
+    private static final int RATING_BAR_MAX_WIDTH = 180;
 
     private Review [] reviews;
     private float restaurantRating;
