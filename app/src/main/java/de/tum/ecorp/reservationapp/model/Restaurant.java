@@ -1,12 +1,9 @@
 package de.tum.ecorp.reservationapp.model;
 
 import android.location.Location;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,17 +31,34 @@ public class Restaurant extends Entity implements Parcelable {
     private ArrayList<Review> reviews;
     private Location location;
     private String [] imageUris;
+    private List<Table> tables;
+    private OpeningTimes openingTimes;
 
-    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, List<Review> reviews, Location location, String [] images) {
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
+                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes) {
+
         this.name = name;
         this.category = category;
         this.address = address;
         this.website = website;
-        this.reviews = new ArrayList<>();
-        this.reviews.addAll(reviews);
         this.priceRange = priceRange;
         this.location = location;
-        this.imageUris = images;
+        this.reviews = new ArrayList<>();
+        this.reviews.addAll(reviews);
+        this.tables = tables;
+        this.openingTimes = openingTimes;
+    }
+
+    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location) {
+        this.name = name;
+        this.category = category;
+        this.address = address;
+        this.website = website;
+        this.priceRange = priceRange;
+        this.location = location;
+        this.reviews = new ArrayList<>();
+        this.tables = new ArrayList<>();
+        this.openingTimes = new OpeningTimes();
     }
 
     //GETTERS & SETTERS
@@ -108,10 +122,10 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     public ArrayList<Review> getReviews() {
-        return this.reviews;
+        return reviews;
     }
 
-    public int getNumerOfReviews() {
+    public int getNumberOfReviews() {
         return this.reviews.size();
     }
 
@@ -121,6 +135,18 @@ public class Restaurant extends Entity implements Parcelable {
 
     public void setPriceRange(PriceRange priceRange) {
         this.priceRange = priceRange;
+    }
+
+    public OpeningTimes getOpeningTimes() {
+        return this.openingTimes;
+    }
+
+    public void setOpeningTimes(OpeningTimes openingTimes) {
+        this.openingTimes = openingTimes;
+    }
+
+    public List<Table> getTables() {
+        return this.tables;
     }
 
     public String[] getImageUris() {

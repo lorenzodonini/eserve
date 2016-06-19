@@ -25,12 +25,12 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.resource.MockRestaurantResource;
+import de.tum.ecorp.reservationapp.resource.MockImageResource;
+import de.tum.ecorp.reservationapp.resource.MockRestaurantResourceAsync;
 import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.service.LocationAware;
 import de.tum.ecorp.reservationapp.service.UserManager;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
-
 
 public class MainActivity extends AppCompatActivity implements LocationAware {
     private static final int MAX_DISPLAYED_RESULTS = 50;
@@ -48,6 +48,18 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         setSupportActionBar(toolbar);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        //TODO: check if the try/catch block is still needed
+        /*
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        try {
+            userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+        } catch (SecurityException e) {
+            View rootView = findViewById(android.R.id.content);
+            Snackbar.make(rootView, "bla", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+         */
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -84,17 +96,16 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
         //Creating adapter
         listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
-
+        //Asynchronous call to populate the list
         populateListView(listAdapter);
-
         restaurantListView.setAdapter(listAdapter);
     }
 
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
-        new MockRestaurantResource().getRestaurants(new Task<List<Restaurant>>() {
+        new MockRestaurantResourceAsync().getRestaurantsAsync(new Task<List<Restaurant>>() {
             @Override
             public void before() {
-
+                //Do nothing
             }
 
             @Override
@@ -114,24 +125,10 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
                 listAdapter.clear();
                 listAdapter.addAll(resultsToDisplay);
+                listAdapter.notifyDataSetChanged();
             }
         });
     }
-
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-
-        restaurantListView = (ListView) findViewById(R.id.listView);
-
-        //Creating adapter
-        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
-
-        populateListView(listAdapter);
-
-        restaurantListView.setAdapter(listAdapter);
-
-    }*/
 
     @Override
     protected void onPause() {
@@ -141,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
     @Override
     protected void onResume() {
-        super.onResume(); 
+        super.onResume();
         userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
 
     }

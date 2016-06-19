@@ -72,7 +72,7 @@ public class RestaurantDetailFragment extends Fragment {
             name.setText(mRestaurant.getName());
             ratingNum.setText(ViewUtility.formatFloat(mRestaurant.getRating(),1));
             ratingBar.setRating(mRestaurant.getRating());
-            reviewAmount.setText(getActivity().getString(R.string.review_amount_label, mRestaurant.getNumerOfReviews()));
+            reviewAmount.setText(getActivity().getString(R.string.review_amount_label, mRestaurant.getNumberOfReviews()));
             category.setText(mRestaurant.getCategory());
             price.setText(ViewUtility.formatPriceRange(mRestaurant.getPriceRange()));
             address.setText(mRestaurant.getAddress());
