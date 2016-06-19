@@ -34,6 +34,10 @@ public class UserManager implements Observer {
 
     }
 
+    public void stopUsingGPS(){
+        locationService.stopUsingGPS();
+    }
+
     public Location getCurrentLocation() {
         return currentLocation;
     }
