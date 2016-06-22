@@ -116,7 +116,7 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     public void addReview(Review review) {
-        this.reviews.add(review);
+        reviews.add(review);
     }
 
     public void addReviews(List<Review> reviews) {
@@ -128,7 +128,7 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     public int getNumberOfReviews() {
-        return this.reviews.size();
+        return reviews.size();
     }
 
     public PriceRange getPriceRange() {
@@ -140,7 +140,7 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     public OpeningTimes getOpeningTimes() {
-        return this.openingTimes;
+        return openingTimes;
     }
 
     public void setOpeningTimes(OpeningTimes openingTimes) {
@@ -148,7 +148,7 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     public List<Table> getTables() {
-        return this.tables;
+        return tables;
     }
 
     public String[] getImageUris() {

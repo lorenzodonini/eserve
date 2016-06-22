@@ -96,8 +96,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         mImagePagerAdapter = new ImagePagerAdapter(this);
         mImagePager = (ViewPager)findViewById(R.id.restaurant_image_pager);
         mImagePager.setAdapter(mImagePagerAdapter);
-        //Loading the images for this restaurant asynchronously
-        //loadImagesForRestaurant();
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -120,7 +118,8 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void loadImagesForRestaurant() {
+    //TODO: Consider reusing only if the image URIs will actually be parsed here
+    /*private void loadImagesForRestaurant() {
         new MockImageResource().getRestaurantImageUrisAsync(mRestaurant, new Task<List<String>>() {
             @Override
             public void before() {
@@ -133,7 +132,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 mImagePagerAdapter.notifyDataSetChanged();
             }
         });
-    }
+    }*/
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

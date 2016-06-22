@@ -8,9 +8,6 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
 
-/**
- * Created by lorenzodonini on 26/05/16.
- */
 public class ViewUtility {
     //TODO: Decide if we want to support miles as well, then we need to use Locale information
     private final static String UNIT_KILOMETER = "km";

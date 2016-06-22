@@ -2,7 +2,13 @@ package de.tum.ecorp.reservationapp.resource;
 
 import android.location.Location;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Calendar;
+import java.util.Date;
 
 import de.tum.ecorp.reservationapp.model.OpeningTimes;
 import de.tum.ecorp.reservationapp.model.Restaurant;
