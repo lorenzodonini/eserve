@@ -1,12 +1,13 @@
 package de.tum.ecorp.reservationapp.model;
 
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class Restaurant extends Entity {
+public class Restaurant extends Entity implements Parcelable {
 
     public enum PriceRange {
         LOW(1), MEDIUM(2), HIGH(3);
@@ -26,28 +27,27 @@ public class Restaurant extends Entity {
     private String category;
     private String address;
     private String website;
-
     private PriceRange priceRange;
+    private ArrayList<Review> reviews;
     private Location location;
-
-    private List<Review> reviews;
+    private String [] imageUris;
     private List<Table> tables;
     private OpeningTimes openingTimes;
 
     public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
-                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes) {
+                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes, String [] imageUris) {
 
         this.name = name;
         this.category = category;
         this.address = address;
         this.website = website;
-
         this.priceRange = priceRange;
         this.location = location;
-
-        this.reviews = reviews;
+        this.reviews = new ArrayList<>();
+        this.reviews.addAll(reviews);
         this.tables = tables;
         this.openingTimes = openingTimes;
+        this.imageUris = (imageUris != null) ? imageUris : new String[0];
     }
 
     public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location) {
@@ -55,15 +55,15 @@ public class Restaurant extends Entity {
         this.category = category;
         this.address = address;
         this.website = website;
-
         this.priceRange = priceRange;
         this.location = location;
-
-        this.reviews = new ArrayList<Review>();
-        this.tables = new ArrayList<Table>();
+        this.reviews = new ArrayList<>();
+        this.tables = new ArrayList<>();
         this.openingTimes = new OpeningTimes();
+        this.imageUris = new String[0];
     }
 
+    //GETTERS & SETTERS
     public String getName() {
         return name;
     }
@@ -81,7 +81,7 @@ public class Restaurant extends Entity {
     }
 
     public String getAddress() {
-        return this.address;
+        return address;
     }
 
     public void setAddress(String address) {
@@ -89,7 +89,7 @@ public class Restaurant extends Entity {
     }
 
     public String getWebsite() {
-        return this.website;
+        return website;
     }
 
     public void setWebsite(String website) {
@@ -116,19 +116,19 @@ public class Restaurant extends Entity {
     }
 
     public void addReview(Review review) {
-        this.reviews.add(review);
+        reviews.add(review);
     }
 
     public void addReviews(List<Review> reviews) {
         this.reviews.addAll(reviews);
     }
 
-    public List<Review> getReviews() {
-        return this.reviews;
+    public ArrayList<Review> getReviews() {
+        return reviews;
     }
 
     public int getNumberOfReviews() {
-        return this.reviews.size();
+        return reviews.size();
     }
 
     public PriceRange getPriceRange() {
@@ -140,7 +140,7 @@ public class Restaurant extends Entity {
     }
 
     public OpeningTimes getOpeningTimes() {
-        return this.openingTimes;
+        return openingTimes;
     }
 
     public void setOpeningTimes(OpeningTimes openingTimes) {
@@ -148,6 +148,66 @@ public class Restaurant extends Entity {
     }
 
     public List<Table> getTables() {
-        return this.tables;
+        return tables;
     }
+
+    public String[] getImageUris() {
+        return imageUris;
+    }
+
+    public void setImageUris(String[] imageUris) {
+        if (imageUris != null) {
+            this.imageUris = imageUris;
+        }
+    }
+
+    //PARCELABLE IMPLEMENTATION
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(category);
+        dest.writeString(address);
+        dest.writeString(website);
+        dest.writeString(priceRange.name());
+        dest.writeParcelable(location, flags);
+        dest.writeParcelableArray(reviews.toArray(new Review[reviews.size()]), flags);
+        dest.writeInt(imageUris.length);
+        dest.writeStringArray(imageUris);
+    }
+
+    private Restaurant(Parcel in) {
+        name = in.readString();
+        category = in.readString();
+        address = in.readString();
+        website = in.readString();
+        priceRange = PriceRange.valueOf(in.readString());
+        location = in.readParcelable(Location.class.getClassLoader());
+        Parcelable [] items = in.readParcelableArray(Review.class.getClassLoader());
+        if (items != null) {
+            reviews = new ArrayList<>(items.length);
+            for (Parcelable item : items) {
+                reviews.add((Review)item);
+            }
+        }
+        int imageAmt = in.readInt();
+        imageUris = new String[imageAmt];
+        in.readStringArray(imageUris);
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 }

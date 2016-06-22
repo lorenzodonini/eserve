@@ -8,20 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.Currency;
-import java.util.Locale;
-
 import de.tum.ecorp.reservationapp.R;
 import de.tum.ecorp.reservationapp.model.Restaurant;
 import de.tum.ecorp.reservationapp.service.UserManager;
 
 public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
     private final Context context;
-    //TODO: Decide if we want to support miles as well, then we need to use Locale information
-    private final static String UNIT_KILOMETER = "km";
-    private final static String UNIT_METER = "m";
 
     public RestaurantArrayAdapter(Context context, int resource) {
         super(context, resource);
@@ -40,9 +32,9 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
             //Getting subViews
             viewHolder.restaurantNameLabel = (TextView) convertView.findViewById(R.id.restaurantNameLabel);
             viewHolder.restaurantCategoryLabel = (TextView) convertView.findViewById(R.id.restaurantTypeLabel);
-            viewHolder.reviewAmountLabel = (TextView) convertView.findViewById(R.id.reviewAmountLabel);
-            viewHolder.priceRangeLabel = (TextView) convertView.findViewById(R.id.priceRangeLabel);
-            viewHolder.distanceLabel = (TextView) convertView.findViewById(R.id.distanceLabel);
+            viewHolder.reviewAmountLabel = (TextView) convertView.findViewById(R.id.restaurantReviewAmountLabel);
+            viewHolder.priceRangeLabel = (TextView) convertView.findViewById(R.id.restaurantPriceRangeLabel);
+            viewHolder.distanceLabel = (TextView) convertView.findViewById(R.id.restaurantDistanceLabel);
             viewHolder.ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar);
             convertView.setTag(viewHolder);
         } else {
@@ -55,40 +47,13 @@ public class RestaurantArrayAdapter extends ArrayAdapter<Restaurant> {
             viewHolder.restaurantCategoryLabel.setText(restaurant.getCategory());
             viewHolder.reviewAmountLabel.setText(
                     context.getString(R.string.review_amount_label, restaurant.getNumberOfReviews()));
-            viewHolder.priceRangeLabel.setText(formatPriceRange(restaurant.getPriceRange()));
-            viewHolder.distanceLabel.setText(formatDistance(
+            viewHolder.priceRangeLabel.setText(ViewUtility.formatPriceRange(restaurant.getPriceRange()));
+            viewHolder.distanceLabel.setText(ViewUtility.formatDistance(
                     restaurant.getLocation().distanceTo(UserManager.getInstance().getCurrentLocation())));
             viewHolder.ratingBar.setRating(restaurant.getRating());
         }
 
         return convertView;
-    }
-
-    private String formatPriceRange(Restaurant.PriceRange priceRange) {
-        Currency currency = Currency.getInstance(Locale.getDefault());
-
-        StringBuilder result = new StringBuilder();
-        for (int i = 1; i <= priceRange.getNumberRepresentation(); i++) {
-            result.append(currency.getSymbol());
-        }
-
-        return result.toString();
-    }
-
-    private String formatDistance(float distance) {
-        StringBuilder result = new StringBuilder();
-        if (distance < 1000) {
-            result.append((int) distance);
-            result.append(UNIT_METER);
-        } else {
-            double kilometerValue = distance / 1000;
-            DecimalFormat oneDecForm = new DecimalFormat("#.#");
-            oneDecForm.setRoundingMode(RoundingMode.FLOOR);
-            result.append(oneDecForm.format(kilometerValue));
-            result.append(UNIT_KILOMETER);
-        }
-
-        return result.toString();
     }
 
     private static class ViewHolder {

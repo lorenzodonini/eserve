@@ -1,6 +1,7 @@
 package de.tum.ecorp.reservationapp;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -35,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
+    private LocationManager locationManager;
     private UserManager userManager = UserManager.getInstance();
-    private MockImageResource imageResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        //TODO: check if the try/catch block is still needed
+        /*
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         try {
             userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
             Snackbar.make(rootView, "bla", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+         */
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -73,13 +80,32 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 }
             }
         });
+
+        restaurantListView = (ListView) findViewById(R.id.listView);
+        restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Restaurant restaurant = (Restaurant) parent.getItemAtPosition(position);
+                Context context = view.getContext();
+                Intent intent = new Intent(context, RestaurantDetailsActivity.class);
+                intent.putExtra(RestaurantDetailsActivity.ARG_RESTAURANT, restaurant);
+
+                context.startActivity(intent);
+            }
+        });
+
+        //Creating adapter
+        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
+        //Asynchronous call to populate the list
+        populateListView(listAdapter);
+        restaurantListView.setAdapter(listAdapter);
     }
 
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
         new MockRestaurantResourceAsync().getRestaurantsAsync(new Task<List<Restaurant>>() {
             @Override
             public void before() {
-
+                //Do nothing
             }
 
             @Override
@@ -99,31 +125,22 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
                 listAdapter.clear();
                 listAdapter.addAll(resultsToDisplay);
+                listAdapter.notifyDataSetChanged();
             }
         });
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        //locationService.connect();
-
-        imageResource = new MockImageResource(this.getApplicationContext(), this.getResources());
-
-        restaurantListView = (ListView) findViewById(R.id.listView);
-
-        //Creating adapter
-        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
-
-        populateListView(listAdapter);
-
-        restaurantListView.setAdapter(listAdapter);
+    protected void onPause() {
+        super.onPause();
+        userManager.stopUsingGPS();
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        //locationService.disconnect();
+    protected void onResume() {
+        super.onResume();
+        userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+
     }
 
     @Override

@@ -2,12 +2,13 @@ package de.tum.ecorp.reservationapp.resource;
 
 import android.location.Location;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Calendar;
+import java.util.Date;
 
 import de.tum.ecorp.reservationapp.model.OpeningTimes;
 import de.tum.ecorp.reservationapp.model.Restaurant;
@@ -20,7 +21,7 @@ public class MockRestaurantResource implements RestaurantResource {
     private Map<Long, Restaurant> restaurants;
 
     public MockRestaurantResource() {
-        this.restaurants = new HashMap<>();
+        restaurants = new HashMap<>();
 
         List<Restaurant> newRestaurants = createMockRestaurants();
 
@@ -80,6 +81,7 @@ public class MockRestaurantResource implements RestaurantResource {
         Location location;
         List<Table> tables;
         OpeningTimes openingTimes;
+        String imageUris [];
 
         // RESTAURANT 1
         location = new Location("dummyProvider");
@@ -87,8 +89,8 @@ public class MockRestaurantResource implements RestaurantResource {
         location.setLongitude(11.561393737792969);
 
         reviews = new ArrayList<>();
-        reviews.add(new Review("Trololo, bad waiters", 2));
-        reviews.add(new Review("This weeks' product owner sucks :)", 4));
+        reviews.add(new Review("Trololo, bad waiters", 2, new Date()));
+        reviews.add(new Review("This weeks' product owner sucks :)", 4, new Date()));
 
         tables = new ArrayList<>();
         tables.add(new Table(4));  // 1 table for 4
@@ -100,9 +102,13 @@ public class MockRestaurantResource implements RestaurantResource {
         // ...and half an hour on saturdays
         openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
 
+        imageUris = new String[2];
+        imageUris[0] = "https://www.omnihotels.com/-/media/images/hotels/homrst/restaurants/homrst-omni-homestead-resort-casino-restaurant.jpg";
+        imageUris[1] = "http://lxly7dz9m3-flywheel.netdna-ssl.com/wp-content/uploads/2015/06/2hawks.jpg";
+
         result.add(new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
                 "Creepway 3, 80932 Munich", "www.ecorp.com",
-                Restaurant.PriceRange.HIGH, location, reviews, tables, openingTimes));
+                Restaurant.PriceRange.HIGH, location, reviews, tables, openingTimes, imageUris));
 
         // RESTAURANT 2
         location = new Location("dummyProvider");
@@ -110,8 +116,8 @@ public class MockRestaurantResource implements RestaurantResource {
         location.setLongitude(11.578163000000018);
 
         reviews = new ArrayList<>();
-        reviews.add(new Review("Best restaurant ever", 5));
-        reviews.add(new Review("Cookies! Om nom nom..", 4));
+        reviews.add(new Review("Best restaurant ever", 5, new Date()));
+        reviews.add(new Review("Cookies! Om nom nom..", 4, new Date()));
 
         tables = new ArrayList<>();
         tables.add(new Table(4));  // 1 table for 4
@@ -123,9 +129,13 @@ public class MockRestaurantResource implements RestaurantResource {
         // ...and half an hour on saturdays
         openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
 
+        imageUris = new String[2];
+        imageUris[0] = "http://kingofwallpapers.com/restaurant/restaurant-010.jpg";
+        imageUris[1] = "https://upload.wikimedia.org/wikipedia/commons/1/1e/Tom's_Restaurant,_NYC.jpg";
+
         result.add(new Restaurant("America Graffiti", "American Diner restaurant",
                 "SomeRandomStreet 25, 666 Gotham, World", "www.inyourface.org",
-                Restaurant.PriceRange.LOW, location, reviews, tables, openingTimes));
+                Restaurant.PriceRange.LOW, location, reviews, tables, openingTimes, imageUris));
 
         // RESTAURANT 3
         location = new Location("dummyProvider");
@@ -133,8 +143,8 @@ public class MockRestaurantResource implements RestaurantResource {
         location.setLongitude(11.5541695);
 
         reviews = new ArrayList<>();
-        reviews.add(new Review("As a mexican, this is the worst mexican food I have ever taste in my life. The burrito look more like a Calzone. Not coming back, adios amigos!", 1));
-        reviews.add(new Review("I liked the place.  Taste of food was good.", 4));
+        reviews.add(new Review("As a mexican, this is the worst mexican food I have ever taste in my life. The burrito look more like a Calzone. Not coming back, adios amigos!", 1, new Date()));
+        reviews.add(new Review("I liked the place.  Taste of food was good.", 4, new Date()));
 
         tables = new ArrayList<>();
         tables.add(new Table(4));  // 1 table for 4
@@ -150,9 +160,13 @@ public class MockRestaurantResource implements RestaurantResource {
         // ...and half an hour on saturdays
         openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
 
+        imageUris = new String[2];
+        imageUris[0] = "http://newyamya.indyco.net/admin/uploaded_image/11037_P1010505.JPG";
+        imageUris[1] = "http://restaurant-la-cucaracha-mex-bar.mux.de/images/1500x1200z/client/59228/86d6ecu4pv35/restaurant-bar-la-cucaracha-mex-bar-7.jpg";
+
         result.add(new Restaurant("La Cucaracha", "Tex Mex Restaurant, Mexican Restaurant",
                 "Bayerstraße 49, 80335 München, Deutschland", "http://www.la-cucaracha-muenchen.de/",
-                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes));
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
 
         return result;
     }

@@ -7,4 +7,22 @@
     <string name="restaurant_distance_placeholder">0.4km</string>
     <string name="review_amount_placeholder">42 Reviews</string>
     <string name="review_amount_label">%1$d Reviews</string>
+    <string name="restaurant_rating_placeholder">4.8</string>
+    <string name="restaurant_address_placeholder">Boltzmannstraße 3, 85748 Garching bei München</string>
+    <string name="restaurant_website_placeholder">www.ecorp.com</string>
+    <string name="restaurant_opening_placeholder">Open today at 12-15, 17-23</string>
+    <string name="title_activity_restaurant_details">RestaurantDetailsActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_content_description">No images for this restaurant found</string>
+    <string name="expanded_opening_day_placeholder">Wednesday</string>
+    <string name="expanded_opening_hours_placeholder">12:00 PM-3:00 PM\n5:00 PM-10:00 PM</string>
+    <string name="time_icon_description">Opening Times Icon</string>
+    <string name="review_amount_placeholder2">13</string>
+    <string name="review_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget diam augue.
+        Nam euismod vitae ex in hendrerit
+    </string>
+    <string name="review_date_placeholder">2/25/2016</string>
 </resources>
