@@ -9,14 +9,17 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.Arrays;
@@ -25,7 +28,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
-import de.tum.ecorp.reservationapp.resource.MockImageResource;
 import de.tum.ecorp.reservationapp.resource.MockRestaurantResourceAsync;
 import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.service.LocationAware;
@@ -39,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     private ArrayAdapter<Restaurant> listAdapter;
     private LocationManager locationManager;
     private UserManager userManager = UserManager.getInstance();
+    private View searchContainer;
+    private ImageView searchClearButton;
+    private EditText toolbarSearchView;
+    private ImageView searchCloseButton;
+    private MockRestaurantResourceAsync restaurantResourceAsync = new MockRestaurantResourceAsync();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,17 +74,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (userManager.canGetLocation()) {
-                    Location currentLocation = userManager.getCurrentLocation();
-                    final double latitude = currentLocation.getLatitude();
-                    final double longitude = currentLocation.getLongitude();
-
-                    Snackbar.make(view, latitude + " - " + longitude, Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-
-                } else {
-                    showSettingsAlert();
-                }
+                showSearchBar();
             }
         });
 
@@ -99,10 +96,12 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         //Asynchronous call to populate the list
         populateListView(listAdapter);
         restaurantListView.setAdapter(listAdapter);
+
+        initialiseSearchView();
     }
 
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
-        new MockRestaurantResourceAsync().getRestaurantsAsync(new Task<List<Restaurant>>() {
+        restaurantResourceAsync.getRestaurantsAsync(new Task<List<Restaurant>>() {
             @Override
             public void before() {
                 //Do nothing
@@ -145,9 +144,8 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        // hide the menu
+        return false;
     }
 
     @Override
@@ -199,6 +197,84 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    private void initialiseSearchView() {
+        searchContainer = findViewById(R.id.search_container);
+        toolbarSearchView = (EditText) findViewById(R.id.search_view);
+        searchClearButton = (ImageView) findViewById(R.id.search_clear);
+        searchCloseButton = (ImageView) findViewById(R.id.search_close);
+
+        // Search text changed listener
+        toolbarSearchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count > 0) {
+                    searchClearButton.setVisibility(View.VISIBLE);
+                } else {
+                    searchClearButton.setVisibility(View.GONE);
+                }
+                restaurantResourceAsync.getRestaurantsBySearchStringAsync(new Task<List<Restaurant>>() {
+                    @Override
+                    public void before() {
+                        //Do nothing
+                    }
+
+                    @Override
+                    public void handleResult(List<Restaurant> result) {
+                        final Location searchLocation = UserManager.getInstance().getCurrentLocation();
+                        if (searchLocation != null) {
+                            //Sorting results according to distance from search location
+                            Collections.sort(result, new Comparator<Restaurant>() {
+                                @Override
+                                public int compare(Restaurant lhs, Restaurant rhs) {
+                                    return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
+                                            searchLocation.distanceTo(rhs.getLocation()));
+                                }
+                            });
+                        }
+                        //Only displaying the first N results, where N cannot be higher than the amount of results
+                        List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
+                        listAdapter.clear();
+                        listAdapter.addAll(resultsToDisplay);
+                        listAdapter.notifyDataSetChanged();
+                    }
+                }, s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        searchClearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolbarSearchView.setText("");
+            }
+        });
+
+        searchCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSearchBar();
+            }
+        });
+
+        searchClearButton.setVisibility(View.GONE);
+        hideSearchBar();
+    }
+
+    private void showSearchBar() {
+        searchContainer.setVisibility(View.VISIBLE);
+    }
+
+    private void hideSearchBar() {
+        searchContainer.setVisibility(View.GONE);
     }
 
     @Override
