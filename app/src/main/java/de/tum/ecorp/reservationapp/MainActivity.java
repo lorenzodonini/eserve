@@ -11,8 +11,6 @@ import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.google.common.base.Function;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,6 +33,7 @@ import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.service.LocationAware;
 import de.tum.ecorp.reservationapp.service.UserManager;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
+import de.tum.ecorp.reservationapp.view.SearchViewController;
 
 public class MainActivity extends AppCompatActivity implements LocationAware {
     private static final int MAX_DISPLAYED_RESULTS = 50;
@@ -41,11 +42,8 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     private ArrayAdapter<Restaurant> listAdapter;
     private LocationManager locationManager;
     private UserManager userManager = UserManager.getInstance();
-    private View searchContainer;
-    private ImageView searchClearButton;
-    private EditText toolbarSearchView;
-    private ImageView searchCloseButton;
     private MockRestaurantResourceAsync restaurantResourceAsync = new MockRestaurantResourceAsync();
+    private SearchViewController searchViewController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +54,13 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        //TODO: check if the try/catch block is still needed
-        /*
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        try {
-            userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
-        } catch (SecurityException e) {
-            View rootView = findViewById(android.R.id.content);
-            Snackbar.make(rootView, "bla", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        }
-         */
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSearchBar();
+                searchViewController.showSearchBar();
             }
         });
 
@@ -200,24 +186,14 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     }
 
     private void initialiseSearchView() {
-        searchContainer = findViewById(R.id.search_container);
-        toolbarSearchView = (EditText) findViewById(R.id.search_view);
-        searchClearButton = (ImageView) findViewById(R.id.search_clear);
-        searchCloseButton = (ImageView) findViewById(R.id.search_close);
+        View searchContainer = findViewById(R.id.search_container);
+        EditText toolbarSearchView = (EditText) findViewById(R.id.search_view);
+        ImageView searchClearButton = (ImageView) findViewById(R.id.search_clear);
+        ImageView searchCloseButton = (ImageView) findViewById(R.id.search_close);
 
-        // Search text changed listener
-        toolbarSearchView.addTextChangedListener(new TextWatcher() {
+        searchViewController = new SearchViewController(searchContainer, searchClearButton, searchCloseButton, toolbarSearchView, new Function<String, Void>() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count > 0) {
-                    searchClearButton.setVisibility(View.VISIBLE);
-                } else {
-                    searchClearButton.setVisibility(View.GONE);
-                }
+            public Void apply(String input) {
                 restaurantResourceAsync.getRestaurantsBySearchStringAsync(new Task<List<Restaurant>>() {
                     @Override
                     public void before() {
@@ -243,42 +219,19 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                         listAdapter.addAll(resultsToDisplay);
                         listAdapter.notifyDataSetChanged();
                     }
-                }, s.toString());
-            }
+                }, input);
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                return null;
             }
         });
 
-        searchClearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toolbarSearchView.setText("");
-            }
-        });
-
-        searchCloseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideSearchBar();
-            }
-        });
-
-        searchClearButton.setVisibility(View.GONE);
-        hideSearchBar();
+        searchViewController.initialiseSearchView();
     }
 
-    private void showSearchBar() {
-        searchContainer.setVisibility(View.VISIBLE);
-    }
-
-    private void hideSearchBar() {
-        searchContainer.setVisibility(View.GONE);
-    }
 
     @Override
     public void updateLocation(Location location) {
         populateListView(listAdapter);
     }
+
 }
