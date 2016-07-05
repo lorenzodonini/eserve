@@ -19,6 +19,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,9 +35,11 @@ import de.tum.ecorp.reservationapp.service.LocationAware;
 import de.tum.ecorp.reservationapp.service.UserManager;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 
+
+
 public class MainActivity extends AppCompatActivity implements LocationAware {
     private static final int MAX_DISPLAYED_RESULTS = 50;
-
+    final String HOCKEYAPP_ID = "00276bc4f3cc4984a85e9918358f9a3c ";
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
     private LocationManager locationManager;
@@ -148,6 +153,15 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void checkForCrashes() {
+        CrashManager.register(this, HOCKEYAPP_ID);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store / production builds!
+        UpdateManager.register(this, HOCKEYAPP_ID);
     }
 
     @Override
