@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.common.base.Function;
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,9 +40,12 @@ import de.tum.ecorp.reservationapp.service.UserManager;
 import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
 import de.tum.ecorp.reservationapp.view.SearchViewController;
 
+
+
 public class MainActivity extends AppCompatActivity implements LocationAware {
     private static final int MAX_DISPLAYED_RESULTS = 50;
-
+    private static final int LOCATION_REQUEST_ID=1337;
+    final String HOCKEYAPP_ID = "00276bc4f3cc4984a85e9918358f9a3c ";
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
     private LocationManager locationManager;
@@ -53,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         setSupportActionBar(toolbar);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        // Need to ask for permissions at runtime starting API 23
+        if (!canAccessLocation()) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_ID);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -118,20 +131,32 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     @Override
     protected void onPause() {
         super.onPause();
-        userManager.stopUsingGPS();
+        if (canAccessLocation()) {
+            userManager.stopUsingGPS();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
-
+        if (canAccessLocation()) {
+            userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // hide the menu
         return false;
+    }
+
+    private void checkForCrashes() {
+        CrashManager.register(this, HOCKEYAPP_ID);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store / production builds!
+        UpdateManager.register(this, HOCKEYAPP_ID);
     }
 
     @Override
@@ -234,4 +259,19 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         populateListView(listAdapter);
     }
 
+    private boolean canAccessLocation() {
+        //return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+        return (checkCallingOrSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch(requestCode) {
+            case LOCATION_REQUEST_ID:
+                if (canAccessLocation()) {
+                    userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
+                }
+                break;
+        }
+    }
 }
