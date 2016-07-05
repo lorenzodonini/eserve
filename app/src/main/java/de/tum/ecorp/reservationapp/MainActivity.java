@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         populateListView(listAdapter);
         restaurantListView.setAdapter(listAdapter);
 
-        initialiseSearchView();
+        initializeSearchView();
     }
 
     private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         alertDialog.show();
     }
 
-    private void initialiseSearchView() {
+    private void initializeSearchView() {
         View searchContainer = findViewById(R.id.search_container);
         EditText toolbarSearchView = (EditText) findViewById(R.id.search_view);
         ImageView searchClearButton = (ImageView) findViewById(R.id.search_clear);
@@ -252,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
         searchViewController.initialiseSearchView();
     }
-
 
     @Override
     public void updateLocation(Location location) {
