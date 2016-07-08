@@ -13,6 +13,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.common.base.Function;
+import de.tum.ecorp.reservationapp.view.*;
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
@@ -37,17 +40,15 @@ import de.tum.ecorp.reservationapp.resource.MockRestaurantResourceAsync;
 import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.service.LocationAware;
 import de.tum.ecorp.reservationapp.service.UserManager;
-import de.tum.ecorp.reservationapp.view.RestaurantArrayAdapter;
-import de.tum.ecorp.reservationapp.view.SearchViewController;
-
-
 
 public class MainActivity extends AppCompatActivity implements LocationAware {
     private static final int MAX_DISPLAYED_RESULTS = 50;
     private static final int LOCATION_REQUEST_ID=1337;
     final String HOCKEYAPP_ID = "00276bc4f3cc4984a85e9918358f9a3c ";
-    private ListView restaurantListView;
-    private ArrayAdapter<Restaurant> listAdapter;
+
+    //private ListView restaurantListView;
+    private RecyclerView restaurantListView;
+    private RestaurantAdapter restaurantAdapter;
     private LocationManager locationManager;
     private UserManager userManager = UserManager.getInstance();
     private MockRestaurantResourceAsync restaurantResourceAsync = new MockRestaurantResourceAsync();
@@ -77,29 +78,44 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
             }
         });
 
-        restaurantListView = (ListView) findViewById(R.id.listView);
-        restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        restaurantListView = (RecyclerView) findViewById(R.id.restaurantList);
+        restaurantListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        restaurantListView.addItemDecoration(new HorizontalDividerItemDecoration(this));
+
+        //Creating adapter
+        restaurantAdapter = new RestaurantAdapter(new Restaurant[0], this);
+
+        restaurantListView.addOnItemTouchListener(new RecyclerViewClickListener(this, restaurantListView, new ClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Restaurant restaurant = (Restaurant) parent.getItemAtPosition(position);
+            public void onClick(View view, int position) {
+                Restaurant restaurant = restaurantAdapter.getRestaurantAtPosition(position);
+                if (restaurant == null) {
+                    return;
+                }
                 Context context = view.getContext();
                 Intent intent = new Intent(context, RestaurantDetailsActivity.class);
                 intent.putExtra(RestaurantDetailsActivity.ARG_RESTAURANT, restaurant);
 
                 context.startActivity(intent);
             }
-        });
 
-        //Creating adapter
-        listAdapter = new RestaurantArrayAdapter(this, R.layout.restaurant_list_item);
+            @Override
+            public void onLongClick(View view, int position) {
+                //Do nothing
+            }
+        }));
+
+        restaurantListView.setAdapter(restaurantAdapter);
+
         //Asynchronous call to populate the list
-        populateListView(listAdapter);
-        restaurantListView.setAdapter(listAdapter);
+        populateListView();
 
+        //Initialize search view
         initializeSearchView();
     }
 
-    private void populateListView(final ArrayAdapter<Restaurant> listAdapter) {
+    private void populateListView() {
         restaurantResourceAsync.getRestaurantsAsync(new Task<List<Restaurant>>() {
             @Override
             public void before() {
@@ -121,9 +137,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 }
                 //Only displaying the first N results, where N cannot be higher than the amount of results
                 List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
-                listAdapter.clear();
-                listAdapter.addAll(resultsToDisplay);
-                listAdapter.notifyDataSetChanged();
+                restaurantAdapter.updateRestaurantList(resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]));
             }
         });
     }
@@ -240,9 +254,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                         }
                         //Only displaying the first N results, where N cannot be higher than the amount of results
                         List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
-                        listAdapter.clear();
-                        listAdapter.addAll(resultsToDisplay);
-                        listAdapter.notifyDataSetChanged();
+                        restaurantAdapter.updateRestaurantList(resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]));
                     }
                 }, input);
 
@@ -255,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
     @Override
     public void updateLocation(Location location) {
-        populateListView(listAdapter);
+        restaurantAdapter.notifyDataSetChanged();
     }
 
     private boolean canAccessLocation() {
