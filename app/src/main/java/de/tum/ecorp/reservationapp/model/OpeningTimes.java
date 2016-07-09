@@ -1,5 +1,8 @@
 package de.tum.ecorp.reservationapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,6 +20,9 @@ public class OpeningTimes {
         this.openingTimes = new HashMap<>();
     }
 
+    protected OpeningTimes(Parcel in) {
+    }
+
     public void addTimeSlot(int weekday, TimeSlot timeSlot) {
         getTimeSlots(weekday).add(timeSlot);
     }
@@ -25,12 +31,12 @@ public class OpeningTimes {
 
         String result = new String();
 
-        for (Iterator<Map.Entry<Integer, Set<TimeSlot>>> iterator=openingTimes.entrySet().iterator(); iterator.hasNext(); ) {
+        for (Iterator<Map.Entry<Integer, Set<TimeSlot>>> iterator = openingTimes.entrySet().iterator(); iterator.hasNext(); ) {
             Map.Entry<Integer, Set<TimeSlot>> entry = iterator.next();
 
             String weekday = summarizeTimeSlots(entry.getValue());
 
-            if (! weekday.isEmpty()) {
+            if (!weekday.isEmpty()) {
                 result += weekday + "\n";
             }
         }
@@ -41,7 +47,7 @@ public class OpeningTimes {
     public List<String> toStringList() {
         List<String> result = new ArrayList<>();
 
-        for (Iterator<Map.Entry<Integer, Set<TimeSlot>>> iterator=openingTimes.entrySet().iterator(); iterator.hasNext(); ) {
+        for (Iterator<Map.Entry<Integer, Set<TimeSlot>>> iterator = openingTimes.entrySet().iterator(); iterator.hasNext(); ) {
             Map.Entry<Integer, Set<TimeSlot>> entry = iterator.next();
 
             result.add(summarizeTimeSlots(entry.getValue()));

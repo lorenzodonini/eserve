@@ -1,5 +1,7 @@
 package de.tum.ecorp.reservationapp.model;
 
+import android.os.Parcel;
+
 public class TimeSlot implements Comparable<TimeSlot> {
 
     private int startHour;
@@ -16,6 +18,12 @@ public class TimeSlot implements Comparable<TimeSlot> {
 
     public TimeSlot(int startHour) {
         this(startHour, 0);
+    }
+
+    protected TimeSlot(Parcel in) {
+        startHour = in.readInt();
+        startMinute = in.readInt();
+        slotId = in.readInt();
     }
 
     public int getSlotId() {

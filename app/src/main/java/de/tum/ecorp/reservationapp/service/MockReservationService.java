@@ -1,5 +1,7 @@
 package de.tum.ecorp.reservationapp.service;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -123,7 +125,7 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<Table> getAvailableTables(Long restaurantId, Date date, Set<TimeSlot> timeSlots) {
+    public List<Table> getAvailableTables(Long restaurantId, Date date, List<TimeSlot> timeSlots) {
 
         Restaurant restaurant = restaurantResource.getRestaurant(restaurantId);
         List<Table> tables = restaurant.getTables();
@@ -153,7 +155,7 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<Table> getAvailableTables(Long restaurantId, Date date, int numberOfSeats, Set<TimeSlot> timeSlots) {
+    public List<Table> getAvailableTables(Long restaurantId, Date date, int numberOfSeats, List<TimeSlot> timeSlots) {
 
         List<Table> tables = getAvailableTables(restaurantId, date, timeSlots);
 
@@ -176,6 +178,7 @@ public class MockReservationService implements ReservationService {
         c.setTime(date);
 
         int weekDay = c.get(Calendar.DAY_OF_WEEK);
+        Log.d("INSIDE 1", "" + restaurantResource.getRestaurant(restaurantId).getOpeningTimes().getTimeSlots(weekDay));
         List<TimeSlot> result = new ArrayList<>(restaurantResource.getRestaurant(restaurantId).getOpeningTimes().getTimeSlots(weekDay));
 
         for (Iterator<Map.Entry<Table, Map<TimeSlot, Boolean>>> it=reservedTables.entrySet().iterator(); it.hasNext(); ) {

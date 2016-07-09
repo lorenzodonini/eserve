@@ -3,6 +3,7 @@ package de.tum.ecorp.reservationapp.model;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class Restaurant extends Entity implements Parcelable {
     private ArrayList<Review> reviews;
     private Location location;
     private String [] imageUris;
-    private List<Table> tables;
+    private ArrayList<Table> tables;
     private OpeningTimes openingTimes;
 
     public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
@@ -45,7 +46,8 @@ public class Restaurant extends Entity implements Parcelable {
         this.location = location;
         this.reviews = new ArrayList<>();
         this.reviews.addAll(reviews);
-        this.tables = tables;
+        this.tables = new ArrayList<>();
+        this.tables.addAll(tables);
         this.openingTimes = openingTimes;
         this.imageUris = (imageUris != null) ? imageUris : new String[0];
     }
@@ -147,7 +149,7 @@ public class Restaurant extends Entity implements Parcelable {
         this.openingTimes = openingTimes;
     }
 
-    public List<Table> getTables() {
+    public ArrayList<Table> getTables() {
         return tables;
     }
 
@@ -175,6 +177,7 @@ public class Restaurant extends Entity implements Parcelable {
         dest.writeString(website);
         dest.writeString(priceRange.name());
         dest.writeParcelable(location, flags);
+        //dest.writeParcelableArray(tables.toArray(new Table[tables.size()]),flags);
         dest.writeParcelableArray(reviews.toArray(new Review[reviews.size()]), flags);
         dest.writeInt(imageUris.length);
         dest.writeStringArray(imageUris);
@@ -187,6 +190,13 @@ public class Restaurant extends Entity implements Parcelable {
         website = in.readString();
         priceRange = PriceRange.valueOf(in.readString());
         location = in.readParcelable(Location.class.getClassLoader());
+//        Parcelable [] tableItems = in.readParcelableArray(Table.class.getClassLoader());
+//        if (tableItems != null) {
+//            tables = new ArrayList<>(tableItems.length);
+//            for (Parcelable item : tableItems) {
+//                tables.add((Table) item);
+//            }
+//        }
         Parcelable [] items = in.readParcelableArray(Review.class.getClassLoader());
         if (items != null) {
             reviews = new ArrayList<>(items.length);

@@ -16,8 +16,8 @@ public interface ReservationService {
 
     List<Table> getAvailableTables(Long restaurantId, Date date);
     List<Table> getAvailableTables(Long restaurantId, Date date, int numberOfSeats);
-    List<Table> getAvailableTables(Long restaurantId, Date date, Set<TimeSlot> timeSlots);
-    List<Table> getAvailableTables(Long restaurantId, Date date, int numberOfSeats, Set<TimeSlot> timeSlots);
+    List<Table> getAvailableTables(Long restaurantId, Date date, List<TimeSlot> timeSlots);
+    List<Table> getAvailableTables(Long restaurantId, Date date, int numberOfSeats, List<TimeSlot> timeSlots);
 
     List<TimeSlot> getAvailableTimeSlots(Long restaurantId, Date date);
     List<TimeSlot> getAvailableTimeSlots(Long restaurantId, Date date, Table table);
