@@ -124,22 +124,32 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
             @Override
             public void handleResult(List<Restaurant> result) {
-                final Location searchLocation = UserManager.getInstance().getCurrentLocation();
-                if (searchLocation != null) {
-                    //Sorting results according to distance from search location
-                    Collections.sort(result, new Comparator<Restaurant>() {
-                        @Override
-                        public int compare(Restaurant lhs, Restaurant rhs) {
-                            return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
-                                    searchLocation.distanceTo(rhs.getLocation()));
-                        }
-                    });
-                }
-                //Only displaying the first N results, where N cannot be higher than the amount of results
-                List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
-                restaurantAdapter.updateRestaurantList(resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]));
+                restaurantAdapter.updateRestaurantList(sortResults(result));
             }
         });
+    }
+
+    /**
+     * Utility method, used when updating the list of restaurants.
+     * This method automatically sorts the results by distance and only returns the first 50 items.
+     * @param result  The list of restaurants returned by the previously executed query
+     * @return  An array of sorted Restaurants. Refer to MAX_DISPLAYED_RESULTS for the size of the array.
+     */
+    private Restaurant [] sortResults(List<Restaurant> result) {
+        final Location searchLocation = UserManager.getInstance().getCurrentLocation();
+        if (searchLocation != null) {
+            //Sorting results according to distance from search location
+            Collections.sort(result, new Comparator<Restaurant>() {
+                @Override
+                public int compare(Restaurant lhs, Restaurant rhs) {
+                    return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
+                            searchLocation.distanceTo(rhs.getLocation()));
+                }
+            });
+        }
+        //Only displaying the first N results, where N cannot be higher than the amount of results
+        List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
+        return resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]);
     }
 
     @Override
@@ -241,20 +251,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
                     @Override
                     public void handleResult(List<Restaurant> result) {
-                        final Location searchLocation = UserManager.getInstance().getCurrentLocation();
-                        if (searchLocation != null) {
-                            //Sorting results according to distance from search location
-                            Collections.sort(result, new Comparator<Restaurant>() {
-                                @Override
-                                public int compare(Restaurant lhs, Restaurant rhs) {
-                                    return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
-                                            searchLocation.distanceTo(rhs.getLocation()));
-                                }
-                            });
-                        }
-                        //Only displaying the first N results, where N cannot be higher than the amount of results
-                        List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
-                        restaurantAdapter.updateRestaurantList(resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]));
+                        restaurantAdapter.updateRestaurantList(sortResults(result));
                     }
                 }, input);
 
@@ -266,8 +263,19 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     }
 
     @Override
-    public void updateLocation(Location location) {
-        restaurantAdapter.notifyDataSetChanged();
+    public void updateLocation(final Location location) {
+        if (location == null) {
+            return;
+        }
+        Restaurant [] restaurants = restaurantAdapter.getCurrentRestaurants();
+        Arrays.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant lhs, Restaurant rhs) {
+                return Float.compare(location.distanceTo(lhs.getLocation()),
+                        location.distanceTo(rhs.getLocation()));
+            }
+        });
+        restaurantAdapter.updateRestaurantList(restaurants);
     }
 
     private boolean canAccessLocation() {
