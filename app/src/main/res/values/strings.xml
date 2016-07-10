@@ -11,7 +11,7 @@
     </string-array>
 
     <string name="noTables">"No Tables Available"</string>
-    <string name="table">Table</string>
+    <string name="availableTables">Available Tables</string>
     <string name="nrOfPeople">Number of People</string>
     <string name="availableTimes">Available Time</string>
     <string name="date">Chose the Date</string>

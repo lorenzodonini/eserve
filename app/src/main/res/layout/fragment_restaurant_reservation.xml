@@ -31,70 +31,105 @@
             android:layout_marginTop="37dp"
             android:ems="10"
             android:text="@string/date"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Spinner
-            android:id="@+id/spinnerTime"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/timesLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/date"
-            android:layout_marginTop="55dp" />
+            android:layout_marginTop="65dp" 
+            android:paddingBottom="25dp">
 
-        <Spinner
-            android:id="@+id/spinnerTable"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/times"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/availableTimes" />
+
+            <Spinner
+                android:id="@+id/spinnerTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="50dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/seatsLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/tables"
-            android:visibility="invisible" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/timesLayout"
+            android:paddingBottom="25dp">
+
+            <TextView
+                android:id="@+id/seats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/nrOfPeople" />
+
+
+            <Spinner
+                android:id="@+id/spinnerSeats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:paddingTop="50dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tablesLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/seatsLayout"
+            android:paddingBottom="25dp">
+
+            <TextView
+                android:id="@+id/tables"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/availableTables" />
+
+
+            <Spinner
+                android:id="@+id/spinnerTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:paddingTop="50dp" />
+
+        </RelativeLayout>
+
 
         <Button
             android:id="@+id/reserve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_below="@+id/tablesLayout"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="74dp"
+            android:layout_marginBottom="38dp"
             android:text="@string/reserve" />
 
-        <Spinner
-            android:id="@+id/spinnerSeats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerTime"
-            android:layout_centerHorizontal="true"
-            android:visibility="invisible" />
-
         <TextView
-            android:id="@+id/times"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/spinnerTime"
-            android:layout_alignBaseline="@+id/spinnerTime"
-            android:layout_alignBottom="@+id/spinnerTime"
-            android:layout_alignEnd="@+id/reserve"
-            android:layout_below="@+id/date"
-            android:text="@string/availableTimes" />
-
-        <TextView
-            android:id="@+id/seats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/spinnerSeats"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/nrOfPeople"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/tables"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerSeats"
-            android:layout_centerHorizontal="true"
-            android:text="@string/table"
-            android:visibility="invisible" />
+            android:text="@string/date"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
     </RelativeLayout>

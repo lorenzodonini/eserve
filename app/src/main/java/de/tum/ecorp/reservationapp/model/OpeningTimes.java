@@ -2,6 +2,7 @@ package de.tum.ecorp.reservationapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class OpeningTimes implements Parcelable{
+public class OpeningTimes  {
 
     private Map<Integer, Set<TimeSlot>> openingTimes;
 
@@ -30,7 +31,6 @@ public class OpeningTimes implements Parcelable{
     public String toString() {
 
         String result = new String();
-
         for (Iterator<Map.Entry<Integer, Set<TimeSlot>>> iterator = openingTimes.entrySet().iterator(); iterator.hasNext(); ) {
             Map.Entry<Integer, Set<TimeSlot>> entry = iterator.next();
 
@@ -76,33 +76,11 @@ public class OpeningTimes implements Parcelable{
 
     public Set<TimeSlot> getTimeSlots(int weekday) {
         Set<TimeSlot> result = this.openingTimes.get(weekday);
-
-        if (result != null) {
-            return result;
-        } else {
-            return new HashSet<>();
+        if (result == null) {
+            this.openingTimes.put(weekday, new HashSet<TimeSlot>());
         }
+        return this.openingTimes.get(weekday);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    public static final Creator<OpeningTimes> CREATOR = new Creator<OpeningTimes>() {
-        @Override
-        public OpeningTimes createFromParcel(Parcel in) {
-            return new OpeningTimes(in);
-        }
-
-        @Override
-        public OpeningTimes[] newArray(int size) {
-            return new OpeningTimes[size];
-        }
-    };
 
 }
