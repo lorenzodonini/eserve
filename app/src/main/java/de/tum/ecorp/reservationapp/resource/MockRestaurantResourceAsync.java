@@ -105,8 +105,8 @@ public class MockRestaurantResourceAsync implements RestaurantResourceAsync {
     }
 
     @Override
-    public void getRestaurantAsync(final Task<Restaurant> task, final Long restaurantId) {
-        new AsyncTask<Long, Void, Restaurant>() {
+    public void getRestaurantAsync(final Task<Restaurant> task, final Integer restaurantId) {
+        new AsyncTask<Integer, Void, Restaurant>() {
 
             @Override
             protected void onPreExecute() {
@@ -119,7 +119,7 @@ public class MockRestaurantResourceAsync implements RestaurantResourceAsync {
             }
 
             @Override
-            protected Restaurant doInBackground(Long... params) {
+            protected Restaurant doInBackground(Integer... params) {
                 return restaurantResource.getRestaurant(restaurantId);
             }
 

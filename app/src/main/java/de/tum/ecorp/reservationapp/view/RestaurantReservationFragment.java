@@ -53,8 +53,7 @@ public class RestaurantReservationFragment extends Fragment {
     Spinner spinnerSeats;
     Spinner spinnerTable;
 
-    private TextView seats, tables;
-    private EditText reservationDate;
+    private TextView seats, tables, reservationDate;
 
 
     public RestaurantReservationFragment() {
@@ -88,41 +87,54 @@ public class RestaurantReservationFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_restaurant_reservation, container, false);
 
-        seats = (TextView) rootView.findViewById(R.id.seats);
-        tables = (TextView) rootView.findViewById(R.id.tables);
-//        List<String> people = Lists.newArrayList("1", "2", "3", "4", "5", "6");
-        myCalendar = Calendar.getInstance();
-        date = new DatePickerDialog.OnDateSetListener() {
+        if (mRestaurant != null) {
+            spinnerTime = (Spinner) rootView.findViewById(R.id.spinnerTime);
+            spinnerSeats = (Spinner) rootView.findViewById(R.id.spinnerSeats);
+            spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
+            reservationDate = (TextView) rootView.findViewById(R.id.date);
+            seats = (TextView) rootView.findViewById(R.id.seats);
+            tables = (TextView) rootView.findViewById(R.id.tables);
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
+            myCalendar = Calendar.getInstance();
+            updateLabel();
+            initializeSpinners();
+            date = new DatePickerDialog.OnDateSetListener() {
 
-        };
-        reservationDate = (EditText) rootView.findViewById(R.id.date);
-        reservationDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getContext(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                      int dayOfMonth) {
+                    // TODO Auto-generated method stub
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH, monthOfYear);
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    updateLabel();
+                    initializeSpinners();
+                }
+
+            };
+
+            reservationDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    new DatePickerDialog(getContext(), date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }
+            });
 
 
-        spinnerTime = (Spinner) rootView.findViewById(R.id.spinnerTime);
-        spinnerSeats = (Spinner) rootView.findViewById(R.id.spinnerSeats);
-        spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
+            Button reserve = (Button) rootView.findViewById(R.id.reserve);
+        }
 
-        Log.d("Hello   ",""+mRestaurant.getId());
+        return rootView;
+    }
+
+    private void initializeSpinners() {
+        Log.d("Restaurant   ", "" + mRestaurant);
+        Log.d("OPening times   ", "" + mRestaurant.getOpeningTimes());
         chosenDate = myCalendar.getTime();
+        Log.d("DATE", "" + chosenDate);
         timeSlots = reservationService.getAvailableTimeSlots(mRestaurant.getId(), chosenDate);
         List<String> stringListTimes = Lists.transform(timeSlots, new Function<Object, String>() {
             @Override
@@ -197,10 +209,6 @@ public class RestaurantReservationFragment extends Fragment {
 
             }
         });
-
-        Button reserve = (Button) rootView.findViewById(R.id.reserve);
-
-        return rootView;
     }
 
     private void updateLabel() {

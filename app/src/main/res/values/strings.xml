@@ -14,7 +14,7 @@
     <string name="table">Table</string>
     <string name="nrOfPeople">Number of People</string>
     <string name="availableTimes">Available Time</string>
-    <string name="date">Chose Date</string>
+    <string name="date">Chose the Date</string>
     <string name="reserve">Reserve</string>
     <string name="app_name">ReservationApp</string>
     <string name="action_settings">Settings</string>

@@ -14,19 +14,19 @@ public class OpeningTime {
 
     public String getWeekdayAsString() {
         switch (weekday) {
-            case 0:
-                return "Sunday";
             case 1:
-                return "Monday";
+                return "Sunday";
             case 2:
-                return "Tuesday";
+                return "Monday";
             case 3:
-                return "Wednesday";
+                return "Tuesday";
             case 4:
-                return "Thursday";
+                return "Wednesday";
             case 5:
-                return "Friday";
+                return "Thursday";
             case 6:
+                return "Friday";
+            case 7:
                 return "Saturday";
             default:
                 return "Unknown";

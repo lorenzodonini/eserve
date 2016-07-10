@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class OpeningTimes {
+public class OpeningTimes implements Parcelable{
 
     private Map<Integer, Set<TimeSlot>> openingTimes;
 
@@ -83,4 +83,26 @@ public class OpeningTimes {
             return new HashSet<>();
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    public static final Creator<OpeningTimes> CREATOR = new Creator<OpeningTimes>() {
+        @Override
+        public OpeningTimes createFromParcel(Parcel in) {
+            return new OpeningTimes(in);
+        }
+
+        @Override
+        public OpeningTimes[] newArray(int size) {
+            return new OpeningTimes[size];
+        }
+    };
+
 }

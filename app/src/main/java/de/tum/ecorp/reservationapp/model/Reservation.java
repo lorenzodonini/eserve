@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Reservation extends Entity {
 
-    private Long restaurantId;
+    private Integer restaurantId;
     private Date date;
     private Set<TimeSlot> timeSlots;
     private Table table;
@@ -14,7 +14,7 @@ public class Reservation extends Entity {
         //TODO
     }
 
-    public Long getRestaurantId() {
+    public Integer getRestaurantId() {
         return this.restaurantId;
     }
 

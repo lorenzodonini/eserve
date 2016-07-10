@@ -27,5 +27,5 @@ public interface RestaurantResource {
     List<Restaurant> getRestaurantsNearby(Location searchLocation, Double searchRadius);
     List<Restaurant> getRestaurantsFiltered(Map<Filter, Object> filters);
 
-    Restaurant getRestaurant(Long restaurantId);
+    Restaurant getRestaurant(Integer restaurantId);
 }

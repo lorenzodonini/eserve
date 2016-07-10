@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Restaurant extends Entity implements Parcelable {
+public class Restaurant  implements Parcelable {
 
     public enum PriceRange {
         LOW(1), MEDIUM(2), HIGH(3);
@@ -23,7 +23,7 @@ public class Restaurant extends Entity implements Parcelable {
             return numberRepresentation;
         }
     }
-
+    private Integer id;
     private String name;
     private String category;
     private String address;
@@ -35,9 +35,9 @@ public class Restaurant extends Entity implements Parcelable {
     private ArrayList<Table> tables;
     private OpeningTimes openingTimes;
 
-    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
+    public Restaurant(Integer id, String name, String category, String address, String website, PriceRange priceRange, Location location,
                       List<Review> reviews, List<Table> tables, OpeningTimes openingTimes, String [] imageUris) {
-
+        this.id = id;
         this.name = name;
         this.category = category;
         this.address = address;
@@ -52,7 +52,8 @@ public class Restaurant extends Entity implements Parcelable {
         this.imageUris = (imageUris != null) ? imageUris : new String[0];
     }
 
-    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location) {
+    public Restaurant(Integer id, String name, String category, String address, String website, PriceRange priceRange, Location location) {
+        this.id=id;
         this.name = name;
         this.category = category;
         this.address = address;
@@ -66,6 +67,10 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     //GETTERS & SETTERS
+    public Integer getId(){
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -171,6 +176,7 @@ public class Restaurant extends Entity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(category);
         dest.writeString(address);
@@ -179,11 +185,13 @@ public class Restaurant extends Entity implements Parcelable {
         dest.writeParcelable(location, flags);
         //dest.writeParcelableArray(tables.toArray(new Table[tables.size()]),flags);
         dest.writeParcelableArray(reviews.toArray(new Review[reviews.size()]), flags);
+        dest.writeParcelable(openingTimes, flags);
         dest.writeInt(imageUris.length);
         dest.writeStringArray(imageUris);
     }
 
     private Restaurant(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         category = in.readString();
         address = in.readString();
@@ -204,6 +212,7 @@ public class Restaurant extends Entity implements Parcelable {
                 reviews.add((Review)item);
             }
         }
+        openingTimes = in.readParcelable(OpeningTimes.class.getClassLoader());
         int imageAmt = in.readInt();
         imageUris = new String[imageAmt];
         in.readStringArray(imageUris);
