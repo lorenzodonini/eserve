@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         ImageView searchClearButton = (ImageView) findViewById(R.id.search_clear);
         ImageView searchCloseButton = (ImageView) findViewById(R.id.search_close);
 
-        searchViewController = new SearchViewController(searchContainer, searchClearButton, searchCloseButton, toolbarSearchView, new Function<String, Void>() {
+        searchViewController = new SearchViewController(this, searchContainer, searchClearButton, searchCloseButton, toolbarSearchView, new Function<String, Void>() {
             @Override
             public Void apply(String input) {
                 restaurantResourceAsync.getRestaurantsBySearchStringAsync(new Task<List<Restaurant>>() {
