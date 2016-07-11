@@ -2,6 +2,7 @@ package de.tum.ecorp.reservationapp.view;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -57,8 +60,12 @@ public class RestaurantReservationFragment extends Fragment {
     private Spinner spinnerSeats;
     private Spinner spinnerTable;
 
+    private LinearLayout includeLayout;
+    private View timesSeatsLayout, tablesLayout;
     private TextView timeTextView, seatsTextView, tablesTextView, reservationDate;
+    private Button reserve;
 
+    LayoutInflater layoutInflater;
     private String timeChoice;
 
     public RestaurantReservationFragment() {
@@ -85,8 +92,8 @@ public class RestaurantReservationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         reservationService = new MockReservationService(restaurantResource);
         mRestaurant = restaurantResource.getRestaurant(mRestaurant.getId());
@@ -95,9 +102,9 @@ public class RestaurantReservationFragment extends Fragment {
         if (mRestaurant != null) {
             findViewById(rootView);
             myCalendar = Calendar.getInstance();
-            updateLabel();
+//            updateLabel();
 
-            initializeSpinners();
+//            initializeSpinners();
 
             date = new DatePickerDialog.OnDateSetListener() {
 
@@ -109,7 +116,7 @@ public class RestaurantReservationFragment extends Fragment {
                     myCalendar.set(Calendar.MONTH, monthOfYear);
                     myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                     updateLabel();
-                    initializeSpinners();
+                    initializeSpinners(savedInstanceState, container);
                 }
 
             };
@@ -136,8 +143,15 @@ public class RestaurantReservationFragment extends Fragment {
         spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
         reservationDate = (TextView) rootView.findViewById(R.id.date);
         timeTextView = (TextView) rootView.findViewById(R.id.times);
-        seatsTextView = (TextView) rootView.findViewById(R.id.seats);
-        tablesTextView = (TextView) rootView.findViewById(R.id.tables);
+        includeLayout = (LinearLayout) rootView.findViewById(R.id.includeLayout);
+        layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        timesSeatsLayout = (LinearLayout) rootView.findViewById(R.id.timesSeatsLinearLayout);
+//        seatsTextView = (TextView) rootView.findViewById(R.id.seats);
+//        tablesTextView = (TextView) rootView.findViewById(R.id.tables);
+//        timeLayout = (RelativeLayout) rootView.findViewById(R.id.timesLayout);
+//        seatsLayout = (RelativeLayout) rootView.findViewById(R.id.seatsLayout);
+//        tablesLayout = (RelativeLayout) rootView.findViewById(R.id.tablesLayout);
+        reserve = (Button) rootView.findViewById(R.id.reserve);
     }
 
     public void showCalendarDialog() {
@@ -155,7 +169,7 @@ public class RestaurantReservationFragment extends Fragment {
         return dialog;
     }
 
-    private void initializeSpinners() {
+    private void initializeSpinners(final Bundle s, final ViewGroup c) {
 
         chosenDate = myCalendar.getTime();
 //        Log.d("DATE", "" + chosenDate);
@@ -173,20 +187,26 @@ public class RestaurantReservationFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         if (!adapter.isEmpty()) {
-            timeTextView.setVisibility(View.VISIBLE);
+//            timeLayout.setVisibility(View.VISIBLE);
+//            timeTextView.setVisibility(View.VISIBLE);
             timeTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
             timeTextView.setText(R.string.availableTimes);
-            spinnerTime.setVisibility(View.VISIBLE);
+            includeLayout.addView(layoutInflater.inflate(R.layout.times_seats_layout, c,false));
+//            timesSeatsLayout = getLayoutInflater(s).inflate(R.layout.times_seats_layout, includeLayout, true);
+//            spinnerTime.setVisibility(View.VISIBLE);
             spinnerTime.setAdapter(adapter);
         } else {
-            timeTextView.setVisibility(View.VISIBLE);
+//            timeTextView.setVisibility(View.VISIBLE);
             timeTextView.setText(R.string.noTables);
             timeTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorRed));
-            seatsTextView.setVisibility(View.INVISIBLE);
-            tablesTextView.setVisibility(View.INVISIBLE);
-            spinnerTable.setVisibility(View.INVISIBLE);
-            spinnerSeats.setVisibility(View.INVISIBLE);
-            spinnerTime.setVisibility(View.INVISIBLE);
+//            seatsLayout.setVisibility(View.INVISIBLE);
+//            tablesLayout.setVisibility(View.INVISIBLE);
+//            timeLayout.setVisibility(View.INVISIBLE);
+//            seatsTextView.setVisibility(View.INVISIBLE);
+//            tablesTextView.setVisibility(View.INVISIBLE);
+//            spinnerTable.setVisibility(View.INVISIBLE);
+//            spinnerSeats.setVisibility(View.INVISIBLE);
+//            spinnerTime.setVisibility(View.INVISIBLE);
         }
 
         spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -198,8 +218,9 @@ public class RestaurantReservationFragment extends Fragment {
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.nrOfSeats, android.R.layout.simple_spinner_item);
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                seatsTextView.setVisibility(View.VISIBLE);
-                spinnerSeats.setVisibility(View.VISIBLE);
+//                seatsLayout.setVisibility(View.VISIBLE);
+//                seatsTextView.setVisibility(View.VISIBLE);
+//                spinnerSeats.setVisibility(View.VISIBLE);
                 spinnerSeats.setAdapter(adapter);
             }
 
@@ -234,16 +255,20 @@ public class RestaurantReservationFragment extends Fragment {
                 if (stringListTables.size() > 0) {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, stringListTables);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    tablesTextView.setVisibility(View.VISIBLE);
                     tablesTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
                     tablesTextView.setText(R.string.availableTables);
-                    spinnerTable.setVisibility(View.VISIBLE);
+                    includeLayout.addView(layoutInflater.inflate(R.layout.tables_layout, c,false));
+//                    tablesLayout = getLayoutInflater(s).inflate(R.layout.tables_layout, includeLayout, true);
+//                    tablesLayout.setVisibility(View.VISIBLE);
+                    reserve.setEnabled(true);
+//                    spinnerTable.setVisibility(View.VISIBLE);
                     spinnerTable.setAdapter(adapter);
                 } else {
+                    reserve.setEnabled(false);
+//                    tablesLayout.setVisibility(View.INVISIBLE);
                     tablesTextView.setText(R.string.noTables);
-                    tablesTextView.setVisibility(View.VISIBLE);
                     tablesTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorRed));
-                    spinnerTable.setVisibility(View.INVISIBLE);
+//                    spinnerTable.setVisibility(View.INVISIBLE);
                 }
 
             }
