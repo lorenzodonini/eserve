@@ -10,6 +10,7 @@
         <item>8</item>
     </string-array>
 
+    <string name="defaultDate">--/--/--</string>
     <string name="noTables">"No Tables Available"</string>
     <string name="availableTables">Available Tables</string>
     <string name="nrOfPeople">Number of People</string>
