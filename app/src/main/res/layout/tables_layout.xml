@@ -1,35 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--<merge xmlns:android="http://schemas.android.com/apk/res/android">-->
+<?xml version="1.0" encoding="utf-8"?><!--<merge xmlns:android="http://schemas.android.com/apk/res/android">-->
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/includeTablesLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/tablesLayout"
+    <RelativeLayout
+        android:id="@+id/tablesLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner"
+        android:paddingBottom="25dp">
+
+        <TextView
+            android:id="@+id/tables"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/spinner"
-            android:paddingBottom="25dp">
-
-            <TextView
-                android:id="@+id/tables"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:text="@string/availableTables" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/availableTables" />
 
 
-            <Spinner
-                android:id="@+id/spinnerTable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:paddingTop="50dp" />
+        <Spinner
+            android:id="@+id/spinnerTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="50dp" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    </LinearLayout>
-<!--</merge>-->
+</LinearLayout><!--</merge>-->

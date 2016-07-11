@@ -61,6 +61,7 @@ public class RestaurantReservationFragment extends Fragment {
     private Spinner spinnerTable;
 
     private LinearLayout includeLayout;
+    //    private LinearLayout timeSeatLayout, tablesLayout;
     private View timesSeatsLayout, tablesLayout;
     private TextView timeTextView, seatsTextView, tablesTextView, reservationDate;
     private Button reserve;
@@ -97,10 +98,14 @@ public class RestaurantReservationFragment extends Fragment {
         // Inflate the layout for this fragment
         reservationService = new MockReservationService(restaurantResource);
         mRestaurant = restaurantResource.getRestaurant(mRestaurant.getId());
-        View rootView = inflater.inflate(R.layout.fragment_restaurant_reservation, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_restaurant_reservation, container, false);
+
+        final View timeView = inflater.inflate(R.layout.times_seats_layout, container, false);
+
+        final View tableView = inflater.inflate(R.layout.tables_layout, container, false);
 
         if (mRestaurant != null) {
-            findViewById(rootView);
+            findViewById(rootView, timeView, tableView);
             myCalendar = Calendar.getInstance();
 //            updateLabel();
 
@@ -116,7 +121,7 @@ public class RestaurantReservationFragment extends Fragment {
                     myCalendar.set(Calendar.MONTH, monthOfYear);
                     myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                     updateLabel();
-                    initializeSpinners(savedInstanceState, container);
+                    initializeSpinners(rootView, savedInstanceState, container);
                 }
 
             };
@@ -124,11 +129,10 @@ public class RestaurantReservationFragment extends Fragment {
             reservationDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    // TODO Auto-generated method stub
+                    // TODO Auto-generated method stub
                     showCalendarDialog();
                 }
             });
-
 
             Button reserve = (Button) rootView.findViewById(R.id.reserve);
 
@@ -137,17 +141,22 @@ public class RestaurantReservationFragment extends Fragment {
         return rootView;
     }
 
-    private void findViewById(View rootView) {
-        spinnerTime = (Spinner) rootView.findViewById(R.id.spinnerTime);
-        spinnerSeats = (Spinner) rootView.findViewById(R.id.spinnerSeats);
-        spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
-        reservationDate = (TextView) rootView.findViewById(R.id.date);
-        timeTextView = (TextView) rootView.findViewById(R.id.times);
+    private void findViewById(View rootView, View timeView, View tableView) {
         includeLayout = (LinearLayout) rootView.findViewById(R.id.includeLayout);
+//        tablesLayout = (LinearLayout) rootView.findViewById(R.id.includeTablesLinearLayout);
+//        timeSeatLayout = (LinearLayout) rootView.findViewById(R.id.includeTimesSeatsLinearLayout);
+        timeTextView = (TextView) rootView.findViewById(R.id.times);
+        spinnerTime = (Spinner) timeView.findViewById(R.id.spinnerTime);
+        spinnerSeats = (Spinner) timeView.findViewById(R.id.spinnerSeats);
+        spinnerTable = (Spinner) tableView.findViewById(R.id.spinnerTable);
+        reservationDate = (TextView) rootView.findViewById(R.id.date);
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        timesSeatsLayout = (LinearLayout) rootView.findViewById(R.id.timesSeatsLinearLayout);
-//        seatsTextView = (TextView) rootView.findViewById(R.id.seats);
-//        tablesTextView = (TextView) rootView.findViewById(R.id.tables);
+
+        timesSeatsLayout = layoutInflater.inflate(R.layout.times_seats_layout,(LinearLayout) timeView.findViewById(R.id.includeTimesSeatsLinearLayout), false);
+        tablesLayout = layoutInflater.inflate(R.layout.tables_layout,(LinearLayout) tableView.findViewById(R.id.includeTablesLinearLayout));
+        seatsTextView = (TextView) timeView.findViewById(R.id.seats);
+        timeTextView = (TextView) timeView.findViewById(R.id.times);
+        tablesTextView = (TextView) tableView.findViewById(R.id.tables);
 //        timeLayout = (RelativeLayout) rootView.findViewById(R.id.timesLayout);
 //        seatsLayout = (RelativeLayout) rootView.findViewById(R.id.seatsLayout);
 //        tablesLayout = (RelativeLayout) rootView.findViewById(R.id.tablesLayout);
@@ -169,7 +178,7 @@ public class RestaurantReservationFragment extends Fragment {
         return dialog;
     }
 
-    private void initializeSpinners(final Bundle s, final ViewGroup c) {
+    private void initializeSpinners(View rootView, final Bundle s, final ViewGroup c) {
 
         chosenDate = myCalendar.getTime();
 //        Log.d("DATE", "" + chosenDate);
@@ -189,14 +198,21 @@ public class RestaurantReservationFragment extends Fragment {
         if (!adapter.isEmpty()) {
 //            timeLayout.setVisibility(View.VISIBLE);
 //            timeTextView.setVisibility(View.VISIBLE);
-            timeTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
-            timeTextView.setText(R.string.availableTimes);
-            includeLayout.addView(layoutInflater.inflate(R.layout.times_seats_layout, c,false));
+//            timeTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
+//            timeTextView.setText(R.string.availableTimes);
+//            includeLayout.addView(timeSeatLayout);
+//
+//            spinnerTime = (Spinner) rootView.findViewById(R.id.spinnerTime);
+//            spinnerSeats = (Spinner) rootView.findViewById(R.id.spinnerSeats);
+//            timeTextView = (TextView) rootView.findViewById(R.id.times);
 //            timesSeatsLayout = getLayoutInflater(s).inflate(R.layout.times_seats_layout, includeLayout, true);
 //            spinnerTime.setVisibility(View.VISIBLE);
             spinnerTime.setAdapter(adapter);
+            includeLayout.addView(timesSeatsLayout);
+//            includeLayout.addView(tablesLayout);/
         } else {
 //            timeTextView.setVisibility(View.VISIBLE);
+            includeLayout.removeAllViews();
             timeTextView.setText(R.string.noTables);
             timeTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorRed));
 //            seatsLayout.setVisibility(View.INVISIBLE);
@@ -257,12 +273,15 @@ public class RestaurantReservationFragment extends Fragment {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     tablesTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
                     tablesTextView.setText(R.string.availableTables);
-                    includeLayout.addView(layoutInflater.inflate(R.layout.tables_layout, c,false));
+//                    spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
+//                    includeLayout.addView(tablesLayout);
 //                    tablesLayout = getLayoutInflater(s).inflate(R.layout.tables_layout, includeLayout, true);
 //                    tablesLayout.setVisibility(View.VISIBLE);
                     reserve.setEnabled(true);
 //                    spinnerTable.setVisibility(View.VISIBLE);
                     spinnerTable.setAdapter(adapter);
+
+                    includeLayout.addView(tablesLayout);
                 } else {
                     reserve.setEnabled(false);
 //                    tablesLayout.setVisibility(View.INVISIBLE);

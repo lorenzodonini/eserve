@@ -13,15 +13,6 @@
         android:paddingRight="16dp"
         android:paddingTop="16dp">
 
-        <!--<DatePicker-->
-        <!--android:id="@+id/datePicker"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignEnd="@+id/spinnerTime"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:calendarViewShown="false"-->
-        <!--android:datePickerMode="spinner" />-->
-
         <RelativeLayout
             android:id="@+id/dateLayout"
             android:layout_width="match_parent"
@@ -61,20 +52,21 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/includeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/dateLayout"
             android:orientation="vertical">
 
-            <include
-                layout="@layout/times_seats_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!--<include-->
+            <!--layout="@layout/times_seats_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
-            <include
-                layout="@layout/tables_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!--<include-->
+            <!--layout="@layout/tables_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
         </LinearLayout>
 
