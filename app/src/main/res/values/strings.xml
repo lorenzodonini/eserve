@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ReservationApp</string>
     <string name="action_settings">Settings</string>
+    <string name="action_feedback">Feedback</string>
     <string name="restaurant_name_placeholder">ECorp Restaurant</string>
     <string name="restaurant_type_placeholder">Nerdy restaurant</string>
     <string name="restaurant_price_placeholder">$$$$</string>
