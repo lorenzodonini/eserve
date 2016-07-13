@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,11 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.google.common.base.Function;
 import de.tum.ecorp.reservationapp.view.*;
@@ -124,22 +120,32 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
             @Override
             public void handleResult(List<Restaurant> result) {
-                final Location searchLocation = UserManager.getInstance().getCurrentLocation();
-                if (searchLocation != null) {
-                    //Sorting results according to distance from search location
-                    Collections.sort(result, new Comparator<Restaurant>() {
-                        @Override
-                        public int compare(Restaurant lhs, Restaurant rhs) {
-                            return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
-                                    searchLocation.distanceTo(rhs.getLocation()));
-                        }
-                    });
-                }
-                //Only displaying the first N results, where N cannot be higher than the amount of results
-                List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
-                restaurantAdapter.updateRestaurantList(resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]));
+                restaurantAdapter.updateRestaurantList(sortResults(result));
             }
         });
+    }
+
+    /**
+     * Utility method, used when updating the list of restaurants.
+     * This method automatically sorts the results by distance and only returns the first 50 items.
+     * @param result  The list of restaurants returned by the previously executed query
+     * @return  An array of sorted Restaurants. Refer to MAX_DISPLAYED_RESULTS for the size of the array.
+     */
+    private Restaurant [] sortResults(List<Restaurant> result) {
+        final Location searchLocation = UserManager.getInstance().getCurrentLocation();
+        if (searchLocation != null) {
+            //Sorting results according to distance from search location
+            Collections.sort(result, new Comparator<Restaurant>() {
+                @Override
+                public int compare(Restaurant lhs, Restaurant rhs) {
+                    return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
+                            searchLocation.distanceTo(rhs.getLocation()));
+                }
+            });
+        }
+        //Only displaying the first N results, where N cannot be higher than the amount of results
+        List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
+        return resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]);
     }
 
     @Override
@@ -230,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         ImageView searchClearButton = (ImageView) findViewById(R.id.search_clear);
         ImageView searchCloseButton = (ImageView) findViewById(R.id.search_close);
 
-        searchViewController = new SearchViewController(searchContainer, searchClearButton, searchCloseButton, toolbarSearchView, new Function<String, Void>() {
+        searchViewController = new SearchViewController(this, searchContainer, searchClearButton, searchCloseButton, toolbarSearchView, new Function<String, Void>() {
             @Override
             public Void apply(String input) {
                 restaurantResourceAsync.getRestaurantsBySearchStringAsync(new Task<List<Restaurant>>() {
@@ -241,20 +247,7 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
 
                     @Override
                     public void handleResult(List<Restaurant> result) {
-                        final Location searchLocation = UserManager.getInstance().getCurrentLocation();
-                        if (searchLocation != null) {
-                            //Sorting results according to distance from search location
-                            Collections.sort(result, new Comparator<Restaurant>() {
-                                @Override
-                                public int compare(Restaurant lhs, Restaurant rhs) {
-                                    return Float.compare(searchLocation.distanceTo(lhs.getLocation()),
-                                            searchLocation.distanceTo(rhs.getLocation()));
-                                }
-                            });
-                        }
-                        //Only displaying the first N results, where N cannot be higher than the amount of results
-                        List<Restaurant> resultsToDisplay = result.subList(0, Math.min(result.size(), MAX_DISPLAYED_RESULTS));
-                        restaurantAdapter.updateRestaurantList(resultsToDisplay.toArray(new Restaurant[resultsToDisplay.size()]));
+                        restaurantAdapter.updateRestaurantList(sortResults(result));
                     }
                 }, input);
 
@@ -266,8 +259,19 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     }
 
     @Override
-    public void updateLocation(Location location) {
-        restaurantAdapter.notifyDataSetChanged();
+    public void updateLocation(final Location location) {
+        if (location == null) {
+            return;
+        }
+        Restaurant [] restaurants = restaurantAdapter.getCurrentRestaurants();
+        Arrays.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant lhs, Restaurant rhs) {
+                return Float.compare(location.distanceTo(lhs.getLocation()),
+                        location.distanceTo(rhs.getLocation()));
+            }
+        });
+        restaurantAdapter.updateRestaurantList(restaurants);
     }
 
     private boolean canAccessLocation() {

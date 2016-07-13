@@ -53,6 +53,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
+    public Restaurant [] getCurrentRestaurants() {
+        return restaurants;
+    }
+
     @Override
     public int getItemCount() {
         return restaurants.length;
