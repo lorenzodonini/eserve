@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import com.google.common.base.Function;
 import de.tum.ecorp.reservationapp.view.*;
 import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.FeedbackManager;
 import net.hockeyapp.android.UpdateManager;
 
 import java.util.Arrays;
@@ -167,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // hide the menu
-        return false;
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     private void checkForCrashes() {
@@ -187,7 +189,8 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_feedback) {
+            showFeedbackActivity();
             return true;
         }
 
@@ -288,5 +291,10 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
                 }
                 break;
         }
+    }
+
+    public void showFeedbackActivity() {
+        FeedbackManager.register(MainActivity.this, HOCKEYAPP_ID, null);
+        FeedbackManager.showFeedbackActivity(MainActivity.this);
     }
 }
