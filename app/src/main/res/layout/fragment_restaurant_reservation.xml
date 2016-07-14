@@ -18,17 +18,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/date"
+            <!--<Button-->
+            <!--android:id="@+id/date"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="37dp"-->
+            <!--android:ems="10"-->
+            <!--android:text="@string/defaultDate"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textAppearance="?android:attr/textAppearanceLarge" />-->
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="37dp"
-                android:ems="10"
-                android:text="@string/defaultDate"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:baselineAligned="false"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:text="@string/defaultDate"
+                    android:textAlignment="center"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="150dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/darker_gray"
+                    android:visibility="visible" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/dateView"
@@ -49,8 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="false"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/noTablesAvailable"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:enabled="false"
             android:text="@string/reserve" />
@@ -75,16 +105,16 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/noTablesAvailable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/noTables"
-            android:textColor="@color/colorRed"
-            android:id="@+id/noTablesAvailable"
-            android:layout_marginTop="25dp"
-            android:visibility="invisible"
             android:layout_below="@+id/includeLayout"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="@string/noTables"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorRed"
+            android:visibility="invisible" />
 
 
     </RelativeLayout>
