@@ -74,7 +74,7 @@ public class RestaurantReservationFragment extends Fragment {
 
     }
 
-    public static RestaurantReservationFragment newInstance(Restaurant restaurant) {//ArrayList<Table> tables){//, OpeningTimes times) {
+    public static RestaurantReservationFragment newInstance(Restaurant restaurant) {
         RestaurantReservationFragment fragment = new RestaurantReservationFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_RESTAURANT, restaurant);
@@ -98,7 +98,7 @@ public class RestaurantReservationFragment extends Fragment {
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         reservationService = new MockReservationService(restaurantResource);
-        mRestaurant = restaurantResource.getRestaurant(mRestaurant.getId());
+
         final View rootView = inflater.inflate(R.layout.fragment_restaurant_reservation, container, false);
 
         final View timeView = inflater.inflate(R.layout.times_seats_layout, container, false);
@@ -141,7 +141,7 @@ public class RestaurantReservationFragment extends Fragment {
                             .setMessage("Table Reserved")
                             .setPositiveButton("OK", null)
                             .create()
-                            .show(); 
+                            .show();
                 }
             });
         }

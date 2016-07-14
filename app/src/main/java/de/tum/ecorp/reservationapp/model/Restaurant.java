@@ -184,9 +184,7 @@ public class Restaurant implements Parcelable {
         dest.writeString(website);
         dest.writeString(priceRange.name());
         dest.writeParcelable(location, flags);
-        //dest.writeParcelableArray(tables.toArray(new Table[tables.size()]),flags);
         dest.writeParcelableArray(reviews.toArray(new Review[reviews.size()]), flags);
-//        dest.writeParcelable(openingTimes, flags);
         dest.writeInt(imageUris.length);
         dest.writeStringArray(imageUris);
     }
@@ -199,13 +197,6 @@ public class Restaurant implements Parcelable {
         website = in.readString();
         priceRange = PriceRange.valueOf(in.readString());
         location = in.readParcelable(Location.class.getClassLoader());
-//        Parcelable [] tableItems = in.readParcelableArray(Table.class.getClassLoader());
-//        if (tableItems != null) {
-//            tables = new ArrayList<>(tableItems.length);
-//            for (Parcelable item : tableItems) {
-//                tables.add((Table) item);
-//            }
-//        }
         Parcelable[] items = in.readParcelableArray(Review.class.getClassLoader());
         if (items != null) {
             reviews = new ArrayList<>(items.length);
@@ -213,7 +204,6 @@ public class Restaurant implements Parcelable {
                 reviews.add((Review) item);
             }
         }
-//        openingTimes = in.readParcelable(OpeningTimes.class.getClassLoader());
         int imageAmt = in.readInt();
         imageUris = new String[imageAmt];
         in.readStringArray(imageUris);

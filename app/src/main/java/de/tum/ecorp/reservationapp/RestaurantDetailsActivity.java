@@ -157,7 +157,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
                 case 1:
                     return RestaurantReviewsFragment.newInstance(mRestaurant.getReviews(), mRestaurant.getRating());
                 default:
-                    return RestaurantReservationFragment.newInstance(mRestaurant);//mRestaurant.getTables(), mRestaurant.getOpeningTimes());
+                    return RestaurantReservationFragment.newInstance(mRestaurant);
             }
         }
 
