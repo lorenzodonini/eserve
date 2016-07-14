@@ -62,7 +62,7 @@ public class RestaurantReservationFragment extends Fragment {
 
     private LinearLayout includeLayout;
     private View timesSeatsLayout, tablesLayout;
-    private TextView timeTextView, tablesTextView, reservationDate;
+    private TextView timeTextView, tablesTextView, reservationDate, noTables;
     private Button reserve;
 
     LayoutInflater layoutInflater;
@@ -144,8 +144,9 @@ public class RestaurantReservationFragment extends Fragment {
         layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         timesSeatsLayout = layoutInflater.inflate(R.layout.times_seats_layout, (LinearLayout) timeView.findViewById(R.id.includeTimesSeatsLinearLayout), false);
-        tablesLayout = layoutInflater.inflate(R.layout.tables_layout, (LinearLayout) tableView.findViewById(R.id.includeTablesLinearLayout));
+        tablesLayout = layoutInflater.inflate(R.layout.tables_layout, (LinearLayout) tableView.findViewById(R.id.includeTablesLinearLayout), false);
         reserve = (Button) rootView.findViewById(R.id.reserve);
+        noTables = (TextView) rootView.findViewById(R.id.noTablesAvailable);
     }
 
     public void showCalendarDialog() {
@@ -187,76 +188,88 @@ public class RestaurantReservationFragment extends Fragment {
             timeTextView = (TextView) rootView.findViewById(R.id.times);
             timeTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
             spinnerTime.setAdapter(adapter);
-        } else {
-            includeLayout.removeAllViews();
-        }
 
-        spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            spinnerTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> parentView,
-                                       View selectedItemView, int position, long id) {
-                timeChoice = parentView.getItemAtPosition(position).toString();
-                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.nrOfSeats, android.R.layout.simple_spinner_item);
+                public void onItemSelected(AdapterView<?> parentView,
+                                           View selectedItemView, int position, long id) {
+                    timeChoice = parentView.getItemAtPosition(position).toString();
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.nrOfSeats, android.R.layout.simple_spinner_item);
 
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerSeats.setAdapter(adapter);
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // do nothing
-            }
-
-        });
-
-        spinnerSeats.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String peopleChoice = parent.getItemAtPosition(position).toString();
-                List<TimeSlot> chosenTime = new ArrayList<TimeSlot>();
-                String[] time = timeChoice.split(":");
-                chosenTime.add(new TimeSlot(Integer.parseInt(time[0]), Integer.parseInt(time[1])));
-                tableSlots = reservationService.getAvailableTables(mRestaurant.getId(), chosenDate, Integer.parseInt(peopleChoice), chosenTime);
-                List<String> stringListTables = Lists.transform(tableSlots, new Function<Object, String>() {
-                    @Override
-                    public String apply(Object arg0) {
-                        if (arg0 != null)
-                            return arg0.toString();
-                        else
-                            return "";
-                    }
-                });
-
-                if (stringListTables.size() > 0) {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, stringListTables);
+                    noTables.setVisibility(View.INVISIBLE);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    reserve.setEnabled(true);
-                    if (tablesLayout.getParent() != null) {
-                        ((ViewGroup)tablesLayout.getParent()).removeView(tablesLayout);
-                    }
-                    includeLayout.addView(tablesLayout);
-                    tablesTextView = (TextView) rootView.findViewById(R.id.tables);
-                    spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
-                    spinnerTable.setAdapter(adapter);
-                    tablesTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
-                    tablesTextView.setText(R.string.availableTables);
-
-                } else {
-                    if (tablesLayout.getParent() != null) {
-                        ((ViewGroup)tablesLayout.getParent()).removeView(tablesLayout);
-                    }
-                    reserve.setEnabled(false);
-                    tablesTextView.setText(R.string.noTables);
-                    tablesTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorRed));
+                    spinnerSeats.setAdapter(adapter);
                 }
 
-            }
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // do nothing
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            });
 
+            spinnerSeats.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String peopleChoice = parent.getItemAtPosition(position).toString();
+                    List<TimeSlot> chosenTime = new ArrayList<TimeSlot>();
+                    String[] time = timeChoice.split(":");
+                    chosenTime.add(new TimeSlot(Integer.parseInt(time[0]), Integer.parseInt(time[1])));
+                    tableSlots = reservationService.getAvailableTables(mRestaurant.getId(), chosenDate, Integer.parseInt(peopleChoice), chosenTime);
+                    List<String> stringListTables = Lists.transform(tableSlots, new Function<Object, String>() {
+                        @Override
+                        public String apply(Object arg0) {
+                            if (arg0 != null)
+                                return arg0.toString();
+                            else
+                                return "";
+                        }
+                    });
+
+                    if (stringListTables.size() > 0) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, stringListTables);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        reserve.setEnabled(true);
+                        if (tablesLayout.getParent() != null) {
+                            ((ViewGroup) tablesLayout.getParent()).removeView(tablesLayout);
+                        }
+
+                        noTables.setVisibility(View.INVISIBLE);
+                        includeLayout.addView(tablesLayout);
+                        tablesTextView = (TextView) rootView.findViewById(R.id.tables);
+                        spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
+                        spinnerTable.setAdapter(adapter);
+                        tablesTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGrey));
+                        tablesTextView.setText(R.string.availableTables);
+
+                    } else {
+                        if (tablesLayout.getParent() != null) {
+                            ((ViewGroup) tablesLayout.getParent()).removeView(tablesLayout);
+                        }
+                        noTables.setVisibility(View.VISIBLE);
+                        reserve.setEnabled(false);
+                        tablesTextView.setText(R.string.noTables);
+                        tablesTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorRed));
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+        } else {
+            if (includeLayout.getParent() != null) {
+                includeLayout.removeAllViews();
             }
-        });
+            reserve.setEnabled(false);
+            noTables.setVisibility(View.VISIBLE);
+//            includeLayout.removeAllViews();
+        }
+
+
     }
 
     private void updateLabel() {

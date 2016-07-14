@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <Button
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,17 +30,6 @@
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <Button
-                android:id="@+id/reserve"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="false"
-                android:layout_below="@+id/date"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:enabled="false"
-                android:text="@string/reserve" />
-
             <TextView
                 android:id="@+id/dateView"
                 android:layout_width="wrap_content"
@@ -49,7 +38,22 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/date"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <requestFocus
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/reserve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/noTablesAvailable"
+            android:layout_marginTop="25dp"
+            android:enabled="false"
+            android:text="@string/reserve" />
 
         <LinearLayout
             android:id="@+id/includeLayout"
@@ -69,6 +73,18 @@
             <!--android:layout_height="wrap_content" />-->
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/noTables"
+            android:textColor="@color/colorRed"
+            android:id="@+id/noTablesAvailable"
+            android:layout_marginTop="25dp"
+            android:visibility="invisible"
+            android:layout_below="@+id/includeLayout"
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>
