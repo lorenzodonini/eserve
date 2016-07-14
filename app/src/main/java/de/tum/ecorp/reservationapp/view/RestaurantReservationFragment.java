@@ -1,8 +1,10 @@
 package de.tum.ecorp.reservationapp.view;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -125,13 +127,23 @@ public class RestaurantReservationFragment extends Fragment {
             reservationDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO Auto-generated method stub
                     showCalendarDialog();
                 }
             });
 
             Button reserve = (Button) rootView.findViewById(R.id.reserve);
 
+            reserve.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("E-Serve Reservation")
+                            .setMessage("Table Reserved")
+                            .setPositiveButton("OK", null)
+                            .create()
+                            .show(); 
+                }
+            });
         }
 
         return rootView;
@@ -155,12 +167,9 @@ public class RestaurantReservationFragment extends Fragment {
     }
 
     protected DatePickerDialog onCreateDialog() {
-        // TODO Auto-generated method stub
         DatePickerDialog dialog = new DatePickerDialog(getContext(), R.style.CalendarTheme, date, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
-        dialog.getDatePicker().setSpinnersShown(true);
-        dialog.getDatePicker().setCalendarViewShown(false);
         return dialog;
     }
 
@@ -180,7 +189,12 @@ public class RestaurantReservationFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, stringListTimes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+//        check if there are available times
         if (!adapter.isEmpty()) {
+            if (timesSeatsLayout.getParent() != null) {
+                ((ViewGroup) timesSeatsLayout.getParent()).removeView(timesSeatsLayout);
+            }
+            //add times and seats view
             includeLayout.addView(timesSeatsLayout);
 
             spinnerTime = (Spinner) rootView.findViewById(R.id.spinnerTime);
@@ -225,7 +239,7 @@ public class RestaurantReservationFragment extends Fragment {
                                 return "";
                         }
                     });
-
+                    //check if there are available tables
                     if (stringListTables.size() > 0) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, stringListTables);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -235,6 +249,7 @@ public class RestaurantReservationFragment extends Fragment {
                         }
 
                         noTables.setVisibility(View.INVISIBLE);
+                        //add tables view
                         includeLayout.addView(tablesLayout);
                         tablesTextView = (TextView) rootView.findViewById(R.id.tables);
                         spinnerTable = (Spinner) rootView.findViewById(R.id.spinnerTable);
@@ -266,7 +281,6 @@ public class RestaurantReservationFragment extends Fragment {
             }
             reserve.setEnabled(false);
             noTables.setVisibility(View.VISIBLE);
-//            includeLayout.removeAllViews();
         }
 
 
@@ -274,7 +288,7 @@ public class RestaurantReservationFragment extends Fragment {
 
     private void updateLabel() {
 
-        String myFormat = "dd/MM/yy"; //In which you need put here
+        String myFormat = "dd/MM/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.GERMAN);
 
         reservationDate.setText(sdf.format(myCalendar.getTime()));
