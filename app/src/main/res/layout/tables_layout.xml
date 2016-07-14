@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/includeTablesLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--android:background="@drawable/spinner"-->
+    <RelativeLayout
+        android:id="@+id/tablesLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="25dp">
+
+        <TextView
+            android:id="@+id/tables"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/availableTables" />
+
+
+        <Spinner
+            android:id="@+id/spinnerTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="50dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
