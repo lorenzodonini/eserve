@@ -128,7 +128,7 @@ public class MockReservationService implements ReservationService {
     public List<Table> getAvailableTables(Integer restaurantId, Date date, List<TimeSlot> timeSlots) {
 
         Restaurant restaurant = restaurantResource.getRestaurant(restaurantId);
-        List<Table> tables = new ArrayList<>(restaurant.getTables()); 
+        List<Table> tables = new ArrayList<>(restaurant.getTables());
 
         Map<Table, Map<TimeSlot, Boolean>> reservedTables = getReservationsForRestaurantOn(restaurantId, date);
 
