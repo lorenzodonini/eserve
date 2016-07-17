@@ -45,7 +45,7 @@ import de.tum.ecorp.reservationapp.view.SearchViewController;
 public class MainActivity extends AppCompatActivity implements LocationAware {
     private static final int MAX_DISPLAYED_RESULTS = 50;
     private static final int LOCATION_REQUEST_ID=1337;
-    final String HOCKEYAPP_ID = "00276bc4f3cc4984a85e9918358f9a3c ";
+    final String HOCKEYAPP_ID = "00276bc4f3cc4984a85e9918358f9a3c";
     private ListView restaurantListView;
     private ArrayAdapter<Restaurant> listAdapter;
     private LocationManager locationManager;
@@ -131,17 +131,13 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     @Override
     protected void onPause() {
         super.onPause();
-//        if (canAccessLocation()) {
             userManager.stopUsingGPS();
-//        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        if (canAccessLocation()) {
             userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
-//        }
     }
 
     @Override
