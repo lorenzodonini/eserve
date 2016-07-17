@@ -128,10 +128,8 @@ public class MockReservationService implements ReservationService {
     public List<Table> getAvailableTables(Integer restaurantId, Date date, List<TimeSlot> timeSlots) {
 
         Restaurant restaurant = restaurantResource.getRestaurant(restaurantId);
-        List<Table> tables = new ArrayList<>(restaurant.getTables().size());
-        for (Table table : restaurant.getTables()) {
-            tables.add(table);
-        }
+        List<Table> tables = new ArrayList<>();
+        tables.addAll(restaurant.getTables());
 
         Map<Table, Map<TimeSlot, Boolean>> reservedTables = getReservationsForRestaurantOn(restaurantId, date);
 
@@ -181,11 +179,6 @@ public class MockReservationService implements ReservationService {
         c.setTime(date);
 
         int weekDay = c.get(Calendar.DAY_OF_WEEK);
-//        Log.d("Day  ", ""+weekDay);
-//        Log.d("INSIDE 1", "" + restaurantResource.getRestaurant(restaurantId).getId());
-//        Log.d("INSIDE 2", "" + restaurantResource.getRestaurant(restaurantId).getName());
-//        Log.d("INSIDE 3", "" + restaurantResource.getRestaurant(restaurantId).getOpeningTimes().toString());
-//        Log.d("INSIDE 4", "" + restaurantResource.getRestaurant(restaurantId).getOpeningTimes().getTimeSlots(weekDay));
         List<TimeSlot> result = new ArrayList<>(restaurantResource.getRestaurant(restaurantId).getOpeningTimes().getTimeSlots(weekDay));
 
         for (Iterator<Map.Entry<Table, Map<TimeSlot, Boolean>>> it = reservedTables.entrySet().iterator(); it.hasNext(); ) {

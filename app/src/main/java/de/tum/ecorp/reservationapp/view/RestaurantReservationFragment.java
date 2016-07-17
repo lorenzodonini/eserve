@@ -2,14 +2,10 @@ package de.tum.ecorp.reservationapp.view;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.common.base.Function;
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import java.text.SimpleDateFormat;
@@ -106,7 +99,17 @@ public class RestaurantReservationFragment extends Fragment {
         final View tableView = inflater.inflate(R.layout.tables_layout, container, false);
 
         if (mRestaurant != null) {
-            findViewById(rootView, timeView, tableView);
+
+            includeLayout = (LinearLayout) rootView.findViewById(R.id.includeLayout);
+            timeTextView = (TextView) rootView.findViewById(R.id.times);
+            reservationDate = (TextView) rootView.findViewById(R.id.date);
+            layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            timesSeatsLayout = layoutInflater.inflate(R.layout.times_seats_layout, (LinearLayout) timeView.findViewById(R.id.includeTimesSeatsLinearLayout), false);
+            tablesLayout = layoutInflater.inflate(R.layout.tables_layout, (LinearLayout) tableView.findViewById(R.id.includeTablesLinearLayout), false);
+            reserve = (Button) rootView.findViewById(R.id.reserve);
+            noTables = (TextView) rootView.findViewById(R.id.noTablesAvailable);
+
             myCalendar = Calendar.getInstance();
 
             date = new DatePickerDialog.OnDateSetListener() {
@@ -149,17 +152,6 @@ public class RestaurantReservationFragment extends Fragment {
         return rootView;
     }
 
-    private void findViewById(View rootView, View timeView, View tableView) {
-        includeLayout = (LinearLayout) rootView.findViewById(R.id.includeLayout);
-        timeTextView = (TextView) rootView.findViewById(R.id.times);
-        reservationDate = (TextView) rootView.findViewById(R.id.date);
-        layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        timesSeatsLayout = layoutInflater.inflate(R.layout.times_seats_layout, (LinearLayout) timeView.findViewById(R.id.includeTimesSeatsLinearLayout), false);
-        tablesLayout = layoutInflater.inflate(R.layout.tables_layout, (LinearLayout) tableView.findViewById(R.id.includeTablesLinearLayout), false);
-        reserve = (Button) rootView.findViewById(R.id.reserve);
-        noTables = (TextView) rootView.findViewById(R.id.noTablesAvailable);
-    }
 
     public void showCalendarDialog() {
         DatePickerDialog d = onCreateDialog();
