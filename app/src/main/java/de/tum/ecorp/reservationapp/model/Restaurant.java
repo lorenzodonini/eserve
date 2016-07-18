@@ -3,11 +3,13 @@ package de.tum.ecorp.reservationapp.model;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Restaurant extends Entity implements Parcelable {
+public class Restaurant implements Parcelable {
 
     public enum PriceRange {
         LOW(1), MEDIUM(2), HIGH(3);
@@ -23,6 +25,7 @@ public class Restaurant extends Entity implements Parcelable {
         }
     }
 
+    private Integer id;
     private String name;
     private String category;
     private String address;
@@ -30,13 +33,13 @@ public class Restaurant extends Entity implements Parcelable {
     private PriceRange priceRange;
     private ArrayList<Review> reviews;
     private Location location;
-    private String [] imageUris;
+    private String[] imageUris;
     private List<Table> tables;
     private OpeningTimes openingTimes;
 
-    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location,
-                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes, String [] imageUris) {
-
+    public Restaurant(Integer id, String name, String category, String address, String website, PriceRange priceRange, Location location,
+                      List<Review> reviews, List<Table> tables, OpeningTimes openingTimes, String[] imageUris) {
+        this.id = id;
         this.name = name;
         this.category = category;
         this.address = address;
@@ -50,7 +53,8 @@ public class Restaurant extends Entity implements Parcelable {
         this.imageUris = (imageUris != null) ? imageUris : new String[0];
     }
 
-    public Restaurant(String name, String category, String address, String website, PriceRange priceRange, Location location) {
+    public Restaurant(Integer id, String name, String category, String address, String website, PriceRange priceRange, Location location) {
+        this.id = id;
         this.name = name;
         this.category = category;
         this.address = address;
@@ -64,6 +68,10 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     //GETTERS & SETTERS
+    public Integer getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -169,6 +177,7 @@ public class Restaurant extends Entity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(category);
         dest.writeString(address);
@@ -181,17 +190,18 @@ public class Restaurant extends Entity implements Parcelable {
     }
 
     private Restaurant(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         category = in.readString();
         address = in.readString();
         website = in.readString();
         priceRange = PriceRange.valueOf(in.readString());
         location = in.readParcelable(Location.class.getClassLoader());
-        Parcelable [] items = in.readParcelableArray(Review.class.getClassLoader());
+        Parcelable[] items = in.readParcelableArray(Review.class.getClassLoader());
         if (items != null) {
             reviews = new ArrayList<>(items.length);
             for (Parcelable item : items) {
-                reviews.add((Review)item);
+                reviews.add((Review) item);
             }
         }
         int imageAmt = in.readInt();

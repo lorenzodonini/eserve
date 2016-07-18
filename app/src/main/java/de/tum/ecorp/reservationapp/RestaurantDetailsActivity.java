@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,9 +26,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import de.tum.ecorp.reservationapp.model.Restaurant;
+import de.tum.ecorp.reservationapp.model.TimeSlot;
 import de.tum.ecorp.reservationapp.resource.MockImageResource;
 import de.tum.ecorp.reservationapp.resource.Task;
 import de.tum.ecorp.reservationapp.view.RestaurantDetailFragment;
+import de.tum.ecorp.reservationapp.view.RestaurantReservationFragment;
 import de.tum.ecorp.reservationapp.view.RestaurantReviewsFragment;
 
 import java.util.List;
@@ -151,8 +154,10 @@ public class RestaurantDetailsActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return RestaurantDetailFragment.newInstance(mRestaurant);
-                default:
+                case 1:
                     return RestaurantReviewsFragment.newInstance(mRestaurant.getReviews(), mRestaurant.getRating());
+                default:
+                    return RestaurantReservationFragment.newInstance(mRestaurant);
             }
         }
 

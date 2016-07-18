@@ -18,7 +18,7 @@ import de.tum.ecorp.reservationapp.model.TimeSlot;
 
 public class MockRestaurantResource implements RestaurantResource {
 
-    private Map<Long, Restaurant> restaurants;
+    private Map<Integer, Restaurant> restaurants;
 
     public MockRestaurantResource() {
         restaurants = new HashMap<>();
@@ -70,7 +70,7 @@ public class MockRestaurantResource implements RestaurantResource {
     }
 
     @Override
-    public Restaurant getRestaurant(Long restaurantId) {
+    public Restaurant getRestaurant(Integer restaurantId) {
         return this.restaurants.get(restaurantId);
     }
 
@@ -106,7 +106,7 @@ public class MockRestaurantResource implements RestaurantResource {
         imageUris[0] = "https://www.omnihotels.com/-/media/images/hotels/homrst/restaurants/homrst-omni-homestead-resort-casino-restaurant.jpg";
         imageUris[1] = "http://lxly7dz9m3-flywheel.netdna-ssl.com/wp-content/uploads/2015/06/2hawks.jpg";
 
-        result.add(new Restaurant("ECorp creepy restaurant", "Nerdy restaurant",
+        result.add(new Restaurant(1,"ECorp creepy restaurant", "Nerdy restaurant",
                 "Creepway 3, 80932 Munich", "www.ecorp.com",
                 Restaurant.PriceRange.HIGH, location, reviews, tables, openingTimes, imageUris));
 
@@ -133,7 +133,7 @@ public class MockRestaurantResource implements RestaurantResource {
         imageUris[0] = "http://kingofwallpapers.com/restaurant/restaurant-010.jpg";
         imageUris[1] = "https://upload.wikimedia.org/wikipedia/commons/1/1e/Tom's_Restaurant,_NYC.jpg";
 
-        result.add(new Restaurant("America Graffiti", "American Diner restaurant",
+        result.add(new Restaurant(2,"America Graffiti", "American Diner restaurant",
                 "SomeRandomStreet 25, 666 Gotham, World", "www.inyourface.org",
                 Restaurant.PriceRange.LOW, location, reviews, tables, openingTimes, imageUris));
 
@@ -164,7 +164,7 @@ public class MockRestaurantResource implements RestaurantResource {
         imageUris[0] = "http://newyamya.indyco.net/admin/uploaded_image/11037_P1010505.JPG";
         imageUris[1] = "http://restaurant-la-cucaracha-mex-bar.mux.de/images/1500x1200z/client/59228/86d6ecu4pv35/restaurant-bar-la-cucaracha-mex-bar-7.jpg";
 
-        result.add(new Restaurant("La Cucaracha", "Tex Mex Restaurant, Mexican Restaurant",
+        result.add(new Restaurant(3,"La Cucaracha", "Tex Mex Restaurant, Mexican Restaurant",
                 "Bayerstraße 49, 80335 München, Deutschland", "http://www.la-cucaracha-muenchen.de/",
                 Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
 

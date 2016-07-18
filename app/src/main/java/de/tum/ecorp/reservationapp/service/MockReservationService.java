@@ -1,5 +1,7 @@
 package de.tum.ecorp.reservationapp.service;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +27,7 @@ public class MockReservationService implements ReservationService {
         this.reservations = new HashMap<>();
     }
 
-    private Map<Date, Map<Table, Map<TimeSlot, Boolean>>> getReservationsForRestaurant(Long restaurantId) {
+    private Map<Date, Map<Table, Map<TimeSlot, Boolean>>> getReservationsForRestaurant(Integer restaurantId) {
         Map<Date, Map<Table, Map<TimeSlot, Boolean>>> result = this.reservations.get(restaurantId);
 
         if (result != null) {
@@ -35,7 +37,7 @@ public class MockReservationService implements ReservationService {
         }
     }
 
-    private Map<Table, Map<TimeSlot, Boolean>> getReservationsForRestaurantOn(Long restaurantId, Date date) {
+    private Map<Table, Map<TimeSlot, Boolean>> getReservationsForRestaurantOn(Integer restaurantId, Date date) {
         Map<Table, Map<TimeSlot, Boolean>> result = getReservationsForRestaurant(restaurantId).get(date);
 
         if (result != null) {
@@ -45,7 +47,7 @@ public class MockReservationService implements ReservationService {
         }
     }
 
-    private Map<TimeSlot, Boolean> getReservationsForRestaurantOnTable(Long restaurantId, Date date, Table table) {
+    private Map<TimeSlot, Boolean> getReservationsForRestaurantOnTable(Integer restaurantId, Date date, Table table) {
         Map<TimeSlot, Boolean> result = getReservationsForRestaurantOn(restaurantId, date).get(table);
 
         if (result != null) {
@@ -58,7 +60,7 @@ public class MockReservationService implements ReservationService {
     @Override
     public void addReservation(Reservation reservation) {
 
-        Long restaurantId = reservation.getRestaurantId();
+        Integer restaurantId = reservation.getRestaurantId();
         Date date = reservation.getDate();
         Table table = reservation.getTable();
 
@@ -69,7 +71,7 @@ public class MockReservationService implements ReservationService {
 
     @Override
     public void removeReservation(Reservation reservation) {
-        Long restaurantId = reservation.getRestaurantId();
+        Integer restaurantId = reservation.getRestaurantId();
         Date date = reservation.getDate();
         Table table = reservation.getTable();
 
@@ -79,7 +81,7 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<Table> getAvailableTables(Long restaurantId, Date date) {
+    public List<Table> getAvailableTables(Integer restaurantId, Date date) {
 
         Restaurant restaurant = restaurantResource.getRestaurant(restaurantId);
         List<Table> tables = restaurant.getTables();
@@ -107,11 +109,11 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<Table> getAvailableTables(Long restaurantId, Date date, int numberOfSeats) {
+    public List<Table> getAvailableTables(Integer restaurantId, Date date, int numberOfSeats) {
 
         List<Table> tables = getAvailableTables(restaurantId, date);
 
-        for (Iterator<Table> iterator=tables.iterator(); iterator.hasNext(); ) {
+        for (Iterator<Table> iterator = tables.iterator(); iterator.hasNext(); ) {
             Table table = iterator.next();
 
             if (table.getNumberOfSeats() < numberOfSeats) {
@@ -123,10 +125,10 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<Table> getAvailableTables(Long restaurantId, Date date, Set<TimeSlot> timeSlots) {
+    public List<Table> getAvailableTables(Integer restaurantId, Date date, List<TimeSlot> timeSlots) {
 
         Restaurant restaurant = restaurantResource.getRestaurant(restaurantId);
-        List<Table> tables = restaurant.getTables();
+        List<Table> tables = new ArrayList<>(restaurant.getTables());
 
         Map<Table, Map<TimeSlot, Boolean>> reservedTables = getReservationsForRestaurantOn(restaurantId, date);
 
@@ -153,11 +155,11 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<Table> getAvailableTables(Long restaurantId, Date date, int numberOfSeats, Set<TimeSlot> timeSlots) {
+    public List<Table> getAvailableTables(Integer restaurantId, Date date, int numberOfSeats, List<TimeSlot> timeSlots) {
 
         List<Table> tables = getAvailableTables(restaurantId, date, timeSlots);
 
-        for (Iterator<Table> it=tables.iterator(); it.hasNext(); ) {
+        for (Iterator<Table> it = tables.iterator(); it.hasNext(); ) {
             Table t = it.next();
             if (t.getNumberOfSeats() < numberOfSeats) {
                 it.remove();
@@ -168,7 +170,7 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<TimeSlot> getAvailableTimeSlots(Long restaurantId, Date date) {
+    public List<TimeSlot> getAvailableTimeSlots(Integer restaurantId, Date date) {
 
         Map<Table, Map<TimeSlot, Boolean>> reservedTables = getReservationsForRestaurantOn(restaurantId, date);
 
@@ -178,10 +180,10 @@ public class MockReservationService implements ReservationService {
         int weekDay = c.get(Calendar.DAY_OF_WEEK);
         List<TimeSlot> result = new ArrayList<>(restaurantResource.getRestaurant(restaurantId).getOpeningTimes().getTimeSlots(weekDay));
 
-        for (Iterator<Map.Entry<Table, Map<TimeSlot, Boolean>>> it=reservedTables.entrySet().iterator(); it.hasNext(); ) {
+        for (Iterator<Map.Entry<Table, Map<TimeSlot, Boolean>>> it = reservedTables.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<Table, Map<TimeSlot, Boolean>> entry = it.next();
 
-            for (Iterator<Map.Entry<TimeSlot, Boolean>> iter=entry.getValue().entrySet().iterator(); iter.hasNext(); ) {
+            for (Iterator<Map.Entry<TimeSlot, Boolean>> iter = entry.getValue().entrySet().iterator(); iter.hasNext(); ) {
                 Map.Entry<TimeSlot, Boolean> tsb = iter.next();
 
                 if (tsb.getValue() == true) {
@@ -196,7 +198,7 @@ public class MockReservationService implements ReservationService {
     }
 
     @Override
-    public List<TimeSlot> getAvailableTimeSlots(Long restaurantId, Date date, Table table) {
+    public List<TimeSlot> getAvailableTimeSlots(Integer restaurantId, Date date, Table table) {
 
         Map<Table, Map<TimeSlot, Boolean>> reservedTables = getReservationsForRestaurantOn(restaurantId, date);
 
@@ -211,7 +213,7 @@ public class MockReservationService implements ReservationService {
             return result;
         } else {
 
-            for (Iterator<Map.Entry<TimeSlot, Boolean>> it=tableReservations.entrySet().iterator(); it.hasNext(); ) {
+            for (Iterator<Map.Entry<TimeSlot, Boolean>> it = tableReservations.entrySet().iterator(); it.hasNext(); ) {
                 Map.Entry<TimeSlot, Boolean> entry = it.next();
 
                 if (entry.getValue() == true) {

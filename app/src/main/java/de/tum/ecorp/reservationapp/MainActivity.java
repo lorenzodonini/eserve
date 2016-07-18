@@ -152,17 +152,13 @@ public class MainActivity extends AppCompatActivity implements LocationAware {
     @Override
     protected void onPause() {
         super.onPause();
-        if (canAccessLocation()) {
             userManager.stopUsingGPS();
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (canAccessLocation()) {
-            userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this));
-        }
+            userManager.enableLocationService(locationManager, Arrays.asList((LocationAware) this)); 
     }
 
     @Override
