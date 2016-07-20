@@ -83,6 +83,14 @@ public class RestaurantReviewsAdapter extends RecyclerView.Adapter<RecyclerView.
 
         RATING_BAR_MAX_WIDTH = holder.progressBar1.getLayoutParams().width;
 
+        if (reviews.length == 0) {
+            holder.progressBar1.getLayoutParams().width = 1;
+            holder.progressBar2.getLayoutParams().width = 1;
+            holder.progressBar3.getLayoutParams().width = 1;
+            holder.progressBar4.getLayoutParams().width = 1;
+            holder.progressBar5.getLayoutParams().width = 1;
+        }
+
         holder.progressBar1.getLayoutParams().width = (ratings[0] == 0) ?
                 1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[0] / (float) reviews.length));
         holder.progressBar2.getLayoutParams().width = (ratings[1] == 0) ?
