@@ -32,7 +32,8 @@
             android:progress="100" android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/reviewStars5"
             android:progressDrawable="@drawable/custom_progressbar" android:layout_alignTop="@+id/reviewStars5"
-            android:layout_alignBottom="@+id/reviewStars5"/>
+            android:layout_alignBottom="@+id/reviewStars5"
+        android:progressTint="#477f03" />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +54,7 @@
                  android:layout_height="wrap_content" android:id="@+id/reviewPercentage4" android:progress="100"
                  android:layout_marginLeft="10dp" android:layout_toRightOf="@+id/reviewStars4"
                  android:progressDrawable="@drawable/custom_progressbar" android:layout_alignTop="@+id/reviewStars4"
-                 android:layout_alignBottom="@+id/reviewStars4" android:progressTint="#5fac00"/>
+                 android:layout_alignBottom="@+id/reviewStars4" android:progressTint="#76d008"/>
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:text="@string/review_amount_placeholder2" android:id="@+id/reviewAmount4"
               android:layout_alignTop="@+id/reviewPercentage4"
