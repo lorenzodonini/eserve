@@ -311,17 +311,19 @@ public class MockRestaurantResource implements RestaurantResource {
 
         openingTimes = new OpeningTimes();
         // This restaurant is opened from X to Y on mondays
-        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(17, 0));  //13.00-13.30
-        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(17, 30)); //13.30-14.00
-        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(18, 0));  //14.00-14.30
-        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(18, 30)); //14.30-15.00
+        openingTimes.addTimeSlot(Calendar.SUNDAY, new TimeSlot(19, 0));  //13.00-13.30
+        openingTimes.addTimeSlot(Calendar.SUNDAY, new TimeSlot(19, 30)); //13.30-14.00
+        openingTimes.addTimeSlot(Calendar.SUNDAY, new TimeSlot(20, 0));  //14.00-14.30
+        openingTimes.addTimeSlot(Calendar.SUNDAY, new TimeSlot(20, 30)); //14.30-15.00
+        openingTimes.addTimeSlot(Calendar.SUNDAY, new TimeSlot(21, 00)); //14.30-15.00
+        openingTimes.addTimeSlot(Calendar.SUNDAY, new TimeSlot(21, 30)); //14.30-15.00
         // ...and half an hour on saturdays
         openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
 
         imageUris = new String[3];
         imageUris[0] = "https://s3-media1.fl.yelpcdn.com/bphoto/WlrByfl-hdvY1DPEU-ztTQ/o.jpg";
         imageUris[1] = "https://s3-media4.fl.yelpcdn.com/bphoto/Oqb8tj-Y3tjmS8WIfggJNQ/o.jpg";
-        imageUris[1] = "https://s3-media4.fl.yelpcdn.com/bphoto/4DLKxX9yGq2iPaflR2brlQ/o.jpg";
+        imageUris[2] = "https://s3-media4.fl.yelpcdn.com/bphoto/4DLKxX9yGq2iPaflR2brlQ/o.jpg";
 
         result.add(new Restaurant(4,"Thai Magie", "Sushi, Asian Restaurant, Thai",
                 "Westenriederstr. 13, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",

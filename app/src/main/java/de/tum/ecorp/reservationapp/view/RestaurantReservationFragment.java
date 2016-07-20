@@ -23,6 +23,8 @@ import com.google.common.collect.Lists;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -169,7 +171,14 @@ public class RestaurantReservationFragment extends Fragment {
 
         chosenDate = myCalendar.getTime();
         timeSlots = reservationService.getAvailableTimeSlots(mRestaurant.getId(), chosenDate);
-        List<String> stringListTimes = Lists.transform(timeSlots, new Function<Object, String>() {
+        Collections.sort(timeSlots, new Comparator<TimeSlot>() {
+            @Override
+            public int compare(TimeSlot lhs, TimeSlot rhs) {
+                return lhs.getSlotId() - rhs.getSlotId();
+            }
+        });
+
+        List < String > stringListTimes = Lists.transform(timeSlots, new Function<Object, String>() {
             @Override
             public String apply(Object arg0) {
                 if (arg0 != null)
