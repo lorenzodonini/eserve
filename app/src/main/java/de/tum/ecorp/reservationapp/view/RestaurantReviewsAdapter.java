@@ -89,18 +89,18 @@ public class RestaurantReviewsAdapter extends RecyclerView.Adapter<RecyclerView.
             holder.progressBar3.getLayoutParams().width = 1;
             holder.progressBar4.getLayoutParams().width = 1;
             holder.progressBar5.getLayoutParams().width = 1;
+        } else {
+            holder.progressBar1.getLayoutParams().width = (ratings[0] == 0) ?
+                    1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[0] / (float) reviews.length));
+            holder.progressBar2.getLayoutParams().width = (ratings[1] == 0) ?
+                    1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[1]) / (float) reviews.length);
+            holder.progressBar3.getLayoutParams().width = (ratings[2] == 0) ?
+                    1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[2]) / (float) reviews.length);
+            holder.progressBar4.getLayoutParams().width = (ratings[3] == 0) ?
+                    1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[3]) / (float) reviews.length);
+            holder.progressBar5.getLayoutParams().width = (ratings[4] == 0) ?
+                    1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[4]) / (float) reviews.length);
         }
-
-        holder.progressBar1.getLayoutParams().width = (ratings[0] == 0) ?
-                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[0] / (float) reviews.length));
-        holder.progressBar2.getLayoutParams().width = (ratings[1] == 0) ?
-                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[1]) / (float) reviews.length);
-        holder.progressBar3.getLayoutParams().width = (ratings[2] == 0) ?
-                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[2]) / (float) reviews.length);
-        holder.progressBar4.getLayoutParams().width = (ratings[3] == 0) ?
-                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[3]) / (float) reviews.length);
-        holder.progressBar5.getLayoutParams().width = (ratings[4] == 0) ?
-                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[4]) / (float) reviews.length);
 
         holder.amount1.setText(Integer.toString(ratings[0]));
         holder.amount2.setText(Integer.toString(ratings[1]));
