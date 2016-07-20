@@ -2,6 +2,7 @@ package de.tum.ecorp.reservationapp.resource;
 
 import android.location.Location;
 
+import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -77,6 +78,7 @@ public class MockRestaurantResource implements RestaurantResource {
     private List<Restaurant> createMockRestaurants() {
 
         List<Restaurant> result = new ArrayList<>();
+        GregorianCalendar gc;
         List<Review> reviews;
         Location location;
         List<Table> tables;
@@ -139,8 +141,10 @@ public class MockRestaurantResource implements RestaurantResource {
 
         // RESTAURANT 3
         location = new Location("dummyProvider");
-        location.setLatitude(48.1390143);
-        location.setLongitude(11.5541695);
+        //location.setLatitude(48.1390143);
+        //location.setLongitude(11.5541695);
+        location.setLatitude(48.1369415);
+        location.setLongitude(11.573697);
 
         reviews = new ArrayList<>();
         reviews.add(new Review("As a mexican, this is the worst mexican food I have ever taste in my life. The burrito look more like a Calzone. Not coming back, adios amigos!", 1, new Date()));
@@ -168,6 +172,694 @@ public class MockRestaurantResource implements RestaurantResource {
                 "Bayerstraße 49, 80335 München, Deutschland", "http://www.la-cucaracha-muenchen.de/",
                 Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
 
+        // RESTAURANT 4: Thai Magie
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1351017);
+        location.setLongitude(11.5752915);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 3, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 5, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 4, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 4, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 4, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 5, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 4, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 4, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 3, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 2, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 5, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+        gc.set(2015, 4, 13);
+        reviews.add(new Review("One of the best sushi places for this small amount of money. Awesome!", 5, gc.getTime()));
+
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("It was ok. Not the best, but also not the worst. The only thing I didnt like was a quite weird waiter. He was kind of depressed or something. Didn't smile even once :)", 2, gc.getTime()));
+        gc.set(2012, 8, 19);
+        reviews.add(new Review("I was in dire need of some quality Thai food, and Sushi Magie came through in spades with a delicious plate of chicken Pad Thai. It gets packed (and cramped) at lunch, but that's how you know it's a good place!", 4, gc.getTime()));
+        gc.set(2014, 8, 21);
+        reviews.add(new Review("We found this place as we were walking around the city centre looking for sushi on a Sunday afternoon. Most of the places we would normally go to were shut and we ended up here. This is a place similar to a couple of others we have been to that serve thai and Japanese under one roof. This is the only country where I have seen this combo.", 4, gc.getTime()));
+
+        tables = new ArrayList<>();
+        tables.add(new Table(5));
+        tables.add(new Table(5));
+        tables.add(new Table(5));
+        tables.add(new Table(4));  // 1 table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(4));  // another table for 4
+        tables.add(new Table(6));  // table for 6
+        tables.add(new Table(6));  // table for 6
+        tables.add(new Table(6));  // table for 6
+        tables.add(new Table(6));  // table for 6
+        tables.add(new Table(6));  // table for 6
+        tables.add(new Table(6));  // table for 6
+        tables.add(new Table(6));  // table for 6
+        tables.add(new Table(10)); // table for 10
+        tables.add(new Table(10)); // table for 10
+        tables.add(new Table(10)); // table for 10
+        tables.add(new Table(10)); // table for 10
+
+        openingTimes = new OpeningTimes();
+        // This restaurant is opened from X to Y on mondays
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(17, 0));  //13.00-13.30
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(17, 30)); //13.30-14.00
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(18, 0));  //14.00-14.30
+        openingTimes.addTimeSlot(Calendar.MONDAY, new TimeSlot(18, 30)); //14.30-15.00
+        // ...and half an hour on saturdays
+        openingTimes.addTimeSlot(Calendar.SATURDAY, new TimeSlot(20, 0));  //20.00-20.30
+
+        imageUris = new String[3];
+        imageUris[0] = "https://s3-media1.fl.yelpcdn.com/bphoto/WlrByfl-hdvY1DPEU-ztTQ/o.jpg";
+        imageUris[1] = "https://s3-media4.fl.yelpcdn.com/bphoto/Oqb8tj-Y3tjmS8WIfggJNQ/o.jpg";
+        imageUris[1] = "https://s3-media4.fl.yelpcdn.com/bphoto/4DLKxX9yGq2iPaflR2brlQ/o.jpg";
+
+        result.add(new Restaurant(4,"Thai Magie", "Sushi, Asian Restaurant, Thai",
+                "Westenriederstr. 13, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
+
+        // RESTAURANT 5: Sasou
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1369325);
+        location.setLongitude(11.573837);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(5,"Sasou", "Japanese/Asian Restaurant",
+                "Marienplatz 28, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
+
+        // RESTAURANT 6: China Moon Roof Terrace
+        location = new Location("dummyProvider");
+        location.setLatitude(48.136998);
+        location.setLongitude(11.5726328);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(6,"China Moon Roof Terrace", "Lounge, Asian Restaurant",
+                "Mandarin Oriental Hotel Neuturmstr. 1, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.HIGH, location, reviews, tables, openingTimes, imageUris));
+
+        // RESTAURANT 7: Yum2take
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1346182);
+        location.setLongitude(11.5720964);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(7,"Yum2take", "Asian Fast Food, Thai Restaurant",
+                "Sebastiansplatz 8, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.LOW, location, reviews, tables, openingTimes, imageUris));
+
+        // RESTAURANT 8: Ocui
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1342616);
+        location.setLongitude(11.5685944);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(8,"Ocui", "Italian/Asian Restaurant",
+                "Oberanger 31-33, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
+
+        // RESTAURANT 9: Kaiden Asia
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1375124);
+        location.setLongitude(11.5679561);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(9,"Kaiden Asia", "Japanese/Chinese/Asian Restaurant, Sushi",
+                "Altheimer Eck 12, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
+
+        // RESTAURANT 10: Hofbräuhaus
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1369345);
+        location.setLongitude(11.573817);
+        //location.setLatitude(48.1369325);
+        //location.setLongitude(11.573837);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 4, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(10,"Hofbräuhaus", "German Restaurant, Bavarian Cuisine, Beergarden",
+                "Platzl 9, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
+
+
+        // RESTAURANT 11: Zwickl
+        location = new Location("dummyProvider");
+        location.setLatitude(48.1369315);
+        location.setLongitude(11.573897);
+        //location.setLatitude(48.1369325);
+        //location.setLongitude(11.573837);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        gc.set(2016, 6, 25);
+
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 5, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+        reviews.add(new Review("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis malesuada porta.", 3, gc.getTime()));
+
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(11,"Zwickl", "Bavarian Cuisine, Bar",
+                "Dreifaltigkeitsplatz 2, 80331 Munich, Germany", "https://www.facebook.com/pages/Sushi-Magie/102082396551506",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
+
+        // RESTAURANT 11: Test 0 reviews
+        location = new Location("dummyProvider");
+        location.setLatitude(49.1369315);
+        location.setLongitude(12.573897);
+
+        gc = new GregorianCalendar();
+        reviews = new ArrayList<>();
+        tables = new ArrayList<>();
+        openingTimes = new OpeningTimes();
+        imageUris = new String[0];
+
+        result.add(new Restaurant(12,"McDonalds", "Fast food",
+                "somewhere", "https://www.example.com",
+                Restaurant.PriceRange.MEDIUM, location, reviews, tables, openingTimes, imageUris));
+
         return result;
     }
 
@@ -188,7 +880,7 @@ public class MockRestaurantResource implements RestaurantResource {
                 case RESTAURANT_NAME:
                     String nameSearchString = (String) value;
 
-                    if (! stringContainsString(restaurant.getName(), nameSearchString)) {
+                    if (! stringContainsString(restaurant.getName(), nameSearchString) && ! stringContainsString(restaurant.getCategory(), nameSearchString)) {
                         return true;
                     }
                     break;
