@@ -17,7 +17,7 @@ public class RestaurantReviewsAdapter extends RecyclerView.Adapter<RecyclerView.
     private static final int HEADER_VIEW_POSITION = 0;
     private static final int BODY_VIEW_TYPE = 1;
     private static final int HEADER_ELEMENT_COUNT = 1;
-    private static final int RATING_BAR_MAX_WIDTH = 180;
+    private static int RATING_BAR_MAX_WIDTH = 180;
 
     private Review [] reviews;
     private float restaurantRating;
@@ -72,7 +72,7 @@ public class RestaurantReviewsAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     private void initializeHeader(HeaderViewHolder holder) {
-        holder.restaurantRatingNum.setText(Float.toString(restaurantRating));
+        holder.restaurantRatingNum.setText(ViewUtility.formatFloat(restaurantRating, 1));
         holder.restaurantRating.setRating(restaurantRating);
         holder.restaurantRatingAmount.setText(mContext.getString(R.string.review_amount_label, reviews.length));
 
@@ -81,16 +81,18 @@ public class RestaurantReviewsAdapter extends RecyclerView.Adapter<RecyclerView.
             ratings[Math.round(review.getRating()) - 1]++;
         }
 
+        RATING_BAR_MAX_WIDTH = holder.progressBar1.getLayoutParams().width;
+
         holder.progressBar1.getLayoutParams().width = (ratings[0] == 0) ?
-                1 : Math.round(RATING_BAR_MAX_WIDTH * (reviews.length / ratings[0]));
+                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[0] / (float) reviews.length));
         holder.progressBar2.getLayoutParams().width = (ratings[1] == 0) ?
-                1 : Math.round(RATING_BAR_MAX_WIDTH * (reviews.length / ratings[1]));
+                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[1]) / (float) reviews.length);
         holder.progressBar3.getLayoutParams().width = (ratings[2] == 0) ?
-                1 : Math.round(RATING_BAR_MAX_WIDTH * (reviews.length / ratings[2]));
+                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[2]) / (float) reviews.length);
         holder.progressBar4.getLayoutParams().width = (ratings[3] == 0) ?
-                1 : Math.round(RATING_BAR_MAX_WIDTH * (reviews.length / ratings[3]));
+                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[3]) / (float) reviews.length);
         holder.progressBar5.getLayoutParams().width = (ratings[4] == 0) ?
-                1 : Math.round(RATING_BAR_MAX_WIDTH * (reviews.length / ratings[4]));
+                1 : Math.round((float)RATING_BAR_MAX_WIDTH * ((float) ratings[4]) / (float) reviews.length);
 
         holder.amount1.setText(Integer.toString(ratings[0]));
         holder.amount2.setText(Integer.toString(ratings[1]));
