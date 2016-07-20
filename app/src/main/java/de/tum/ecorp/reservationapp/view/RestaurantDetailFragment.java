@@ -81,22 +81,23 @@ public class RestaurantDetailFragment extends Fragment {
 
             //Initializing mocked opening times
             OpeningTime [] openingTimes = new OpeningTime[7];
-            OpeningTime time = new OpeningTime(0, null);
-            openingTimes[0] = time;
+            OpeningTime time;
             List<String> times = new ArrayList<>();
             times.add("12:00 PM-3:00 PM");
             times.add("5:00 PM-10:00 PM");
-            time = new OpeningTime(1, times);
-            openingTimes[1] = time;
             time = new OpeningTime(2, times);
-            openingTimes[2] = time;
+            openingTimes[0] = time;
             time = new OpeningTime(3, times);
-            openingTimes[3] = time;
+            openingTimes[1] = time;
             time = new OpeningTime(4, times);
-            openingTimes[4] = time;
+            openingTimes[2] = time;
             time = new OpeningTime(5, times);
-            openingTimes[5] = time;
+            openingTimes[3] = time;
             time = new OpeningTime(6, times);
+            openingTimes[4] = time;
+            time = new OpeningTime(7, times);
+            openingTimes[5] = time;
+            time = new OpeningTime(1, times);
             openingTimes[6] = time;
 
             setOpeningHoursForDay(rootView.findViewById(R.id.sundayHours), openingTimes[0]);
