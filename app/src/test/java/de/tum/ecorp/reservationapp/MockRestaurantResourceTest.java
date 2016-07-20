@@ -29,7 +29,7 @@ public class MockRestaurantResourceTest {
 
     @Test
     public void get_restaurants() throws Exception {
-        assertEquals(mrr.getRestaurants().size(), 3);
+        assertEquals(mrr.getRestaurants().size(), 12);
     }
 
     @Test
